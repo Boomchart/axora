@@ -1,0 +1,53 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:8889
+-- Generation Time: Jun 30, 2023 at 09:16 AM
+-- Server version: 5.7.34
+-- PHP Version: 8.2.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `konan`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `first_name`, `last_name`, `password`, `username`, `profile`, `support`, `promo`, `message`, `knowledge_base`, `email_configuration`, `general_settings`, `news`, `invoice`, `role`, `remember_token`, `status`, `created_at`, `updated_at`) VALUES
+('51ecb553-6d87-44a7-9665-87dcec166315', '', '', '$2y$10$XH3iJ2/4W6l0342WIW0hheV6N635XmpGGbOx3dofQsq0TSgNtdKYO', 'admin', 1, 1, 1, 1, 1, 1, 1, 1, 1, 'super', 'YaGN6Z2b77y1KZigf80oD5MswKgcqJjJ2WH6PomnZoa7OjgUDKXOES4qwl9F', 0, '2022-01-16 18:00:00', '0000-00-00 00:00:00'),
+('13ecb753-6d87-44a7-9665-87gcec166313', 'Katlin', 'Flin', '1234', 'katlin', 1, 1, NULL, NULL, 1, NULL, NULL, 1, 0, NULL, NULL, 0, '2023-06-29 08:08:21', '2023-06-30 07:40:02'),
+('43ecb753-6d87-44a7-9665-87dcec16s315', 'John', 'Doe', '$2y$10$71dYM2EOqWsm2MAigLDsXulrtPM6Bs7tnmlU.Ve43jw6rBh8uL4q.', 'doel', 1, NULL, 1, NULL, NULL, 1, 1, NULL, 0, NULL, NULL, 0, '2023-06-30 07:40:28', '2023-06-30 07:40:35');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

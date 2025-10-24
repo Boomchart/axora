@@ -1,0 +1,7 @@
+{
+    "Invoice": true,
+    "Ecommerce": true,
+    "Appointment": true,
+    "Expense": true,
+    "InlineJs": true
+}
