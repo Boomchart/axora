@@ -1,19 +1,28 @@
-@extends('front.menu')
-@section('content')
-<section class="position-relative py-lg-5 pt-5 dd-bg" data-jarallax data-img-position="0% 100%" data-speed="0.5">
-    <div class="container position-relative zindex-2 pt-5 pb-2 pb-md-0 py-6">
-        <div class="row justify-content-center pt-3 mt-3">
-            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
-                <h1 class="mb-4 text-success">{{__('Privacy policy')}}</h1>
+@extends('front.pages')
+
+@section('page_header')
+    <!-- Clean Page Header -->
+    <section class="page-header-clean">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-header-title">Privacy Policy</h1>
+                <p class="page-header-subtitle">
+                    Your privacy matters to us. Learn how we collect, use, and protect your data when you use our gift card API platform.
+                </p>
             </div>
         </div>
-    </div>
-</section>
-<section class="container mb-5 pt-4 pb-2 py-mg-4">
-    <div class="row gy-4">
-        <div class="col-lg-12">
-            <p class="text-start">{!!$set->privacy!!}</p>
+    </section>
+@endsection
+
+
+@section('content')
+    <section class="image-content-section">
+        <div class="container">
+            <div class="row align-items-center justify-content-center g-5">
+                <div class="col-lg-9">
+                    {!!$set->privacy!!}
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 @stop

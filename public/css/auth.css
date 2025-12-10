@@ -1,0 +1,352 @@
+/* ===========================
+   AXORA AUTH & ONBOARDING STYLES
+   =========================== */
+:root {
+    --primary-color: #0D7373;       /* Axora Teal */
+    --primary-dark: #0A5F5F;        /* Darker Teal for Hover/Gradient */
+    --primary-light: #108B8B;       /* Lighter Teal */
+    --primary-lighter: #E6F5F5;     /* Very light Teal for backgrounds */
+    --secondary-color: #F4C2C2;     /* Accent */
+    --text-primary: #2D3436;
+    --text-secondary: #636E72;
+    --border-color: #DFE6E9;
+    --background-secondary: #F8F9FA;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
+}
+
+/* ===========================
+   1. SHARED COMPONENTS
+   =========================== */
+
+/* Logos */
+.navbar-logo {
+    height: 45px;
+    width: auto;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    padding: 0.875rem;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 115, 115, 0.3);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+/* Links */
+.auth-link, .link-primary {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.auth-link:hover, .link-primary:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Form Inputs */
+.form-group, .fv-row {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9375rem;
+}
+
+.form-control,
+.form-select {
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: var(--text-primary);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--primary-lighter);
+    outline: none;
+}
+
+/* Password Toggle */
+.password-input-wrapper, .position-relative {
+    position: relative;
+}
+
+.password-toggle, .password-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover, .password-toggle-btn:hover {
+    color: var(--primary-color);
+}
+
+/* ===========================
+   2. LOGIN PAGE (CENTERED CARD)
+   =========================== */
+
+.auth-section {
+    padding: 4rem 0;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* Divider & Socials */
+.divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    z-index: 0;
+}
+
+.divider span {
+    background: white;
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    border: 2px solid var(--border-color);
+    background: white;
+    color: var(--text-primary);
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-social:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-lighter);
+    color: var(--primary-color);
+}
+
+/* ===========================
+   3. ONBOARDING PAGE (SIDEBAR LAYOUT)
+   =========================== */
+
+/* Sidebar Background */
+.axora-sidebar {
+    background-color: var(--primary-color);
+    background-image: linear-gradient(160deg, var(--primary-color) 0%, #084a4a 100%);
+    color: white;
+    min-height: 100vh;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Timeline Components */
+.timeline-line {
+    border-left: 2px dashed rgba(255,255,255,0.2) !important;
+}
+
+.symbol-label.okay {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.symbol-label.active-step {
+    background: white !important;
+    color: var(--primary-color) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+/* Onboarding Header Overrides */
+.axora-form-section .auth-header {
+    text-align: left; /* Align left for onboarding */
+    margin-bottom: 2.5rem;
+}
+
+/* Footer Info */
+.auth-footer, .auth-info {
+    margin-top: 2rem;
+    color: var(--text-secondary);
+}
+
+.auth-info i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+/* ===========================
+   4. UTILITIES & RESPONSIVE
+   =========================== */
+
+.text-primary-teal { color: var(--primary-color) !important; }
+.bg-light-teal { background-color: var(--primary-lighter) !important; }
+
+/* Checkboxes */
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .auth-title {
+        font-size: 1.75rem;
+    }
+
+    /* On mobile, ensure sidebar hidden or styled differently if needed */
+    .axora-sidebar {
+        display: none;
+    }
+}
+
+/* ===========================
+   TEXT COLOR UTILITIES
+   =========================== */
+
+/* 1. BRAND COLORS (TEAL)
+   Use for: Links, Highlights, Active States */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.text-primary-dark {
+    color: var(--primary-dark) !important;
+}
+
+.text-primary-light {
+    color: var(--primary-light) !important;
+}
+
+/* 2. ACCENT COLOR (PINK)
+   Use for: Badges, New Features, "Look here" moments
+   (Renamed to .text-accent to avoid confusing it with grey text) */
+.text-accent {
+    color: var(--secondary-color) !important;
+}
+
+/* 3. TYPOGRAPHY (GREYS)
+   Use for: Headings (Main) and Subtitles/Labels (Secondary) */
+.text-main {
+    color: var(--text-primary) !important; /* Dark Grey #2D3436 */
+}
+
+.text-muted, .text-secondary {
+    color: var(--text-secondary) !important; /* Medium Grey #636E72 */
+}
+
+/* 4. HOVER STATES
+   Add these to links or icons that should change color on mouseover */
+.hover-primary:hover {
+    color: var(--primary-color) !important;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.hover-dark:hover {
+    color: var(--primary-dark) !important;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+/* 5. STATUS COLORS (Standard Fintech Palette)
+   Essential for validation messages */
+.text-success {
+    color: #00B894 !important; /* Clean Green */
+}
+
+.text-danger {
+    color: #D63031 !important; /* Error Red */
+}
+
+.text-warning {
+    color: #FDCC6E !important; /* Warning Orange/Yellow */
+}

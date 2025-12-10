@@ -261,6 +261,7 @@ class Register extends Component
                 ]);
                 $user->update(['contact_id' => $contact->id]);
 
+
                 $business = Business::create([
                     'user_id' => $user->id,
                     'name' => $this->business_name,
@@ -325,6 +326,7 @@ class Register extends Component
                 return $this->emit('alert', $e->getMessage());
             }
         } elseif ($this->stage == 'email_verify') {
+            dd('email_verify');
             $this->validate(
                 [
                     'email_code' => ['numeric', 'required', 'min_digits:6', 'max_digits:6'],
