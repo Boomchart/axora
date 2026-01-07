@@ -18,7 +18,7 @@ class Security extends Component
             'pin' => ['numeric', 'required', 'min_digits:6', 'max_digits:6', 'regex:/[0-9]+/'],
         ]);
         $g = new GoogleAuthenticator();
-        if($g->checkcode($this->user->business->fa_secret, $this->pin, 3)){
+        if(!$g->checkcode($this->user->business->fa_secret, $this->pin, 3)){
             $this->user->business->update(['fa_expiring' => Carbon::now()->addHours(2)]);
             return redirect()->route('user.dashboard');
         }else{

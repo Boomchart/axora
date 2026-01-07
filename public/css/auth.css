@@ -1,21 +1,36 @@
 /* ===========================
    AXORA AUTH & ONBOARDING STYLES
+   (Leetchi-Inspired: Teal Trust + Pink Warmth)
    =========================== */
 :root {
-    --primary-color: #0D7373;       /* Axora Teal */
-    --primary-dark: #0A5F5F;        /* Darker Teal for Hover/Gradient */
-    --primary-light: #108B8B;       /* Lighter Teal */
-    --primary-lighter: #E6F5F5;     /* Very light Teal for backgrounds */
-    --secondary-color: #F4C2C2;     /* Accent */
+    /* PRIMARY: Trust & Security (Teal) */
+    --primary-color: #0D7373;
+    --primary-dark: #074F4F;
+    --primary-light: #108B8B;
+    --primary-lighter: #E6F5F5;
+
+    /* SECONDARY: Warmth & Gifting (Pink/Coral) */
+    --secondary-color: #F4C2C2;      /* Soft Pink (Backgrounds/Badges) */
+    --secondary-dark: #E07A7A;       /* Coral (Text/Links/Borders) */
+    --secondary-vibrant: #FF6B6B;    /* Vibrant Coral (Highlights/Hover) */
+
+    /* BACKGROUNDS: Warm & Human */
+    --bg-warm: #FDFBF7;              /* Warm Beige/Sand */
+    --bg-white: #FFFFFF;
+    --background-secondary: #F8F9FA; /* Fallback */
+
+    /* TEXT */
     --text-primary: #2D3436;
     --text-secondary: #636E72;
-    --border-color: #DFE6E9;
-    --background-secondary: #F8F9FA;
+    --text-muted: #8898AA;
+
+    /* BORDERS */
+    --border-color: #ECEEEF;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: var(--background-secondary);
+    background-color: var(--bg-warm); /* Warm background */
     color: var(--text-primary);
 }
 
@@ -36,16 +51,17 @@ body {
     padding: 0.875rem;
     font-weight: 700;
     font-size: 1rem;
-    border-radius: 8px;
+    border-radius: 12px; /* Softer corners */
     transition: all 0.3s ease;
-    color: #fff;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(13, 115, 115, 0.2);
 }
 
 .btn-primary:hover {
     background-color: var(--primary-dark) !important;
     border-color: var(--primary-dark) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(13, 115, 115, 0.3);
+    box-shadow: 0 8px 20px rgba(13, 115, 115, 0.3);
 }
 
 .btn-outline-primary {
@@ -53,6 +69,7 @@ body {
     border-color: var(--primary-color);
     padding: 0.625rem 1.5rem;
     font-weight: 600;
+    border-radius: 12px;
 }
 
 .btn-outline-primary:hover {
@@ -61,16 +78,32 @@ body {
     color: #fff;
 }
 
-/* Links */
-.auth-link, .link-primary {
-    color: var(--primary-color);
+/* Secondary Button (Warm Pink Outline) - New Addition */
+.btn-outline-secondary {
+    background: transparent;
+    border: 2px solid var(--secondary-color) !important;
+    color: var(--text-primary) !important;
+    padding: 0.8rem 1.5rem;
+    font-weight: 700;
+    border-radius: 12px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #FFF5F5; /* Very pale pink */
+    border-color: var(--secondary-dark) !important;
+    color: var(--secondary-dark) !important;
+}
+
+/* Links (Coral Pink Accent) */
+.auth-link, .link-primary, a:not(.btn):not(.navbar-brand) {
+    color: var(--secondary-dark);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease;
 }
 
-.auth-link:hover, .link-primary:hover {
-    color: var(--primary-dark);
+.auth-link:hover, .link-primary:hover, a:not(.btn):not(.navbar-brand):hover {
+    color: var(--secondary-vibrant);
     text-decoration: underline;
 }
 
@@ -80,7 +113,7 @@ body {
 }
 
 .form-label {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.5rem;
     font-size: 0.9375rem;
@@ -90,17 +123,18 @@ body {
 .form-select {
     padding: 0.875rem 1rem;
     border: 2px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px; /* Softer corners */
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: #fff;
     color: var(--text-primary);
 }
 
+/* Focus State: Pink Glow (Warmth) */
 .form-control:focus,
 .form-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px var(--primary-lighter);
+    border-color: var(--secondary-dark);
+    box-shadow: 0 0 0 4px rgba(244, 194, 194, 0.4); /* Pink Glow */
     outline: none;
 }
 
@@ -140,10 +174,11 @@ body {
 }
 
 .auth-card {
-    background: white;
-    border-radius: 16px;
+    background: var(--bg-white);
+    border-radius: 20px;
     padding: 3rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(13, 115, 115, 0.05); /* Teal-tinted soft shadow */
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
 .auth-header {
@@ -154,13 +189,14 @@ body {
 .auth-title {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: var(--primary-color);
     margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 .auth-subtitle {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     margin-bottom: 0;
 }
 
@@ -201,7 +237,7 @@ body {
     background: white;
     color: var(--text-primary);
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 12px;
     transition: all 0.3s ease;
 }
 
@@ -218,7 +254,8 @@ body {
 /* Sidebar Background */
 .axora-sidebar {
     background-color: var(--primary-color);
-    background-image: linear-gradient(160deg, var(--primary-color) 0%, #084a4a 100%);
+    /* Gradient to a slightly warmer deep green */
+    background-image: linear-gradient(160deg, var(--primary-color) 0%, #054040 100%);
     color: white;
     min-height: 100vh;
     border-right: 1px solid rgba(0,0,0,0.05);
@@ -235,16 +272,17 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Active Step: PINK Circle with TEAL Text */
 .symbol-label.active-step {
-    background: white !important;
-    color: var(--primary-color) !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    border: 2px solid rgba(255,255,255,0.5);
+    background: var(--secondary-color) !important;
+    color: var(--primary-dark) !important;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.2);
+    border: none;
 }
 
 /* Onboarding Header Overrides */
 .axora-form-section .auth-header {
-    text-align: left; /* Align left for onboarding */
+    text-align: left;
     margin-bottom: 2.5rem;
 }
 
@@ -263,13 +301,36 @@ body {
    4. UTILITIES & RESPONSIVE
    =========================== */
 
-.text-primary-teal { color: var(--primary-color) !important; }
-.bg-light-teal { background-color: var(--primary-lighter) !important; }
-
 /* Checkboxes */
 .form-check-input:checked {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+/* Icons */
+.icon-circle-pink {
+    background-color: #FFF0F0;
+    color: var(--secondary-dark);
+    width: 60px; height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* OTP Specific Tweaks */
+.symbol-35px {
+    width: 35px; height: 35px;
+}
+
+.symbol-label {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+}
+
+.border-dashed {
+    border-style: dashed !important;
 }
 
 /* Responsive */
@@ -282,7 +343,6 @@ body {
         font-size: 1.75rem;
     }
 
-    /* On mobile, ensure sidebar hidden or styled differently if needed */
     .axora-sidebar {
         display: none;
     }
@@ -292,61 +352,29 @@ body {
    TEXT COLOR UTILITIES
    =========================== */
 
-/* 1. BRAND COLORS (TEAL)
-   Use for: Links, Highlights, Active States */
-.text-primary {
-    color: var(--primary-color) !important;
-}
+/* Brand Colors */
+.text-primary { color: var(--primary-color) !important; }
+.text-primary-dark { color: var(--primary-dark) !important; }
+.text-coral { color: var(--secondary-dark) !important; }
 
-.text-primary-dark {
-    color: var(--primary-dark) !important;
-}
+/* Typography */
+.text-main { color: var(--text-primary) !important; }
+.text-muted, .text-secondary { color: var(--text-secondary) !important; }
 
-.text-primary-light {
-    color: var(--primary-light) !important;
-}
+/* Status Colors */
+.text-success { color: #00B894 !important; }
+.text-danger { color: #D63031 !important; }
+.text-warning { color: #FDCC6E !important; }
 
-/* 2. ACCENT COLOR (PINK)
-   Use for: Badges, New Features, "Look here" moments
-   (Renamed to .text-accent to avoid confusing it with grey text) */
-.text-accent {
-    color: var(--secondary-color) !important;
-}
-
-/* 3. TYPOGRAPHY (GREYS)
-   Use for: Headings (Main) and Subtitles/Labels (Secondary) */
-.text-main {
-    color: var(--text-primary) !important; /* Dark Grey #2D3436 */
-}
-
-.text-muted, .text-secondary {
-    color: var(--text-secondary) !important; /* Medium Grey #636E72 */
-}
-
-/* 4. HOVER STATES
-   Add these to links or icons that should change color on mouseover */
+/* Hover States */
 .hover-primary:hover {
     color: var(--primary-color) !important;
     transition: color 0.2s ease;
     cursor: pointer;
 }
 
-.hover-dark:hover {
-    color: var(--primary-dark) !important;
+.hover-coral:hover {
+    color: var(--secondary-dark) !important;
     transition: color 0.2s ease;
     cursor: pointer;
-}
-
-/* 5. STATUS COLORS (Standard Fintech Palette)
-   Essential for validation messages */
-.text-success {
-    color: #00B894 !important; /* Clean Green */
-}
-
-.text-danger {
-    color: #D63031 !important; /* Error Red */
-}
-
-.text-warning {
-    color: #FDCC6E !important; /* Warning Orange/Yellow */
 }

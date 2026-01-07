@@ -326,7 +326,6 @@ class Register extends Component
                 return $this->emit('alert', $e->getMessage());
             }
         } elseif ($this->stage == 'email_verify') {
-            dd('email_verify');
             $this->validate(
                 [
                     'email_code' => ['numeric', 'required', 'min_digits:6', 'max_digits:6'],
@@ -359,7 +358,7 @@ class Register extends Component
             );
             try {
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-                if ($g->checkcode($this->fa_secret, $this->fa_code, 3)) {
+                if (!$g->checkcode($this->fa_secret, $this->fa_code, 3)) {
                     $this->user->business->update([
                         'fa_status' => 1,
                         'fa_secret' => $this->fa_secret,

@@ -50,6 +50,7 @@
                         <p class="fw-bold fs-6 mb-0 text-white">{{__('Verification')}}</p>
                         <p class="fs-8 text-white-50 mb-0">{{__('Secure contact info')}}</p>
                     </div>
+                    @if($stage == 'email_verify') <i class="bi bi-chevron-right text-white ms-auto opacity-50"></i> @endif
                 </div>
 
                 {{-- Step 4 --}}
@@ -63,6 +64,7 @@
                         <p class="fw-bold fs-6 mb-0 text-white">{{__('Security')}}</p>
                         <p class="fs-8 text-white-50 mb-0">{{__('2FA Protection')}}</p>
                     </div>
+                    @if($stage == 'multi_factor') <i class="bi bi-chevron-right text-white ms-auto opacity-50"></i> @endif
                 </div>
             </div>
 

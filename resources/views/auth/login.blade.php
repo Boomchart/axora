@@ -13,7 +13,7 @@
     </div>
 
     <div class="social-login">
-      <button class="btn btn-social btn-google">
+      <button class="btn btn-social btn-google w-100">
         <i class="bi bi-google"></i>{{__('Continue with Google')}}
       </button>
     </div>

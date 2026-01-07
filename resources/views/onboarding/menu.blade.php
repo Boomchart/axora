@@ -48,6 +48,25 @@
 <script src="{{ asset('dashboard/js/alpine.js') }}"></script>
 @yield('script')
 
+
+@if (session('success'))
+    <script>
+        "use strict";
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.options.closeButton = true;
+        toastr.success("{!! session('success') !!}");
+    </script>
+@endif
+
+@if (session('alert'))
+    <script>
+        "use strict";
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.options.closeButton = true;
+        toastr.warning("{!! session('alert') !!}");
+    </script>
+@endif
+
 @if ($set->recaptcha == 1)
     {!! RecaptchaV3::initJs() !!}
 @endif

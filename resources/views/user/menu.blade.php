@@ -12,6 +12,7 @@
     <link href="{{asset('dashboard/plugins/custom/leaflet/leaflet.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('dashboard/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('dashboard/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('dashboard/css/override.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
     <link rel="stylesheet" href="{{ asset('vendor/megaphone/css/megaphone.css') }}">
     <link rel="stylesheet" href="{{asset('asset/filepond/css/filepond.css')}}" />

@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="{{$set->site_name}}" />
     <meta name="application-name" content="{{$set->site_name}}" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="description" content="{{$set->site_desc}}" />
+    <meta name="description" content="@yield('meta_description', $set->site_desc)" /
     <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" />
     <!-- Google Fonts - Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,7 @@
     <link href="{{asset('asset/fonts/fontawesome/css/all.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
     @yield('css')
+    @stack('css')
 </head>
 <body>
 

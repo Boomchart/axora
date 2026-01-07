@@ -1,0 +1,28 @@
+/* 1. Default State: Icon is White */
+.text-whitelabel-menu {
+    color: #E07A7A !important;
+    transition: color 0.3s ease;
+}
+
+/* 2. Hover State: Icon becomes Pink when the link is hovered */
+.menu-link:hover .text-whitelabel-menu {
+    color: #E07A7A !important;
+}
+
+/* 3. Active State: Icon becomes Pink when the menu item has the 'active' class */
+.menu-link.active .text-whitelabel-menu {
+    color: #ffffff !important;
+}
+.bg-success {
+    background-color: #0D7373 !important;
+}
+.bg-success.hoverable:hover {
+    background-color: #108B8B !important
+}
+.btn.btn-bg-success {
+    border-color: #0D7373;
+    background-color: #0D7373;
+}
+.bg-warning {
+    background-color: #E07A7A !important;
+}
