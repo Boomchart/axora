@@ -1,28 +1,703 @@
-/* 1. Default State: Icon is White */
+/*!* 1. Default State: Icon is White *!*/
+/*.text-whitelabel-menu {*/
+/*    color: #E07A7A !important;*/
+/*    transition: color 0.3s ease;*/
+/*}*/
+
+/*!* 2. Hover State: Icon becomes Pink when the link is hovered *!*/
+/*.menu-link:hover .text-whitelabel-menu {*/
+/*    color: #E07A7A !important;*/
+/*}*/
+
+/*!* 3. Active State: Icon becomes Pink when the menu item has the 'active' class *!*/
+/*.menu-link.active .text-whitelabel-menu {*/
+/*    color: #ffffff !important;*/
+/*}*/
+/*.bg-success {*/
+/*    background-color: #0D7373 !important;*/
+/*}*/
+/*.bg-success.hoverable:hover {*/
+/*    background-color: #108B8B !important*/
+/*}*/
+/*.btn.btn-bg-success {*/
+/*    border-color: #0D7373;*/
+/*    background-color: #0D7373;*/
+/*}*/
+/*.bg-warning {*/
+/*    background-color: #E07A7A !important;*/
+/*}*/
+
+
+/* ========================================
+   LEETCHI-INSPIRED REBRAND
+   Primary: Coral/Pink (#FF6B6B, #FF8787)
+   Secondary: Teal (#3d9e9e, #2d8c8c)
+   Accent: Deep Coral (#FF4757)
+   ======================================== */
+
+/* ==========================================
+   PRIMARY COLORS - Coral/Pink Theme
+   ========================================== */
+
+/* ========================================
+   LEETCHI-INSPIRED REBRAND
+   Primary: Teal (#3d9e9e, #2d8c8c) - Main actions, buttons, CTAs
+   Secondary: Coral/Pink (#FF6B6B, #FF8787) - Accents, highlights
+   Success: Teal (#3d9e9e)
+   Warning/Error: Coral (#FF6B6B, #FF4757)
+   ======================================== */
+
+/* ==========================================
+   PRIMARY COLORS - Teal Theme (Main Actions)
+   ========================================== */
+
+/* ========================================
+   LEETCHI-INSPIRED REBRAND
+   Primary: Teal (#3d9e9e, #2d8c8c) - Main actions, buttons, CTAs
+   Secondary: Coral (#F7C0B9, #F8E7E4) - Accents, highlights
+   Success: Teal (#3d9e9e)
+   Warning/Error: Coral (#F7C0B9)
+   Neutral: Light Gray (#F2F2F2)
+   ======================================== */
+
+/* ==========================================
+   PRIMARY COLORS - Teal Theme (Main Actions)
+   ========================================== */
+
+/* Primary Background Color */
+.bg-primary,
+.btn-primary,
+.badge-primary {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+}
+
+.bg-primary:hover,
+.btn-primary:hover {
+    background-color: #2d8c8c !important;
+    border-color: #2d8c8c !important;
+}
+
+/* Text Primary Color */
+.text-primary {
+    color: #3d9e9e !important;
+}
+
+.text-primary:hover {
+    color: #2d8c8c !important;
+}
+
+/* ==========================================
+   SECONDARY COLORS - Coral Theme (Accents)
+   ========================================== */
+
+/* Secondary Background Color */
+.bg-secondary {
+    background-color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+}
+
+.bg-secondary:hover {
+    background-color: #f5b0a6 !important;
+    border-color: #f5b0a6 !important;
+}
+
+/* Text Secondary Color */
+.text-secondary {
+    color: #F7C0B9 !important;
+}
+
+.text-secondary:hover {
+    color: #f5b0a6 !important;
+}
+
+/* ==========================================
+   SUCCESS COLORS - Teal (Replacing old colors)
+   ========================================== */
+
+.bg-success {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+}
+
+.bg-success.hoverable:hover,
+.bg-success:hover {
+    background-color: #2d8c8c !important;
+    border-color: #2d8c8c !important;
+}
+
+.btn.btn-success,
+.btn.btn-bg-success {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+    color: #ffffff !important;
+}
+
+.btn.btn-success:hover,
+.btn.btn-bg-success:hover {
+    background-color: #2d8c8c !important;
+    border-color: #2d8c8c !important;
+}
+
+.text-success {
+    color: #3d9e9e !important;
+}
+
+/* ==========================================
+   WARNING/ACCENT COLORS - Coral
+   ========================================== */
+
+.bg-warning {
+    background-color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+}
+
+.bg-warning:hover {
+    background-color: #f5b0a6 !important;
+    border-color: #f5b0a6 !important;
+}
+
+.btn.btn-warning {
+    background-color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+    color: #333333 !important;
+}
+
+.btn.btn-warning:hover {
+    background-color: #f5b0a6 !important;
+    border-color: #f5b0a6 !important;
+}
+
+.text-warning {
+    color: #F7C0B9 !important;
+}
+
+/* ==========================================
+   MENU STYLING - Leetchi Inspired
+   ========================================== */
+
+/* Menu Icons - Default State */
 .text-whitelabel-menu {
-    color: #E07A7A !important;
+    color: #6B7280 !important;
     transition: color 0.3s ease;
 }
 
-/* 2. Hover State: Icon becomes Pink when the link is hovered */
+/* Menu Icons - Hover State */
 .menu-link:hover .text-whitelabel-menu {
-    color: #E07A7A !important;
+    color: #3d9e9e !important;
 }
 
-/* 3. Active State: Icon becomes Pink when the menu item has the 'active' class */
+/* Menu Icons - Active State */
 .menu-link.active .text-whitelabel-menu {
     color: #ffffff !important;
 }
-.bg-success {
-    background-color: #0D7373 !important;
+
+/* Active Menu Link Background */
+.menu-link.active {
+    background-color: #3d9e9e !important;
+    border-radius: 0.5rem;
 }
-.bg-success.hoverable:hover {
-    background-color: #108B8B !important
+
+.menu-link.active:hover {
+    background-color: #2d8c8c !important;
 }
-.btn.btn-bg-success {
-    border-color: #0D7373;
-    background-color: #0D7373;
+
+/* Active Menu Item Text */
+.menu-link.active .menu-title {
+    color: #ffffff !important;
+    font-weight: 600;
 }
-.bg-warning {
-    background-color: #E07A7A !important;
+
+.menu-link.active .menu-icon i {
+    color: #ffffff !important;
+}
+
+/* ==========================================
+   BUTTON STYLES
+   ========================================== */
+
+/* Primary Button (Teal) */
+.btn-primary {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #2d8c8c !important;
+    border-color: #2d8c8c !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(61, 158, 158, 0.3);
+}
+
+/* Secondary Button (Coral) */
+.btn-secondary {
+    background-color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+    color: #333333 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background-color: #f5b0a6 !important;
+    border-color: #f5b0a6 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(247, 192, 185, 0.4);
+}
+
+/* Outline Buttons */
+.btn-outline-primary {
+    color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-secondary {
+    color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #F7C0B9 !important;
+    border-color: #F7C0B9 !important;
+    color: #333333 !important;
+}
+
+/* ==========================================
+   LINKS
+   ========================================== */
+
+a {
+    color: #3d9e9e;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #2d8c8c;
+    text-decoration: none;
+}
+
+.text-hover-primary:hover {
+    color: #3d9e9e !important;
+}
+
+/* ==========================================
+   BADGES & LABELS
+   ========================================== */
+
+.badge-primary {
+    background-color: #3d9e9e !important;
+    color: #ffffff !important;
+}
+
+.badge-secondary {
+    background-color: #F7C0B9 !important;
+    color: #333333 !important;
+}
+
+.badge-success {
+    background-color: #3d9e9e !important;
+    color: #ffffff !important;
+}
+
+.badge-light-primary {
+    background-color: rgba(61, 158, 158, 0.1) !important;
+    color: #3d9e9e !important;
+}
+
+.badge-light-secondary {
+    background-color: #F8E7E4 !important;
+    color: #d19085 !important;
+}
+
+/* ==========================================
+   ALERTS
+   ========================================== */
+
+.alert-primary {
+    background-color: rgba(61, 158, 158, 0.1) !important;
+    border-color: #3d9e9e !important;
+    color: #2d8c8c !important;
+}
+
+.alert-secondary {
+    background-color: #F8E7E4 !important;
+    border-color: #F7C0B9 !important;
+    color: #c27d6f !important;
+}
+
+.alert-success {
+    background-color: rgba(61, 158, 158, 0.1) !important;
+    border-color: #3d9e9e !important;
+    color: #2d8c8c !important;
+}
+
+/* ==========================================
+   CARDS & CONTAINERS
+   ========================================== */
+
+.card-header {
+    border-bottom: 2px solid rgba(61, 158, 158, 0.1);
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(61, 158, 158, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+/* ==========================================
+   BORDERS
+   ========================================== */
+
+.border-primary {
+    border-color: #3d9e9e !important;
+}
+
+.border-secondary {
+    border-color: #F7C0B9 !important;
+}
+
+.border-success {
+    border-color: #3d9e9e !important;
+}
+
+/* ==========================================
+   FORM CONTROLS
+   ========================================== */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #3d9e9e !important;
+    box-shadow: 0 0 0 0.25rem rgba(61, 158, 158, 0.25) !important;
+}
+
+.form-check-input:checked {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+}
+
+/* ==========================================
+   PROGRESS BARS
+   ========================================== */
+
+.progress-bar {
+    background-color: #3d9e9e !important;
+}
+
+.progress-bar-striped {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+/* ==========================================
+   TABS & NAVIGATION
+   ========================================== */
+
+.nav-tabs .nav-link.active {
+    color: #3d9e9e !important;
+    border-bottom-color: #3d9e9e !important;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #3d9e9e !important;
+}
+
+/* ==========================================
+   PAGINATION
+   ========================================== */
+
+.pagination .page-item.active .page-link {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+}
+
+.pagination .page-link {
+    color: #3d9e9e !important;
+}
+
+.pagination .page-link:hover {
+    color: #2d8c8c !important;
+    background-color: rgba(61, 158, 158, 0.1) !important;
+}
+
+/* ==========================================
+   SIDEBAR CUSTOMIZATION
+   ========================================== */
+
+.aside-logo {
+    border-bottom: 1px solid rgba(61, 158, 158, 0.1);
+}
+
+.aside {
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   GRADIENTS (Leetchi-style)
+   ========================================== */
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #3d9e9e 0%, #5db3b3 100%) !important;
+}
+
+.bg-gradient-secondary {
+    background: linear-gradient(135deg, #F7C0B9 0%, #F8E7E4 100%) !important;
+}
+
+.bg-gradient-teal-coral {
+    background: linear-gradient(135deg, #3d9e9e 0%, #F7C0B9 100%) !important;
+}
+
+/* ==========================================
+   TABLES
+   ========================================== */
+
+.table thead th {
+    background-color: rgba(61, 158, 158, 0.05);
+    color: #3d9e9e;
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(61, 158, 158, 0.03);
+}
+
+/* ==========================================
+   DROPDOWNS
+   ========================================== */
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(61, 158, 158, 0.1);
+    color: #3d9e9e;
+}
+
+.dropdown-item.active {
+    background-color: #3d9e9e !important;
+    color: #ffffff !important;
+}
+
+/* ==========================================
+   LOADING SPINNER
+   ========================================== */
+
+.spinner-border-primary {
+    border-color: #3d9e9e;
+    border-right-color: transparent;
+}
+
+.page-spinner {
+    border-top-color: #3d9e9e;
+    border-right-color: #F7C0B9;
+    border-bottom-color: #3d9e9e;
+    border-left-color: #F7C0B9;
+}
+
+/* ==========================================
+   SHADOWS & EFFECTS
+   ========================================== */
+
+.shadow-primary {
+    box-shadow: 0 4px 20px rgba(61, 158, 158, 0.2) !important;
+}
+
+.shadow-secondary {
+    box-shadow: 0 4px 20px rgba(247, 192, 185, 0.3) !important;
+}
+
+/* ==========================================
+   CUSTOM UTILITY CLASSES
+   ========================================== */
+
+/* Coral Text Colors */
+.text-coral {
+    color: #F7C0B9 !important;
+}
+
+.text-coral-dark {
+    color: #f5b0a6 !important;
+}
+
+.text-coral-light {
+    color: #F8E7E4 !important;
+}
+
+/* Teal Text Colors */
+.text-teal {
+    color: #3d9e9e !important;
+}
+
+.text-teal-dark {
+    color: #2d8c8c !important;
+}
+
+.text-teal-light {
+    color: #5db3b3 !important;
+}
+
+/* Coral Background Colors */
+.bg-coral {
+    background-color: #F7C0B9 !important;
+}
+
+.bg-coral-dark {
+    background-color: #f5b0a6 !important;
+}
+
+.bg-coral-light {
+    background-color: #F8E7E4 !important;
+}
+
+/* Teal Background Colors */
+.bg-teal {
+    background-color: #3d9e9e !important;
+}
+
+.bg-teal-dark {
+    background-color: #2d8c8c !important;
+}
+
+.bg-teal-light {
+    background-color: #d5eded !important;
+}
+
+/* Neutral Background Colors */
+.bg-neutral {
+    background-color: #F2F2F2 !important;
+}
+
+.bg-neutral-light {
+    background-color: #FAFAFA !important;
+}
+
+.bg-neutral-dark {
+    background-color: #E5E5E5 !important;
+}
+
+/* ==========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================== */
+
+@media (max-width: 991.98px) {
+    .menu-link.active {
+        border-radius: 0.5rem;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+/* Focus States */
+*:focus {
+    outline: 2px solid #3d9e9e;
+    outline-offset: 2px;
+}
+
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #3d9e9e;
+    outline-offset: 2px;
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes pulse-coral {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.pulse-coral {
+    animation: pulse-coral 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ==========================================
+   HOVER EFFECTS
+   ========================================== */
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(61, 158, 158, 0.2);
+}
+
+/* ==========================================
+   ICON COLORS
+   ========================================== */
+
+.icon-primary,
+.icon-teal {
+    color: #3d9e9e !important;
+}
+
+.icon-secondary,
+.icon-coral {
+    color: #F7C0B9 !important;
+}
+
+/* ==========================================
+   STATUS COLORS
+   ========================================== */
+
+.status-active {
+    color: #3d9e9e !important;
+}
+
+.status-pending {
+    color: #F7C0B9 !important;
+}
+
+.status-success {
+    color: #3d9e9e !important;
+}
+
+.status-error {
+    color: #f5b0a6 !important;
+}
+.btn-whitelabel {
+    background-color: #3d9e9e !important;
+    border-color: #3d9e9e !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-whitelabel:hover,
+.btn-whitelabel:focus,
+.btn-whitelabel:active {
+    background-color: #2d8c8c !important;
+    border-color: #2d8c8c !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(61, 158, 158, 0.3);
 }

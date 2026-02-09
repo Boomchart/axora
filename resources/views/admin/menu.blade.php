@@ -13,12 +13,22 @@
     <link href="{{asset('dashboard/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('dashboard/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('dashboard/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('dashboard/css/override.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
     <link rel="stylesheet" href="{{ asset('vendor/megaphone/css/megaphone.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/filepond/css/filepond.css') }}">
     @livewireStyles
     @yield('css')
     @include('partials.font')
+    <style>
+        /* Active menu item styling */
+        .menu-link.active .menu-title {
+            color: #ffffff !important;
+        }
+        .menu-link.active .menu-icon i {
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
