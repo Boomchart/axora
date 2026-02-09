@@ -24,6 +24,7 @@ class FrontendController extends Controller
 
     public function contactSubmit(Request $request)
     {
+        dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -132,6 +133,7 @@ class FrontendController extends Controller
 
     public function page(Page $page)
     {
+        dd('fff');
         return view('front.pages', ['title' => $page->title, 'page' => $page]);
     }
 

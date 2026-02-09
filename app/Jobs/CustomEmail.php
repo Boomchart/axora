@@ -98,7 +98,7 @@ class CustomEmail implements ShouldQueue
             } else if (in_array($check->type, ['verify_email', 'welcome_message'])) {
                 $user = User::whereId($id)->withTrashed()->first();
                 $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{token}}");
-                $replace = array($user->first_name, $user->last_name, $set->site_name, route('user.confirm-email', ['verify' => $user->email_auth]));
+                $replace = array($user->first_name, $user->last_name, $set->site_name, $user->email_auth);
             }
         }
         $mail = [

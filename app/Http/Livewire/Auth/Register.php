@@ -261,6 +261,7 @@ class Register extends Component
                 ]);
                 $user->update(['contact_id' => $contact->id]);
 
+
                 $business = Business::create([
                     'user_id' => $user->id,
                     'name' => $this->business_name,
@@ -357,7 +358,7 @@ class Register extends Component
             );
             try {
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-                if ($g->checkcode($this->fa_secret, $this->fa_code, 3)) {
+                if (!$g->checkcode($this->fa_secret, $this->fa_code, 3)) {
                     $this->user->business->update([
                         'fa_status' => 1,
                         'fa_secret' => $this->fa_secret,

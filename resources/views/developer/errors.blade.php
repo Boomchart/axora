@@ -1,74 +1,142 @@
 @extends('developer.menu')
 
 @section('content')
-<div class="toolbar" id="kt_toolbar">
-    <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
-        <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-            <h1 class="text-dark fw-bold my-1 fs-3 mb-6">{{__('Errors')}}</h1>
+    <h1>Errors</h1>
+    <p class="lead-text">
+        {{$set->site_name}} uses conventional HTTP response codes to indicate the success or failure of an API request. Codes in the 2xx range indicate success, codes in the 4xx range indicate an error with the provided information, and codes in the 5xx range indicate a server error.
+    </p>
+
+    <h2 id="http-status-codes">HTTP Status Codes</h2>
+
+    <table class="params-table">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Status</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><code>200</code></td>
+            <td>OK</td>
+            <td>The request was successful</td>
+        </tr>
+        <tr>
+            <td><code>201</code></td>
+            <td>Created</td>
+            <td>The resource was successfully created</td>
+        </tr>
+        <tr>
+            <td><code>400</code></td>
+            <td>Bad Request</td>
+            <td>The request was malformed or invalid</td>
+        </tr>
+        <tr>
+            <td><code>401</code></td>
+            <td>Unauthorized</td>
+            <td>Authentication failed or API key is invalid</td>
+        </tr>
+        <tr>
+            <td><code>403</code></td>
+            <td>Forbidden</td>
+            <td>You don't have permission to access this resource</td>
+        </tr>
+        <tr>
+            <td><code>404</code></td>
+            <td>Not Found</td>
+            <td>The requested resource doesn't exist</td>
+        </tr>
+        <tr>
+            <td><code>422</code></td>
+            <td>Unprocessable Entity</td>
+            <td>Validation errors occurred</td>
+        </tr>
+        <tr>
+            <td><code>429</code></td>
+            <td>Too Many Requests</td>
+            <td>Rate limit exceeded</td>
+        </tr>
+        <tr>
+            <td><code>500</code></td>
+            <td>Internal Server Error</td>
+            <td>Something went wrong on our end</td>
+        </tr>
+        <tr>
+            <td><code>503</code></td>
+            <td>Service Unavailable</td>
+            <td>The service is temporarily unavailable</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 id="error-response-format">Error Response Format</h2>
+    <p>
+        All errors return a JSON object with an <code>error</code> object containing details about what went wrong:
+    </p>
+
+    <div class="code-block-wrapper">
+        <div class="code-block-header">
+            <span class="code-block-title">Error Response Structure</span>
+            <button class="code-copy-button">Copy</button>
         </div>
-    </div>
-    <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post">
-        <div class="container">
-            <p class="mb-10">{{$set->site_name}} {{__('uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the 2xx range indicate success. Codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted etc.). Codes in the 5xx range indicate an error with our servers (these are rare)')}}.</p>
-            <p class="mb-3 text-dark">{{__('Errors are returned when one or more validation rules fail or unauthorized access to API. Examples include insufficient fund during a call will result in a validation error. Here\'s a sample below')}}:</p>
-            <pre class="rounded">
-<code class="language-json" data-lang="json">
-{
-    "status": "{{__('failed')}}",
-    "message": "{{__('Insufficient funds, please add funds to your account')}}",
+        <pre><code class="language-json">{
+    "status": "failed",
+    "message": "Insufficient funds",
     "data": "null"
-}
-</code>
-            </pre>
-            <div class="table-responsive">
-                <table class="table table-row-bordered table-flush align-middle gy-6">
-                    <thead class="border-bottom border-gray-200 fs-7 fw-bold bg-lighten">
-                        <tr>
-                            <th class="text-left">{{__('Error 🚦')}}</th>
-                            <th class="text-left">{{__('What')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="fs-7 fw-bold text-gray-700">
-                        <tr>
-                            <td class="text-left">{{__('400 - Bad Request')}}</td>
-                            <td class="text-left">{{__('The request was unacceptable, often due to missing a required parameter')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('401 - Unauthorized')}}</td>
-                            <td class="text-left">{{__('No valid API key provided')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('402 - Request Failed')}}</td>
-                            <td class="text-left">{{__('The parameters were valid but the request failed')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('403 - Forbidden')}}</td>
-                            <td class="text-left">{{__('The API key doesn\'t have permissions to perform the request')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('404 - Not Found')}}</td>
-                            <td class="text-left">{{__('The requested resource doesn\'t exist')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('409 - Conflict')}}</td>
-                            <td class="text-left">{{__('The request conflicts with another request (perhaps due to using the same idempotent key)')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('429 - Too Many Requests')}}</td>
-                            <td class="text-left">{{__('Too many requests hit the API too quickly. We recommend an exponential backoff of your requests')}}.</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('500, 502, 503, 504 - Server Errors')}}</td>
-                            <td class="text-left">{{__('Something went wrong on')}} {{$set->site_name}}'s end. {{__('These are rare.')}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-left">{{__('200 - OK')}}</td>
-                            <td class="text-left">{{__('Everything worked as expected')}} 😊</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+}</code></pre>
     </div>
-</div>
-@stop
+
+    <h2 id="handling-errors">Handling Errors</h2>
+    <p>
+        Here's an example of how to handle errors in your application:
+    </p>
+
+    <div class="code-block-wrapper">
+        <div class="code-block-header">
+            <span class="code-block-title">PHP Error Handling</span>
+            <button class="code-copy-button">Copy</button>
+        </div>
+        <pre><code class="language-php">try {
+    $response = $client->post('/gift-cards', [
+        'json' => $data
+    ]);
+
+    $result = json_decode($response->getBody(), true);
+    // Process successful response
+
+} catch (\GuzzleHttp\Exception\ClientException $e) {
+    $response = $e->getResponse();
+    $statusCode = $response->getStatusCode();
+    $error = json_decode($response->getBody(), true);
+
+    if ($statusCode === 422) {
+        // Handle validation errors
+        foreach ($error['error']['details'] as $detail) {
+            echo "Field: {$detail['field']}, Error: {$detail['message']}";
+        }
+    } elseif ($statusCode === 401) {
+        // Handle authentication error
+        echo "Authentication failed: " . $error['error']['message'];
+    } else {
+        // Handle other errors
+        echo "Error: " . $error['error']['message'];
+    }
+}</code></pre>
+    </div>
+
+    <div class="info-box success">
+        <div class="info-box-title">
+            <i class="bi bi-check-circle"></i>
+            Best Practices
+        </div>
+        <ul>
+            <li>Always check HTTP status codes before parsing responses</li>
+            <li>Implement retry logic for 5xx errors with exponential backoff</li>
+            <li>Log errors for debugging and monitoring</li>
+            <li>Display user-friendly error messages to end users</li>
+            <li>Handle rate limit errors by implementing backoff strategies</li>
+            <li>Monitor error rates in production</li>
+        </ul>
+    </div>
+@endsection

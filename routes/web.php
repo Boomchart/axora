@@ -29,20 +29,23 @@ Route::prefix('docs')->group(function () {
     Route::view('webhook', 'developer.webhook', ['title' => 'Webhooks'])->name('developer.webhook');
     Route::view('authentication', 'developer.authentication', ['title' => __('Authentication')])->name('developer.authentication');
     Route::view('environments', 'developer.environments', ['title' => __('Environments')])->name('developer.environments');
-    Route::prefix('transaction')->group(function () {
-        Route::view('transaction', 'developer.transaction.single', ['title' => __('Single Transaction')])->name('developer.transaction.single');
-        Route::view('transactions', 'developer.transaction.all', ['title' => __('All Transaction')])->name('developer.transaction.all');
+    Route::view('api-keys', 'developer.api-keys', ['title' => __('Get API Keys')])->name('developer.api-keys');
+});
+
+Route::prefix('api-reference')->group(function () {
+    Route::prefix('transactions')->group(function () {
+        Route::view('single', 'developer.reference.transaction.single', ['title' => __('Single Transaction')])->name('developer.transaction.single');
+        Route::view('all', 'developer.reference.transaction.all', ['title' => __('All Transaction')])->name('developer.transaction.all');
+    });
+    Route::prefix('gift-cards')->group(function () {
+        Route::view('single', 'developer.reference.card.single', ['title' => __('Single Card')])->name('developer.card.single');
+        Route::view('all', 'developer.reference.card.all', ['title' => __('All Card')])->name('developer.card.all');
     });
 
-    Route::prefix('card')->group(function () {
-        Route::view('card', 'developer.card.single', ['title' => __('Single Card')])->name('developer.card.single');
-        Route::view('cards', 'developer.card.all', ['title' => __('All Card')])->name('developer.card.all');
-    });
-
-    Route::view('countries', 'developer.countries', ['title' => __('Countries')])->name('developer.countries');
-    Route::view('order', 'developer.order', ['title' => __('Order Card')])->name('developer.order');
-    Route::view('balance', 'developer.balance', ['title' => __('Account Balance')])->name('developer.balance');
-    Route::view('quote', 'developer.quote', ['title' => __('Get a Quote')])->name('developer.quote');
+    Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');
+    Route::view('order', 'developer.reference.order', ['title' => __('Order Card')])->name('developer.order');
+    Route::view('balance', 'developer.reference.balance', ['title' => __('Account Balance')])->name('developer.balance');
+    Route::view('quote', 'developer.reference.quote', ['title' => __('Get a Quote')])->name('developer.quote');
 });
 
 Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {

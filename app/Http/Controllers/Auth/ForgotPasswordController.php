@@ -37,6 +37,7 @@ class ForgotPasswordController extends Controller
             return back()->withErrors($validator->errors())->withInput();
         }
 
+
         if (!User::whereEmail($request->email)->exists()) {
             return back()->with('success', __('Reset link will be sent if an account is found.'));
         } else {
