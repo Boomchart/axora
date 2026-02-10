@@ -219,7 +219,7 @@
                         <div class="d-flex flex-stack cursor-pointer bg-white rounded-4 p-3">
                             <div class="d-flex align-items-center">
                                 <div class="symbol symbol-45px symbol-circle me-4">
-                                    <div class="symbol-label bg-danger">
+                                    <div class="symbol-label bg-whitelabel">
                                         <i class="bi bi-braces text-white fs-3"></i>
                                     </div>
                                 </div>

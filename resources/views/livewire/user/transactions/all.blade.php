@@ -158,7 +158,7 @@
                         <div class="text-center mt-20">
                             <div class="symbol symbol-150px symbol-circle me-5 mb-10">
                                 <div class="symbol-label fs-1 text-dark bg-whitelabel">
-                                    <i class="bi bi-clipboard-data text-dark" style="font-size:66px;"></i>
+                                    <i class="bi bi-clipboard-data text-white" style="font-size:66px;"></i>
                                 </div>
                             </div>
                             <h3 class="text-dark fw-bold">{{__('No Transactions Found')}}</h3>

@@ -1,56 +1,54 @@
-
+/* ===========================
+   COLOR VARIABLES (NEW AXORA)
+   =========================== */
 :root {
-    --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /* Use Inter for a cleaner, more technical look than Montserrat */
+    --font-heading: 'Inter', -apple-system, system-ui, sans-serif;
+    --font-body: 'Inter', -apple-system, system-ui, sans-serif;
 
-    /* Primary Colors - Dark Teal/Forest Green */
-    --primary-color: #0D7373;
-    --primary-dark: #0A5F5F;
-    --primary-light: #108B8B;
-    --primary-lighter: #E6F5F5;
+    /* Primary Colors - Deep Axora Teal */
+    --primary-color: #0D9488;      /* Main Action */
+    --primary-dark: #0F766E;       /* Hover */
+    --primary-light: #2DD4BF;      /* Highlights */
+    --primary-lighter: #F0FDFA;    /* Background Washes */
 
-    /* Secondary Colors - Soft Peachy Pink */
-    --secondary-color: #F4C2C2;      /* Backgrounds/Borders */
-    --secondary-dark: #E07A7A;       /* UPDATED: Darker Coral for readable text/links */
-    --secondary-light: #F8D6D6;
-    --secondary-lighter: #F8E7E4;
-    --secondary-vibrant: #FF6B6B;    /* NEW: Vibrant Coral for Hover */
+    /* Secondary/Accent - Indigo & Coral */
+    --secondary-color: #6366F1;    /* Indigo - For Tech/Security feel */
+    --secondary-dark: #4F46E5;
+    --secondary-light: #EEF2FF;
+    --secondary-vibrant: #FB7185;  /* Coral - Reserved for "Gifts/Rewards" */
 
-    /* Neutral Colors */
-    --text-primary: #2D3436;
-    --text-secondary: #636E72;
-    --text-light: #B2BEC3;
-    --text-muted: #8898AA;
+    /* Neutral Colors - Modern Slate */
+    --text-primary: #0F172A;       /* Slate 900 */
+    --text-secondary: #475569;     /* Slate 600 */
+    --text-light: #94A3B8;         /* Slate 400 */
+    --text-muted: #64748B;
 
     --background-primary: #FFFFFF;
-    --background-secondary: #F8F9FA;
-    --background-accent: #FFF9F5;    /* Warm Beige */
-    --bg-warm: #FDFBF7;              /* NEW: Auth Page Background */
+    --background-secondary: #F8FAFC; /* Clean Slate Wash */
+    --background-accent: #EEF2FF;    /* Light Indigo Wash */
+    --bg-warm: #F8FAFC;
 
-    /* Border & Shadow */
-    --border-color: #DFE6E9;
-    --shadow-sm: 0 2px 8px rgba(13, 115, 115, 0.1);
-    --shadow-md: 0 4px 16px rgba(13, 115, 115, 0.15);
-    --shadow-lg: 0 8px 32px rgba(13, 115, 115, 0.2);
-    --shadow-teal: 0 10px 40px rgba(13, 115, 115, 0.05); /* NEW: Soft Auth Shadow */
+    /* Border & Shadow - Sharp & Deep */
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
+    --shadow-teal: 0 10px 40px rgba(13, 148, 136, 0.1);
 
     /* Status Colors */
-    --success-color: #108B8B;
-    --warning-color: #FDCC6E;        /* Updated for better visibility */
-    --danger-color: #D63031;
-    --info-color: var(--primary-color);
+    --success-color: #10B981;
+    --warning-color: #F59E0B;        /* Amber */
+    --danger-color: #EF4444;
+    --info-color: #0EA5E9;           /* Sky Blue */
 }
 
 /* ===========================
-   GLOBAL STYLES
+   GLOBAL STYLES OVERRIDE
    =========================== */
 body {
-    font-family: var(--font-body), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-secondary);
     color: var(--text-primary);
-    line-height: 1.6;
 }
 
 /* All headings */
@@ -381,42 +379,22 @@ strong, b {
     margin-right: auto;
 }
 
-.feature-card {
-    background-color: var(--background-primary);
-    border: 2px solid var(--border-color);
-    border-radius: 16px; /* consistent card radius */
-    padding: 2rem;
-    height: 100%;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+/* Card Overrides (Removing the Pink/Leetchi feel) */
+.feature-card, .use-case-card, .payment-card {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-sm);
 }
 
 .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    /* Gradient: Teal to Soft Pink */
+    /* Gradient: Teal to Indigo (More Tech-focused) */
     background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
 }
 
-.feature-card:hover {
-    transform: translateY(-8px);
+.feature-card:hover, .payment-card:hover {
+    border-color: var(--primary-color);
     box-shadow: var(--shadow-lg);
-    border-color: var(--secondary-color); /* Hover border turns soft pink */
-}
-
-.feature-card:nth-child(odd):hover {
-    border-color: var(--primary-light); /* Odd cards hover teal */
-}
-
-.feature-card:hover::before {
-    transform: scaleX(1);
 }
 
 .feature-icon {
@@ -1201,12 +1179,10 @@ strong, b {
     color: var(--text-primary);
 }
 
-/* Focus State: Pink Glow (Warmth) */
 .form-control:focus,
 .form-select:focus {
-    border-color: var(--secondary-dark);
-    box-shadow: 0 0 0 4px rgba(244, 194, 194, 0.4); /* Pink Glow */
-    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
 }
 
 /* Password Toggle */
@@ -1232,4 +1208,8 @@ strong, b {
 .password-toggle:hover, .password-toggle-btn:hover {
     color: var(--primary-color);
 }
+
+
+
+
 

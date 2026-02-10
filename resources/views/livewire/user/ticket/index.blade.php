@@ -187,7 +187,7 @@
                     @else
                     <div class="text-center mt-20">
                         <div class="symbol symbol-150px symbol-circle me-5 mb-10">
-                            <div class="symbol-label fs-1 text-dark bg-whitelabel">
+                            <div class="symbol-label fs-1 text-white bg-whitelabel">
                                 <i class="bi bi-chat-square-text" style="font-size:66px;"></i>
                             </div>
                         </div>

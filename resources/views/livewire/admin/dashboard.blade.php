@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 mb-5">
-                        <div class="card p-5 bg-secondary">
+                        <div class="card p-5 bg-warning">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-7 text-dark">{{__('Completed Orders')}}</p>
                                 <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
