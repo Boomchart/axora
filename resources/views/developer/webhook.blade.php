@@ -35,32 +35,12 @@
         </thead>
         <tbody>
         <tr>
-            <td><code>gift_card.created</code></td>
-            <td>A gift card order was created</td>
+            <td><code>issued</code></td>
+            <td>Gift card issued</td>
         </tr>
         <tr>
-            <td><code>gift_card.delivered</code></td>
-            <td>A gift card was successfully delivered</td>
-        </tr>
-        <tr>
-            <td><code>gift_card.failed</code></td>
-            <td>A gift card delivery failed</td>
-        </tr>
-        <tr>
-            <td><code>gift_card.refunded</code></td>
-            <td>A gift card order was refunded</td>
-        </tr>
-        <tr>
-            <td><code>transaction.completed</code></td>
-            <td>A transaction was completed successfully</td>
-        </tr>
-        <tr>
-            <td><code>transaction.failed</code></td>
-            <td>A transaction failed</td>
-        </tr>
-        <tr>
-            <td><code>balance.updated</code></td>
-            <td>Your account balance was updated</td>
+            <td><code>redemption</code></td>
+            <td>Gift card was redeemed</td>
         </tr>
         </tbody>
     </table>
@@ -90,45 +70,6 @@
   }
 }</code></pre>
     </div>
-
-    <h2 id="payload-attributes">Payload Attributes</h2>
-
-    <table class="params-table">
-        <thead>
-        <tr>
-            <th>Attribute</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><span class="param-name">id</span></td>
-            <td><span class="param-type">string</span></td>
-            <td>Unique identifier for the event</td>
-        </tr>
-        <tr>
-            <td><span class="param-name">type</span></td>
-            <td><span class="param-type">string</span></td>
-            <td>The event type (e.g., gift_card.delivered)</td>
-        </tr>
-        <tr>
-            <td><span class="param-name">created_at</span></td>
-            <td><span class="param-type">timestamp</span></td>
-            <td>When the event occurred (ISO 8601)</td>
-        </tr>
-        <tr>
-            <td><span class="param-name">data</span></td>
-            <td><span class="param-type">object</span></td>
-            <td>Contains the event data</td>
-        </tr>
-        <tr>
-            <td><span class="param-name">data.object</span></td>
-            <td><span class="param-type">object</span></td>
-            <td>The resource affected by the event</td>
-        </tr>
-        </tbody>
-    </table>
 
     <h2 id="webhook-signatures">Webhook Signatures</h2>
     <p>
@@ -185,16 +126,12 @@ try {
 
     // Handle event based on type
     switch ($event['type']) {
-        case 'gift_card.delivered':
-            handleGiftCardDelivered($event['data']['object']);
+        case 'issued':
+            handleGiftCardIssued($event['data']['object']);
             break;
 
-        case 'gift_card.failed':
-            handleGiftCardFailed($event['data']['object']);
-            break;
-
-        case 'transaction.completed':
-            handleTransactionCompleted($event['data']['object']);
+        case 'redemption':
+            handleGiftCardRedeemed($event['data']['object']);
             break;
 
         default:
@@ -213,22 +150,14 @@ try {
     echo json_encode(['error' => $e->getMessage()]);
 }
 
-function handleGiftCardDelivered($giftCard) {
-    // Update database
-    // Send confirmation email
-    // Log the event
+function handleGiftCardIssued($giftCard) {
+    //take action
 }
 
-function handleGiftCardFailed($giftCard) {
-    // Update database
-    // Notify administrators
-    // Attempt retry logic
+function handleGiftCardRedeemed($giftCard) {
+    //take action
 }
-
-function handleTransactionCompleted($transaction) {
-    // Update accounting records
-    // Generate invoice
-}</code></pre>
+</code></pre>
     </div>
 
     <h2 id="retries">Webhook Retries</h2>

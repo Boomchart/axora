@@ -68,6 +68,10 @@ class UserController extends Controller
         } elseif ($payload['event'] == 'redemption') {
             $issue = \App\Models\CardIssued::whereOrderId($payload['data']['id'])->first();
             if ($issue) {
+                $issue->update([
+                    'card_code' => $payload['data']['card_code'],
+                    'card_url' => $payload['data']['card_url'],
+                ]);
                 if ($issue->business_id) {
                     if ($issue->business->webhook_url) {
                         dispatch(new \App\Jobs\Webhook\Redemption($payload['data'], $issue));
