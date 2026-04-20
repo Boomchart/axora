@@ -96,7 +96,7 @@
 <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.9/dist/cookieconsent.js"></script>
 <script src="{{asset('front/js/cookie.js')}}"></script>
 <script src="{{asset('front/js/toast.js')}}"></script>
-<script src="{{asset('asset/fonts/fontawesome/js/all.js')}}"></script>
+{{--<script src="{{asset('asset/fonts/fontawesome/js/all.js')}}"></script>--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.min.js"></script>
 @livewireScripts
 
