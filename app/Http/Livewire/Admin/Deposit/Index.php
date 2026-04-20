@@ -91,8 +91,6 @@ class Index extends Component
                 } else {
                     return $query->where('created_at', '>=', $from);
                 }
-            }, function ($query) {
-                return $query->where('created_at', '>', Carbon::now()->subMonths(6)->endOfDay());
             })
             ->when(($this->type != null), function ($query) {
                 if ($this->type == 'bank_transfer') {

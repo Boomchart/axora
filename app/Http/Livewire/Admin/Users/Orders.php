@@ -95,8 +95,6 @@ class Orders extends Component
                 } else {
                     return $query->where('created_at', '>=', $from);
                 }
-            }, function ($query) {
-                return $query->where('created_at', '>', Carbon::now()->subMonths(6)->endOfDay());
             })
             ->when(($this->mode != null), function ($query) {
                 return $query->whereMode($this->mode);

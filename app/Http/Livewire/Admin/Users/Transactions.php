@@ -97,8 +97,6 @@ class Transactions extends Component
                 } else {
                     return $query->where('created_at', '>=', $from);
                 }
-            }, function ($query) {
-                return $query->where('created_at', '>', Carbon::now()->subMonths(6)->endOfDay());
             })
             ->when(($this->base != null), function ($query) {
                 return $query->whereType($this->base);

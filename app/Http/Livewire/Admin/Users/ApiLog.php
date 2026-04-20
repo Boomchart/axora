@@ -68,8 +68,6 @@ class ApiLog extends Component
             } else {
                 $query->where('api_logs.created_at', '>=', $from);
             }
-        } else {
-            $query->where('api_logs.created_at', '>', Carbon::now()->subMonths(6)->endOfDay());
         }
 
         // Mode filter
