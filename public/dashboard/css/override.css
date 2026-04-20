@@ -998,7 +998,7 @@ hr.bg-axora-secondary {
     margin: 0 !important;
     border-radius: 16px !important;
     background: transparent !important;
-    color: var(--text-secondary) !important;
+    color: #131617 !important;
     box-shadow: none !important;
     transform: none !important;
     transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
