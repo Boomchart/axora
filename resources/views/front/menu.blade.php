@@ -10,7 +10,7 @@
     <meta name="application-name" content="{{$set->site_name}}" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="description" content="@yield('meta_description', $set->site_desc)" />
-    <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" />
+    <link rel="shortcut icon" href="{{asset('asset/images/favicon.png')}}" />
     <!-- Google Fonts - Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

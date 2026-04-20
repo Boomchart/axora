@@ -126,19 +126,9 @@ $apiKey = 'sk_live_your_production_key';</code></pre>
             <td>Secret key for testing</td>
         </tr>
         <tr>
-            <td><code>pk_test_</code></td>
-            <td>Sandbox</td>
-            <td>Publishable key for testing</td>
-        </tr>
-        <tr>
             <td><code>sk_live_</code></td>
             <td>Production</td>
             <td>Secret key for production</td>
-        </tr>
-        <tr>
-            <td><code>pk_live_</code></td>
-            <td>Production</td>
-            <td>Publishable key for production</td>
         </tr>
         </tbody>
     </table>

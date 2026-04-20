@@ -47,7 +47,7 @@
             <span class="code-block-title">cURL</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">curl {{config('app.url').'/api/v1'}}/gift-cards \
+        <pre><code class="language-bash">curl {{config('app.url').'/api/v1'}}/balance \
   -H "Authorization: Bearer sk_live_your_api_key" \
   -H "Content-Type: application/json"</code></pre>
     </div>
@@ -61,7 +61,7 @@
         <pre><code class="language-php">$apiKey = 'sk_live_your_api_key';
 $baseUrl = '{{config('app.url').'/api/v1'}}';
 
-$ch = curl_init($baseUrl . '/gift-cards');
+$ch = curl_init($baseUrl . '/balance');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ' . $apiKey,
@@ -83,7 +83,7 @@ $data = json_decode($response, true);</code></pre>
         <pre><code class="language-javascript">const apiKey = 'sk_live_your_api_key';
 const baseUrl = '{{config('app.url').'/api/v1'}}';
 
-fetch(`${baseUrl}/gift-cards`, {
+fetch(`${baseUrl}/balance`, {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${apiKey}`,
@@ -111,7 +111,7 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-response = requests.get(f'{base_url}/gift-cards', headers=headers)
+response = requests.get(f'{base_url}/balance', headers=headers)
 data = response.json()
 print(data)</code></pre>
     </div>
@@ -155,16 +155,6 @@ print(data)</code></pre>
             <td>Secret Key (Live)</td>
             <td><code>sk_live_</code></td>
             <td>Server-side production requests</td>
-        </tr>
-        <tr>
-            <td>Publishable Key (Test)</td>
-            <td><code>pk_test_</code></td>
-            <td>Client-side testing (limited permissions)</td>
-        </tr>
-        <tr>
-            <td>Publishable Key (Live)</td>
-            <td><code>pk_live_</code></td>
-            <td>Client-side production (limited permissions)</td>
         </tr>
         </tbody>
     </table>

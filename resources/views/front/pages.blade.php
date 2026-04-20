@@ -10,10 +10,9 @@
     <meta name="application-name" content="{{$set->site_name}}" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="description" content="{{$set->site_desc}}" />
-    <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" />
+    <link rel="shortcut icon" href="{{asset('asset/images/favicon.png')}}" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="{{asset('front/css/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">

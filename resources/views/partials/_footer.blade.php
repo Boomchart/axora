@@ -3,6 +3,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-12 mb-4">
+                <a href="{{route('home')}}" class="footer-brand d-inline-block mb-3">
+                    <img src="{{ asset('asset/images/dark_logo.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="footer-logo">
+                </a>
                 <h3 class="footer-title">{{config('app.name')}} {{__('Gift Card API')}}</h3>
                 <p>{{__('The ultimate gift card API for delivering rewards and incentives instantly, globally, and securely.')}}</p>
             </div>

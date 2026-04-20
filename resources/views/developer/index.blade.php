@@ -56,7 +56,7 @@
       <span class="code-block-title">Example Request</span>
       <button class="code-copy-button">Copy</button>
     </div>
-    <pre><code class="language-bash">curl {{config('app.url').'/api/v1/gift-cards'}} \
+    <pre><code class="language-bash">curl {{config('app.url').'/api/v1/balance'}} \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json"</code></pre>
   </div>

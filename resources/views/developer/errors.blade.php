@@ -98,7 +98,7 @@
             <button class="code-copy-button">Copy</button>
         </div>
         <pre><code class="language-php">try {
-    $response = $client->post('/gift-cards', [
+    $response = $client->get('/balance', [
         'json' => $data
     ]);
 
