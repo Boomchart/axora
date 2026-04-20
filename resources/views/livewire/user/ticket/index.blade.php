@@ -11,8 +11,8 @@
                 </ul>
             </div>
             <div class="d-flex align-items-center flex-nowrap text-nowrap py-1">
-                <button data-bs-toggle="modal" data-bs-target="#filter" class="btn btn-white text-dark me-4"><i class="bi bi-filter"></i> {{__('Filter')}}</button>
-                <button id="kt_ticket_button" class="btn btn-dark me-4"><i class="bi bi-plus-lg"></i> {{__('Open Ticket')}}</button>
+                <button data-bs-toggle="modal" data-bs-target="#filter" class="btn btn-outline-primary me-4"><i class="bi bi-filter"></i> {{__('Filter')}}</button>
+                <button id="kt_ticket_button" class="btn btn-secondary me-4"><i class="bi bi-plus-lg"></i> {{__('Open Ticket')}}</button>
                 <div wire:ignore.self id="kt_ticket" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_ticket_button" data-kt-drawer-close="#kt_ticket_close" data-kt-drawer-width="{'md': '500px'}">
                     <div class="card w-100">
                         <div class="card-header pe-5 border-0">
@@ -141,9 +141,14 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="d-flex justify-content-center flex-column me-3">
                         <div class="col-md-12">
-                            <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
-                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                                <input type="search" class="form-control form-control-solid bg-white rounded-4" wire:model="search" placeholder="{{__('Search')}}" />
+                            <div class="position-relative">
+                                    <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-gray-500">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+
+                                <input type="search" class="form-control form-control-solid bg-white rounded-4"
+                                       wire:model="search"
+                                       placeholder="{{__('Search')}}" style="padding-left: 45px !important;"/>
                             </div>
                         </div>
                     </div>

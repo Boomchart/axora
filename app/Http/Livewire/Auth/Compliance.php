@@ -64,6 +64,8 @@ class Compliance extends Component
 
 	public $uploadedFiles;
 
+    public $page_ready = false;
+
 	protected $listeners = [
 		'saved' => '$refresh',
 		'showWarning' => 'showWarning',
@@ -132,6 +134,7 @@ class Compliance extends Component
 				break;
 			}
 		}
+        $this->page_ready = true;
 	}
 
 	public function getFieldData()
@@ -212,6 +215,7 @@ class Compliance extends Component
 			$this->updatedBusinessCountry();
 			$this->business_state = $business->business_state;
 		}
+
 	}
 
 	public function processApplicant()
@@ -339,7 +343,7 @@ class Compliance extends Component
 	{
 		try {
 			$rules = [
-				'email' => 'required|email:rfc,dns|max:255',
+				'email' => 'required|email:rfc|max:255',
 				'position' => 'required|string|max:255',
 				'ownership' => 'required|numeric',
 				'first_name' => 'required|string|max:255',

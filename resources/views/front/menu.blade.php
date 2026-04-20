@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
     @yield('css')
     @stack('css')
+    @livewireStyles
 </head>
 <body>
 
@@ -38,7 +39,7 @@
         <h2 class="cta-title">{{__('Get Started with')}} {{config('app.name')}} {{__('Today')}}</h2>
         <p class="cta-subtitle mb-4">{{__('Integrate with our Gift Card API and start building your rewards and incentives platform')}}</p>
         <div class="row justify-content-center mt-5">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="cta-card">
                     <div class="cta-icon"><i class="bi bi-code-square"></i></div>
                     <h3>{{__('Developers')}}</h3>
@@ -46,7 +47,7 @@
                     <a href="{{route('developer.index')}}" target="_blank" class="btn btn-light mt-3">{{__('View Documentation')}}</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="cta-card">
                     <div class="cta-icon"><i class="bi bi-rocket-takeoff"></i></div>
                     <h3>{{__('Businesses')}}</h3>
@@ -54,22 +55,21 @@
                     <a href="{{route('contact')}}" class="btn btn-light mt-3">{{__('Contact Sales')}}</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="cta-card">
                     <div class="cta-icon">
                         <i class="bi bi-headset"></i>
                     </div>
                     <h3>{{__('Need Help?')}}</h3>
                     <p>{{__('Our support team is ready to assist you with integration and setup')}}</p>
-                    <a href="{{route('contact')}}" class="btn btn-light mt-3">{{__('Contact Sales')}}</a>
+                    <a href="{{route('help.center')}}" class="btn btn-light mt-3">{{__('Contact Support')}}</a>
                 </div>
             </div>
         </div>
         <div class="mt-5 pt-4 border-top border-white border-opacity-25">
             <p class="mb-3 opacity-75">{{__('Trusted by developers and businesses worldwide')}}</p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <button class="btn btn-outline-light"><i class="bi bi-github me-2"></i>{{__('View on GitHub')}}</button>
-                <button class="btn btn-outline-light"><i class="bi bi-discord me-2"></i>{{__('Join Community')}}</button>
+                <a href="{{route('blog.index')}}" class="btn btn-outline-light"><i class="bi bi-discord me-2"></i>{{__('View blog')}}</a>
                 <a href="{{route('developer.index')}}" target="_blank" class="btn btn-outline-light"><i class="bi bi-file-text me-2"></i>{{__('API Reference')}}</a>
             </div>
         </div>
@@ -98,8 +98,11 @@
 <script src="{{asset('front/js/toast.js')}}"></script>
 <script src="{{asset('asset/fonts/fontawesome/js/all.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.min.js"></script>
-@yield('script')
+@livewireScripts
 
+<script src="{{asset('dashboard/js/alpine.js')}}"></script>
+@yield('script')
+@stack('script')
 @if (session('success'))
     <script>
         "use strict";
@@ -184,5 +187,45 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuToggler = document.querySelector('.axora-menu-toggler');
+        const menuClose = document.querySelector('.axora-mobile-close');
+        const backdrop = document.querySelector('.axora-mobile-backdrop');
+        const mobileLinks = document.querySelectorAll('.axora-mobile-nav a');
+
+        const openMenu = () => {
+            document.body.classList.add('axora-menu-open');
+        };
+
+        const closeMenu = () => {
+            document.body.classList.remove('axora-menu-open');
+        };
+
+        if (menuToggler) {
+            menuToggler.addEventListener('click', openMenu);
+        }
+
+        if (menuClose) {
+            menuClose.addEventListener('click', closeMenu);
+        }
+
+        if (backdrop) {
+            backdrop.addEventListener('click', closeMenu);
+        }
+
+        mobileLinks.forEach((link) => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeMenu();
+            }
+        });
+    });
+</script>
+@livewireScripts
 </body>
 </html>

@@ -50,15 +50,29 @@ Route::prefix('api-reference')->group(function () {
 
 Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
     // Frontend routes
-    Route::view('/', 'front.index')->name('home');
-
+    Route::view('/', 'front.pages.index')->name('home');
     Route::get('unsubscribe/{contact}', [FrontendController::class, 'unsubscribe'])->name('unsubscribe');
-    Route::view('terms', 'front.terms', ['title' => __('Terms & conditions')])->name('terms');
-    Route::view('privacy', 'front.privacy', ['title' => __('Privacy Policy')])->name('privacy');
-    Route::view('contact', 'front.contact', ['title' => __('Contact Us')])->name('contact');
-    Route::get('page/{page:slug}', [FrontendController::class, 'page'])->name('page');
+    Route::view('terms', 'front.pages.terms', ['title' => __('Terms & conditions')])->name('terms');
+    Route::view('privacy', 'front.pages.privacy', ['title' => __('Privacy Policy')])->name('privacy');
+    Route::view('security', 'front.pages.security', ['title' => __('Security')])->name('security');
+    Route::view('solutions', 'front.pages.solutions', ['title' => __('Solutions')])->name('solutions');
+    Route::view('contact', 'front.pages.contact', ['title' => __('Contact Us')])->name('contact');
+    Route::view('about-us', 'front.pages.about', ['title' => __('About Us')])->name('about');
     Route::get('card/{slug}', [FrontendController::class, 'card'])->name('card.category');
     Route::post('contact', [FrontendController::class, 'contactSubmit'])->name('contact-submit');
+    Route::prefix('help-center')->group(function () {
+        Route::view('index', 'front.helpcenter.index', ['title' => __('Help Center')])->name('help.center');
+        Route::get('articles/{article:slug}',[ FrontEndController::class, 'helpCenterArticle' ])->name('help.article');
+        Route::get('topic/{topic}',[ FrontEndController::class, 'helpCenterTopic' ])->name('help.topic');
+        Route::get('search-results', [ FrontEndController::class, 'searchHelpCenter' ])->name('help.search-results');
+    });
+    Route::name('blog.')->group(function () {
+        Route::get('blog', [ FrontendController::class,'blog' ])->name('index');
+        Route::get('posts/{blog:slug}',[ FrontEndController::class, 'blogArticle' ])->name('article');
+        Route::get('categories/{category}/{slug}',[ FrontEndController::class, 'blogCategory' ])->name('category');
+        Route::get('blog/results', [ FrontEndController::class, 'searchBlog' ])->name('search');
+    });
+    Route::view('pricing', 'front.pages.pricing', ['title' => __('Pricing')])->name('pricing');
 
     // User routes
     Route::get('login', [LoginController::class, 'showLoginform'])->name('login');

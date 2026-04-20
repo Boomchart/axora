@@ -30,19 +30,12 @@
 </head>
 <body>
 
-<!-- Login Section -->
+
 <section class="auth-section">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-5 col-md-7">
         @yield('content')
-
-{{--        <div class="auth-info">--}}
-{{--          <p class="text-center text-secondary">--}}
-{{--            <i class="bi bi-shield-check"></i>--}}
-{{--            {{__('Your information is protected with AES-256 Encryption')}}--}}
-{{--          </p>--}}
-{{--        </div>--}}
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@ use Services\Cachable\ModelCaching\Traits\Cachable;
 class Messages extends Model {
     use Uuid, SoftDeletes, Cachable;
     protected $table = "messages";
-    protected $fillable = ['first_name', 'last_name', 'mobile', 'email', 'subject', 'message', 'seen', 'admin_id', 'contact_id'];
+    protected $fillable = ['first_name', 'last_name', 'mobile', 'email', 'subject', 'message', 'seen', 'admin_id', 'contact_id','company_name'];
 
     public function contact()
     {

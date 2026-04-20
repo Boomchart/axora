@@ -19,9 +19,11 @@
     @livewireStyles
     @yield('css')
     @include('partials.font')
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/axora_kyc.css') }}" />
 </head>
 
-<body id="kt_body" class="bg-black header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
     <div class="page-loading active text-indigo">
         <div class="page-loading-inner">
             <div class="page-spinner"></div><span></span>

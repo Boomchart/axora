@@ -81,10 +81,19 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="d-flex justify-content-center flex-column me-3">
                             <div class="col-md-12">
-                                <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                                    <input type="search" class="form-control form-control-solid bg-white rounded-4" wire:model.debounce.1000ms="search" placeholder="{{__('Search')}}" />
-                                    <span class="input-group-text cursor-pointer" id="kt_filter_button"><i class="bi bi-filter"></i></span>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-gray-500">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+
+                                    <input type="search" class="form-control form-control-solid bg-white rounded-4"
+                                           wire:model="search"
+                                           placeholder="{{__('Search')}}" style="padding-left: 45px !important;"/>
+
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                          id="kt_filter_button">
+                                        <i class="bi bi-filter"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +185,7 @@
                         </div>
                         @else
                         <div class="text-center mt-20">
-                            <div class="symbol symbol-150px symbol-circle mb-10 border border-secondary">
+                            <div class="symbol symbol-150px symbol-circle me-5 mb-10">
                                 <div class="symbol-label fs-1 bg-whitelabel">
                                     <i class="bi bi-code-square text-white" style="font-size:66px;"></i>
                                 </div>

@@ -20,15 +20,6 @@
     @livewireStyles
     @yield('css')
     @include('partials.font')
-    <style>
-        /* Active menu item styling */
-        .menu-link.active .menu-title {
-            color: #ffffff !important;
-        }
-        .menu-link.active .menu-icon i {
-            color: #ffffff !important;
-        }
-    </style>
 </head>
 
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
@@ -43,40 +34,29 @@
         </div>
     </div>
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-        <!--begin::Header-->
         <div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
-            <!--begin::Container-->
             <div class="container-fluid d-flex align-items-stretch justify-content-between">
-                <!--begin::Logo bar-->
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                    <!--begin::Logo-->
                     <a href="{{route('home')}}" class="d-lg-none">
                         <img alt="Logo" src="{{asset('asset/images/'.getUi()->dashboard_logo.'.png')}}" style="height:auto; max-width:50%;" />
                     </a>
-                    <!--end::Logo-->
                 </div>
-                <!--end::Logo bar-->
-                <!--begin::Topbar-->
                 <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-                    <!--begin::Search-->
                     <div class="d-flex align-items-stretch">
 
                     </div>
-                    <!--end::Search-->
-                    <!--begin::Toolbar wrapper-->
+
                     <div class="d-flex align-items-stretch flex-shrink-0">
-                        <!--begin::User-->
+
                         <div class="d-flex align-items-center ms-2 ms-lg-3" id="kt_header_user_menu_toggle">
-                            <!--begin::Menu wrapper-->
-                            <a href="{{route('home')}}" target="_blank" class="me-5 btn btn-secondary">
+                            <a href="{{route('home')}}" target="_blank" class="me-5 btn btn-primary">
                                 {{__('Visit Homepage')}}
                             </a>
                             <div class="cursor-pointer symbol symbol-50px symbol-circle" data-kt-menu-trigger="{default: 'click'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                 <div class="symbol-label fs-2 fw-bolder text-dark bg-warning"><i class="bi bi-person text-dark fs-2"></i></div>
                             </div>
-                            <!--begin::User account menu-->
+
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-7 w-275px" data-kt-menu="true" style="">
-                                <!--begin::Menu item-->
                                 <div class="menu-item px-5 mb-0">
                                     <a href="{{route('admin.settings', ['type' => 'system'])}}" class="menu-link px-5 py-3">
                                         <i class="bi bi-gear-wide-connected me-3 text-dark"></i> {{__('System settings')}}
@@ -90,46 +70,31 @@
                                         <i class="fal fa-sign-out me-3"></i> {{__('Sign Out')}}
                                     </a>
                                 </div>
-                                <!--end::Menu item-->
                             </div>
-                            <!--end::User account menu-->
-                            <!--end::Menu wrapper-->
                         </div>
-                        <!--end::User -->
-                        <!--begin::Aside Toggle-->
+
                         <div class="d-flex align-items-center d-lg-none ms-1 ms-lg-3">
                             <div class="btn btn-icon btn-icon-dark btn-active-light-success w-30px h-30px w-md-40px h-md-40px" id="kt_aside_toggle">
-                                <!--begin::Svg Icon | path: icons/duotone/Text/Menu.svg-->
                                 <span class="svg-icon svg-icon-2x">
                                     <i class="fa-thin fa-bars"></i>
                                 </span>
-                                <!--end::Svg Icon-->
                             </div>
                         </div>
-                        <!--end::Aside Toggle-->
                     </div>
-                    <!--end::Toolbar wrapper-->
                 </div>
-                <!--end::Topbar-->
             </div>
-            <!--end::Container-->
         </div>
         <div class="content fs-7 d-flex flex-column flex-column-fluid" id="kt_content">
             @yield('content')
         </div>
         <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
-            <!--begin::Container-->
             <div class="container-fluid d-flex flex-column flex-md-row flex-stack">
-                <!--begin::Copyright-->
                 <div class="text-dark order-2 order-md-1">
                     <span class="text-muted fw-bold me-2">{{date('Y')}} ©</span>
                     <a href="{{route('home')}}" target="_blank" class="text-gray-800 text-hover-success">{{$set->site_name}}</a>
                 </div>
-                <!--end::Copyright-->
             </div>
-            <!--end::Container-->
         </div>
-        <!--end::Footer-->
     </div>
     <script src="{{asset('dashboard/plugins/global/plugins.bundle.js')}}"></script>
     <script src="{{asset('dashboard/js/scripts.bundle.js')}}"></script>

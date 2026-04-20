@@ -65,11 +65,11 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card h-100 rounded-5 bg-success text-warning">
+                    <div class="card h-100 rounded-5 bg-success text-white">
                         <div class="card-body p-9">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="fs-2hx fw-bold">{{number_format($client->userFunds(), 2).' '.$currency->currency}}</div>
+                                    <div class="fs-2hx fw-bold text-white">{{number_format($client->userFunds(), 2).' '.$currency->currency}}</div>
                                 </div>
                                 <div class="col-md-6 text-end">
                                     <button id="kt_balance_button" class="btn btn-white me-3"><i class="bi bi-pen"></i> {{__('Edit Balance')}}</button>

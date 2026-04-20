@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="text-start mt-10">
-                                    <button type="submit" class="btn btn-info" wire:loading.attr="disabled" wire:loading.class="opacity-50">
+                                    <button type="submit" class="btn btn-secondary" wire:loading.attr="disabled" wire:loading.class="opacity-50">
                                         <span wire:loading.remove wire:target="updateIssuing">{{__('Save Settings')}}</span>
                                         <span wire:loading wire:target="updateIssuing">{{__('Processing Request...')}}</span>
                                     </button>
@@ -302,7 +302,7 @@
                         <div class="card-body">
                             <p class="text-dark fw-bold mb-0 fs-5">{{__('Change Password')}}</p>
                             <p class="text-gray-800 mb-5 fs-7">{{__('Reset account password')}}</p>
-                            <button id="kt_password_button" class="btn btn-sm btn-info rounded-pill"><i class="bi bi-lock"></i> {{__('Reset')}}</button>
+                            <button id="kt_password_button" class="btn btn-sm btn-secondary rounded-pill"><i class="bi bi-lock"></i> {{__('Reset')}}</button>
                             <div wire:ignore.self id="kt_password" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_password_button" data-kt-drawer-close="#kt_password_close" data-kt-drawer-width="{default:'100%', 'md': '500px'}">
                                 <div class="card w-100">
                                     <div class="card-header pe-5 border-0">

@@ -9,8 +9,7 @@
             <div class="col-lg-2 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Product')}}</h4>
                 <ul>
-                    <li><a href="#">{{__('Features')}}</a></li>
-                    <li><a href="#">{{__('Pricing')}}</a></li>
+                    <li><a href="{{route('pricing')}}">{{__('Pricing')}}</a></li>
                     <li><a href="{{route('developer.index')}}">{{__('Documentation')}}</a></li>
                     <li><a href="{{route('developer.countries')}}">{{__('API Reference')}}</a></li>
                 </ul>
@@ -18,17 +17,16 @@
             <div class="col-lg-2 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Company')}}</h4>
                 <ul>
-                    <li><a href="{{route('page',['page' => 'about'])}}">{{__('About Us')}}</a></li>
+                    <li><a href="{{route('about')}}">{{__('About Us')}}</a></li>
                     <li><a href="{{route('contact')}}">{{__('Contact')}}</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Resources')}}</h4>
                 <ul>
-                    <li><a href="#">{{__('Case Studies')}}</a></li>
-                    <li><a href="#">{{__('Help Center')}}</a></li>
-                    <li><a href="#">{{__('Status')}}</a></li>
-                    <li><a href="#">{{__('Partners')}}</a></li>
+                    <li><a href="{{route('solutions')}}">{{__('Solutions')}}</a></li>
+                    <li><a href="{{route('help.center')}}">{{__('Help Center')}}</a></li>
+                    <li><a href="{{route('blog.index')}}">{{__('Blog')}}</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6 mb-4">
@@ -36,8 +34,7 @@
                 <ul>
                     <li><a href="{{route('privacy')}}">{{__('Privacy Policy')}}</a></li>
                     <li><a href="{{route('terms')}}">{{__('Terms of Service')}}</a></li>
-                    <li><a href="#">{{__('Security')}}</a></li>
-                    <li><a href="#">{{__('Compliance')}}</a></li>
+                    <li><a href="{{route('security')}}">{{__('Security')}}</a></li>
                 </ul>
             </div>
         </div>

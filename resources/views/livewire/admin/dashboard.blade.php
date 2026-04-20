@@ -5,8 +5,8 @@
                 <h1 class="text-dark fw-bold my-1 fs-4">{{__('Dashboard')}}</h1>
             </div>
             <div class="d-flex align-items-center flex-nowrap text-nowrap py-1 mb-6">
-                <a href="{{route('run.migration')}}" class="btn btn-white text-dark me-4"><i class="bi bi-database"></i> {{__('Run migrations')}}</a>
-                <a href="{{route('optimize.system')}}" class="btn btn-warning text-dark me-4"><i class="bi bi-lightning"></i> {{__('Clear Data Cache')}}</a>
+                <a href="{{route('run.migration')}}" class="btn btn-primary me-4"><i class="bi bi-database"></i> {{__('Run migrations')}}</a>
+                <a href="{{route('optimize.system')}}" class="btn btn-secondary me-4"><i class="bi bi-lightning"></i> {{__('Clear Data Cache')}}</a>
             </div>
         </div>
         <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post">
@@ -100,6 +100,7 @@
                         </div>
                     </div>
                 </form>
+
                 <div class="d-flex justify-content-between mb-5">
                     <h5 class="fw-bold mb-3">{{__('API Response Codes')}}</h5>
                     <a class="btn btn-dark btn-sm rounded-pill" href="{{route('admin.api.logs')}}" target="_blank"><i class="bi bi-code-square"></i> {{__('API Logs')}}</a>

@@ -2,11 +2,11 @@
     --cc-bg: #fff;
     --cc-text: #2d4156;
     --cc-border-radius: .35em;
-    --cc-btn-primary-bg: #0A24F4;
+    --cc-btn-primary-bg: #0D7373;
     --cc-btn-primary-text: var(--cc-bg);
-    --cc-btn-primary-hover-bg: #1d2e38;
+    --cc-btn-primary-hover-bg: #E07A7A;
     --cc-btn-secondary-bg: #eaeff2;
-    --cc-btn-secondary-text: #0A24F4;
+    --cc-btn-secondary-text: #0D7373;
     --cc-btn-secondary-hover-bg: #d8e0e6;
     --cc-btn-border-radius: 4px;
     --cc-toggle-bg-off: #919ea6;

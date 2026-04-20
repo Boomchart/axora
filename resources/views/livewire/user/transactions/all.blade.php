@@ -2,7 +2,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div class="container-fluid d-flex justify-content-between mb-5">
             <h1 class="text-dark fw-bolder my-1 fs-2">{{__('Transactions')}} ({{number_format_short($total)}})</h1>
-            <button wire:click="save" class="btn btn-dark">
+            <button wire:click="save" class="btn btn-secondary">
                 <span wire:loading.remove wire:target="save"><i class="bi bi-filetype-xlsx"></i> {{__('Export')}}</span>
                 <span wire:loading wire:target="save">{{__('Exporting...')}}</span>
             </button>
@@ -98,10 +98,18 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="d-flex justify-content-center flex-column me-3">
                             <div class="col-md-12">
-                                <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
-                                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-                                    <input type="search" class="form-control form-control-solid bg-white rounded-4" wire:model="search" placeholder="{{__('Search Amount, Reference, Customer Email, Customer Phone, Customer Name')}}" />
-                                    <span class="input-group-text cursor-pointer" id="kt_filter_button"><i class="bi bi-filter"></i></span>
+                                <div class="position-relative">
+                                    <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-gray-500">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+
+                                    <input type="search" class="form-control form-control-solid bg-white rounded-4" wire:model="search"
+                                           placeholder="{{__('Search Amount, Reference, Customer Email, Customer Phone, Customer Name')}}" style="padding-left: 45px !important;"/>
+
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                          id="kt_filter_button">
+                                        <i class="bi bi-filter"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>

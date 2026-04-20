@@ -21,7 +21,7 @@
                     <div class="col-md-12">
                         <div class="d-flex align-items-center bg-white rounded-4 p-4">
                             <div class="symbol symbol-45px me-5 symbol-circle">
-                                <span class="symbol-label bg-warning">
+                                <span class="symbol-label axora-warning-icon">
                                     <i class="bi bi-globe fs-3"></i>
                                 </span>
                             </div>
@@ -38,11 +38,11 @@
                     @endif
                     <div class="card bg-transparent h-md-100">
                         <div class="card-body p-0">
-                            <div class="px-9 pt-6 card-rounded w-100 bg-success">
+                            <div class="px-9 pt-6 card-rounded w-100 axora-wallet-card">
                                 <div class="fw-bold fs-7 text-start pb-5 text-warning">
                                     <div class="mb-5"
-                                        x-data="{ 
-                                            show: @js($user->business->reveal_balance), 
+                                        x-data="{
+                                            show: @js($user->business->reveal_balance),
                                             toggle() {
                                                 this.show = !this.show;
                                                 $wire.displayBalance(); // Call Livewire method
@@ -219,8 +219,8 @@
                         <div class="d-flex flex-stack cursor-pointer bg-white rounded-4 p-3">
                             <div class="d-flex align-items-center">
                                 <div class="symbol symbol-45px symbol-circle me-4">
-                                    <div class="symbol-label bg-whitelabel">
-                                        <i class="bi bi-braces text-white fs-3"></i>
+                                    <div class="symbol-label axora-dashboard-icon">
+                                        <i class="bi bi-braces fs-3"></i>
                                     </div>
                                 </div>
                                 <div class="ps-1">

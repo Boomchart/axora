@@ -1,47 +1,66 @@
 @extends('auth.menu')
 
 @section('content')
-  <div class="auth-card">
-    <div class="text-center mb-5">
-      <a href="{{route('home')}}">
-        <img class="text-center" src="{{asset('asset/images/'.getUi()->dashboard_logo.'.png')}}" alt="{{$set->site_name}}" loading="lazy" @style(getUi()->light_css)>
-      </a>
-    </div>
-
-    <div class="text-center mb-4">
-      <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3" style="width: 60px; height: 60px;">
-        <i class="bi bi-shield-lock-fill fs-1 text-primary"></i>
+  <div class="auth-card auth-login-card">
+    <div class="auth-header">
+      <div class="auth-logo-wrap">
+        <a href="{{ route('home') }}" class="auth-logo-link">
+          <img
+                  src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}"
+                  alt="{{ $set->site_name }}"
+                  loading="lazy"
+                  class="auth-logo"
+                  @style(getUi()->light_css)
+          >
+        </a>
       </div>
-      <h1 class="auth-title fs-3">{{__('Security Verification')}}</h1>
+
+      <span class="auth-badge">
+                <i class="bi bi-shield-lock"></i>
+                {{ __('Security Verification') }}
+            </span>
+
+      <h1 class="auth-title">
+        {{ __('Verify Your Identity') }}
+      </h1>
+
       <p class="auth-subtitle">
-        {{__('Please enter the OTP code from your authenticator app.')}}
+        {{ __('Enter the verification code from your authenticator app to continue securely.') }}
       </p>
     </div>
 
-    <div class="d-flex align-items-center justify-content-center bg-light p-3 rounded-3 mb-5 border border-dashed">
-      <div class="symbol symbol-35px me-3">
-        <div class="symbol-label bg-white text-primary fw-bold border border-primary">
-          {{ strtoupper(substr($user->first_name, 0, 1)) }}
-        </div>
+    <div class="auth-user-card">
+      <div class="auth-user-avatar">
+        {{ strtoupper(substr($user->first_name, 0, 1)) }}
       </div>
-      <div class="text-start">
-        <div class="fw-bold text-dark fs-6">{{ $user->first_name }} {{ $user->last_name }}</div>
-        <div class="text-muted fs-8">{{ $user->business->name }}</div>
+
+      <div class="auth-user-info">
+        <h6>
+          {{ $user->first_name }} {{ $user->last_name }}
+        </h6>
+
+        @if(!empty($user->business))
+          <p>
+            {{ $user->business->name }}
+          </p>
+        @endif
       </div>
     </div>
+
     @livewire('auth.security', ['set' => $set, 'user' => $user])
 
+    <div class="auth-footer auth-security-footer">
+      <p class="mb-3">
+        {{ __('Lost your device?') }}
+        <a href="{{ route('contact') }}" class="auth-link">
+          {{ __('Contact Support') }}
+        </a>
+      </p>
 
-    {{-- 5. Footer Actions --}}
-    <div class="auth-footer text-center border-0 pt-0 mt-0">
-      <p class="text-secondary mb-3 small">{{__('Lost your device?')}} <a href="#" class="auth-link">{{__('Contact Support')}}</a></p>
-
-      {{-- Logout is safer here than Register --}}
-      <a href="{{route('user.logout')}}" class="btn btn-sm btn-outline-secondary border-0 text-muted">
-        <i class="bi bi-box-arrow-left me-1"></i> {{__('Sign out and switch account')}}
+      <a href="{{ route('user.logout') }}" class="auth-signout-link">
+        <i class="bi bi-box-arrow-left"></i>
+        {{ __('Sign out and switch account') }}
       </a>
     </div>
-
   </div>
-
 @stop

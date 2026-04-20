@@ -51,9 +51,9 @@
                         <label class="form-label text-dark fs-7">{{__('Type')}}</label>
                         <select class="form-select form-select-solid" wire:model="type">
                             <option value="">{{__('Select type')}}</option>
-                            @if($user->business->agent)
-                            <option value="agent_payment">{{__('Agent Payment')}}</option>
-                            @endif
+{{--                            @if($user->business->agent)--}}
+{{--                            <option value="agent_payment">{{__('Agent Payment')}}</option>--}}
+{{--                            @endif--}}
                             <option value="payout">{{__('Payout')}}</option>
                             <option value="deposit">{{__('Deposit')}}</option>
                             <option value="giftcard_purchase">{{__('Giftcard Purchase')}}</option>

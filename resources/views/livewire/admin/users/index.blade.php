@@ -131,9 +131,9 @@
                                     <td class="fw-bold">
                                         <div class="symbol symbol-40px symbol-circle">
                                             <div class="d-flex align-items-center">
-                                                <div class="symbol-label fs-7 bg-warning text-dark">{{strtoupper(substr($val->business->name, 0, 2))}}</div>
+                                                <div class="symbol-label fs-7 bg-axora-secondary text-dark">{{strtoupper(substr($val->business?->name, 0, 2))}}</div>
                                                 <div class="ps-2">
-                                                    <p class="fs-7 text-dark text-hover-success fw-bold mb-0">{{$val->business->name}}</p>
+                                                    <p class="fs-7 text-dark text-hover-success fw-bold mb-0">{{$val->business?->name}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,7 +155,7 @@
                                     </td>
                                     <td>{{$val->created_at->setTimezone($admin->timezone)->format('Y/m/d h:i:A')}}</td>
                                     <td class="text-center">
-                                        <a href="{{route('user.manage', ['client' => $val->id, 'type' => 'details'])}}" target="_blank" class="btn btn-sm btn-whitelabel rounded-pill me-3"><i class="bi bi-gear-wide-connected"></i> {{__('Manage')}}</a>
+                                        <a href="{{route('user.manage', ['client' => $val->id, 'type' => 'details'])}}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill me-3"><i class="bi bi-gear-wide-connected"></i> {{__('Manage')}}</a>
                                     </td>
                                 </tr>
                                 <div><livewire:admin.users.edit-users :val=$val :admin=$admin :wire:key="'kt_devices_'. $val->id"></livewire:admin.users.edit-users></div>

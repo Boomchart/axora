@@ -1,59 +1,63 @@
 @extends('front.menu')
-<meta name="description" content="{{$topic->description}}" />
+
+<meta name="description" content="{{ $topic->description }}" />
+
 @section('css')
-
+    <link href="{{asset('css/help.css')}}" rel="stylesheet">
 @stop
+
 @section('content')
-<section class="position-relative py-lg-5 pt-5 dd-bg" data-jarallax data-img-position="0% 100%" data-speed="0.5">
-    <div class="container position-relative zindex-2 pt-5 pb-2 pb-md-0 py-6">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('home')}}"><i class="bx bx-home-alt fs-lg me-1"></i> {{__('Home')}}</a></li>
-                <li class="breadcrumb-item"><a href="{{route('help.center')}}">{{__('Help Center')}}</a></li>
-                <li class="breadcrumb-item active text-success" aria-current="page">{{$topic->name}}</li>
-            </ol>
-        </nav>
-        <div class="row justify-content-center pt-3 mt-3">
-            <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
-                <h1 class="mb-4 text-success">{{$topic->name}}</h1>
-                <p class="fs-lg pb-3 mb-3 text-dark">{{$topic->description}}</p>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="container py-5 my-2 my-md-4 my-lg-5">
-    @if($topic->faq->count()>0)
-    <div class="row pb-6">
-        <div class="col-12 col-md-12">
-            <div class="list-group list-group-flush">
-                @foreach($topic->faq as $val)
-                <div class="list-group-item d-flex align-items-center cursor-pointer" data-href="{{route('help.article', ['article' => $val->slug])}}">
-                    <div class="me-auto">
-                        <p class="fw-semibold mb-1 text-success fs-5">{{$val->question}}</p>
-                        <p class="fs-6 mb-0">{{Str::words(strip_tags($val->answer), 25)}}</p>
-                    </div>
+    <section class="axora-topic-hero">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <nav class="axora-breadcrumb" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('help.center') }}">{{ __('Help Center') }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $topic->name }}</li>
+                        </ol>
+                    </nav>
+                    <span class="axora-page-badge"><i class="bi bi-folder2-open"></i>{{ __('Help Topic') }}</span>
+                    <h1 class="axora-page-title">{{ $topic->name }}</h1>
+                    <p class="axora-page-subtitle">{{ $topic->description }}</p>
                 </div>
-                @endforeach
             </div>
         </div>
-    </div>
-    @else
-    <div class="row justify-content-center">
-        <div class="col-12 col-xl-11">
-            <h3 class="text-center mb-1">
-                {{__('No article found under this topic')}}
-            </h3>
-        </div>
-    </div>
-    @endif
-</section>
+    </section>
 
+    <section class="axora-help-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    @if($topic->faq->count() > 0)
+                        <div class="row g-4">
+                            @foreach($topic->faq as $val)
+                                <div class="col-12 col-md-6">
+                                    <a href="{{ route('help.article', ['article' => $val->slug]) }}" class="text-decoration-none d-block h-100">
+                                        <article class="axora-topic-article-card">
+                                            <h3>{{ $val->question }}</h3>
+                                            <p>{{ Str::words(strip_tags($val->answer), 25) }}</p>
+                                            <span class="axora-topic-article-meta"><i class="bi bi-arrow-right-circle"></i>{{ __('Read article') }}</span>
+                                        </article>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="axora-empty-state">
+                            <div class="axora-empty-state-icon"><i class="bi bi-file-earmark-text"></i></div>
+                            <h3>{{ __('No articles found') }}</h3>
+                            <p>{{ __('There are currently no help articles under this topic. You can return to the Help Center or contact support if you need assistance.') }}</p>
+                            <a href="{{ route('help.center') }}" class="btn btn-primary">{{ __('Back to Help Center') }}</a>
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    </section>
 @stop
+
 @section('script')
-<script src="{{asset('front/vendor/jquery/dist/jquery.min.js')}}"></script>
-<script>
-    $('div[data-href]').on("click", function() {
-        window.location.href = $(this).data('href');
-    });
-</script>
 @endsection

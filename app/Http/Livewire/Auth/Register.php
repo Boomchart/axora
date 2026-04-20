@@ -183,7 +183,7 @@ class Register extends Component
                 $rules = [
                     'first_name' => ['required', 'string', 'max:255', 'not_regex:/^https?:\/\//i', 'not_regex:/^www\./i'],
                     'last_name' => ['required', 'string', 'max:255', 'not_regex:/^https?:\/\//i', 'not_regex:/^www\./i'],
-                    'email' => 'required|email:rfc,dns',
+                    'email' => 'required|email:rfc',
                     'password' => ['required', Password::defaults()],
                     'phone' => 'required|phone:' . strtoupper($this->country),
                 ];
@@ -358,7 +358,7 @@ class Register extends Component
             );
             try {
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-                if (!$g->checkcode($this->fa_secret, $this->fa_code, 3)) {
+                if ($g->checkcode($this->fa_secret, $this->fa_code, 3)) {
                     $this->user->business->update([
                         'fa_status' => 1,
                         'fa_secret' => $this->fa_secret,

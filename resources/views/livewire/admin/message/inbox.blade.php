@@ -114,7 +114,7 @@
                             </td>
                             <td>{{$val->created_at->setTimezone($admin->timezone)->format('Y/m/d h:i:A')}}</td>
                             <td class="text-center">
-                                <button id="kt_message_{{$val->id}}_button" class="btn btn-sm btn-whitelabel rounded-pill">Details</button>
+                                <button id="kt_message_{{$val->id}}_button" class="btn btn-sm btn-outline-primary rounded-pill">Details</button>
                             </td>
                         </tr>
                         <div><livewire:admin.message.message :val=$val :type=$type :admin=$admin :wire:key="'kt_message_'. $val->id"></livewire:admin.message.message></div>

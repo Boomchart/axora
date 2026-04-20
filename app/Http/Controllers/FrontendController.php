@@ -24,7 +24,6 @@ class FrontendController extends Controller
 
     public function contactSubmit(Request $request)
     {
-        dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -75,24 +74,34 @@ class FrontendController extends Controller
         return view('auth.email.unsubscribed', ['title' => __('Promotional emails')]);
     }
 
-    public function searchHelpcenter(Request $request)
+    public function searchHelpCenter(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'term' => 'required',
+        $request->validate([
+            'term' => ['required', 'string', 'min:2'],
         ]);
-        if ($validator->fails()) {
-            return back()->with('errors', $validator->errors())->withInput();
-        }
-        return view('front.helpcenter.search', ['title' => __('Search results for: ') . $request->term, 'term' => $request->term, 'topic' => Helpcenter::where('question', 'LIKE', '%' . $request->term . '%')->orWhere('answer', 'LIKE', '%' . $request->term . '%')->paginate(18)]);
+
+        $term = $request->query('term');
+
+        $topic = HelpCenter::query()
+            ->where('question', 'LIKE', '%' . $term . '%')
+            ->orWhere('answer', 'LIKE', '%' . $term . '%')
+            ->paginate(18)
+            ->withQueryString();
+
+        return view('front.helpcenter.search', [
+            'title' => __('Search results for: ') . $term,
+            'term' => $term,
+            'topic' => $topic,
+        ]);
     }
 
-    public function helpcenterTopic($topic)
+    public function helpCenterTopic($topic)
     {
         $topic = Category::whereType('faq')->whereSlug($topic)->first();
         return view('front.helpcenter.topic', ['title' => $topic->name, 'topic' => $topic]);
     }
 
-    public function helpcenterArticle(HelpCenter $article)
+    public function helpCenterArticle(HelpCenter $article)
     {
         $article->views = $article->views + 1;
         $article->save();
@@ -101,20 +110,29 @@ class FrontendController extends Controller
 
     public function searchBlog(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'term' => 'required',
+        $request->validate([
+            'term' => ['required', 'string', 'min:2'],
         ]);
-        if ($validator->fails()) {
-            return back()->with('errors', $validator->errors())->withInput();
-        }
-        return view('front.blog.search', ['title' => __('Search results for: ') . $request->term, 'term' => $request->term, 'article' => Blog::where('title', 'LIKE', '%' . $request->term . '%')->orWhere('details', 'LIKE', '%' . $request->term . '%')->paginate(18)]);
+
+        $term = $request->query('term');
+
+        $article = Blog::query()
+            ->where('title', 'LIKE', '%' . $term . '%')
+            ->orWhere('details', 'LIKE', '%' . $term . '%')
+            ->paginate(18)
+            ->withQueryString();
+        return view('front.blog.search', [
+            'title' => __('Search results for: ') . $request->term,
+            'term' => $request->term,
+            'article' => $article,
+        ]);
     }
 
-    public function blogArticle(Blog $article)
+    public function blogArticle(Blog $blog)
     {
-        $article->views = $article->views + 1;
-        $article->save();
-        return view('front.blog.article', ['title' => $article->title, 'article' => $article]);
+        $blog->views = $blog->views + 1;
+        $blog->save();
+        return view('front.blog.article', ['title' => $blog->title, 'article' => $blog]);
     }
 
     public function blogCategory($category, $slug)
@@ -123,19 +141,6 @@ class FrontendController extends Controller
         return view('front.blog.category', ['title' => $category->name, 'category' => $category]);
     }
 
-    public function article(Blog $article)
-    {
-        $article->update([
-            'views' => $article->views + 1
-        ]);
-        return view('front.article', ['title' => $article->title, 'post' => $article]);
-    }
-
-    public function page(Page $page)
-    {
-        dd('fff');
-        return view('front.pages', ['title' => $page->title, 'page' => $page]);
-    }
 
     public function card($slug)
     {
@@ -150,11 +155,11 @@ class FrontendController extends Controller
         }, $popular->toArray()));
 
 
-        return view('front.card', ['title' => $card->name, 'card' => $card, 'suggestions' => $suggestions, 'popular' => $popular]);
+        return view('front.pages.card', ['title' => $card->name, 'card' => $card, 'suggestions' => $suggestions, 'popular' => $popular]);
     }
 
     public function blog()
     {
-        return view('front.blog.index', ['title' => __('Blog'), 'blog' => Blog::orderby('created_at', 'desc')->whereStatus(1)->paginate(10)]);
+        return view('front.blog.index', ['title' => __('Blog'), 'blogs' => Blog::orderby('created_at', 'desc')->whereStatus(1)->paginate(10)]);
     }
 }

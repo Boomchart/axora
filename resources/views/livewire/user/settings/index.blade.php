@@ -54,7 +54,7 @@
     @endif
     @if($type == 'api')
     <a href="{{route('developer.index')}}" target="_blank">
-        <div class="card bg-secondary mb-5">
+        <div class="card bg-axora-secondary mb-5">
             <div class="d-flex align-items-center p-3">
                 <div class="symbol symbol-40px me-4">
                     <div class="symbol-label fs-7 text-dark bg-white rounded-5">
@@ -117,7 +117,7 @@
                     <label class="form-label text-dark fs-7">{{__('Webhook URL')}}</label>
                     <input class="form-control form-control-solid" type="url" wire:model="webhook_url" autocomplete="off" placeholder="{{__('https://webhook.site')}}" />
                     @error('webhook_url')
-                    <span class="form-text">{{$message}}</span>
+                    <span class="form-text text-danger">{{$message}}</span>
                     @enderror
                 </div>
                 <div class="fv-row mb-6">

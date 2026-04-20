@@ -19,14 +19,10 @@
 </head>
 
 <body id="kt_body" class="bg-dark header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">
-  <!--begin::Main-->
   <div class="d-flex flex-column flex-root">
-    <!--begin::Authentication - Sign-in -->
     <div class="d-flex flex-column flex-column-fluid">
-      <!--begin::Aside-->
       @yield('content')
     </div>
-    <!--end::Authentication - Sign-in-->
   </div>
   {!!$set->livechat!!}
   {!!$set->analytic_snippet!!}
