@@ -1,4 +1,4 @@
-@extends('front.menu')
+@extends('front.pages')
 
 <meta name="description" content="{{ $set->site_name }} Help Center search results for {{ $term }}" />
 

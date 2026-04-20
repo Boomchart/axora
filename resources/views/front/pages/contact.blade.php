@@ -1,4 +1,4 @@
-@extends('front.menu')
+@extends('front.pages')
 
 @section('meta_description', "Contact our team for business inquiries, API support, onboarding, and gift card integration questions.")
 

@@ -1,50 +1,7 @@
-@extends('front.menu')
+@extends('front.pages')
 
 @section('css')
-    <style>
-        .security-content-card {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
-        }
 
-        .security-item {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
-        }
-
-        .security-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .security-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            background-color: var(--secondary-lighter);
-            color: var(--primary-dark);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .security-item h4 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--primary-dark);
-        }
-
-        .security-item p {
-            color: #64748b;
-            margin-bottom: 0;
-            line-height: 1.7;
-        }
-    </style>
 @stop
 
 @section('content')
