@@ -53,11 +53,9 @@
         </div>
         <pre><code class="language-bash"># Sandbox Keys
 {{strtoupper($set->site_name)}}_TEST_SECRET_KEY=sk_test_your_test_key_here
-{{strtoupper($set->site_name)}}_TEST_PUBLISHABLE_KEY=pk_test_your_test_key_here
 
 # Production Keys
 {{strtoupper($set->site_name)}}_LIVE_SECRET_KEY=sk_live_your_live_key_here
-{{strtoupper($set->site_name)}}_LIVE_PUBLISHABLE_KEY=pk_live_your_live_key_here</code></pre>
     </div>
 
     <div class="code-block-wrapper">

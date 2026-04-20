@@ -98,8 +98,8 @@ class Index extends Component
     public function generate()
     {
         $this->user->business->update([
-            'api_key' => encryptRSA(Str::random(30)),
-            'test_api_key' => Str::random(30)
+            'api_key' => 'sk_live_' . Str::random(30),
+            'test_api_key' => 'sk_test_' . Str::random(30),
         ]);
         $this->api_key = $this->user->business->api_key;
         $this->test_api_key = $this->user->business->test_api_key;

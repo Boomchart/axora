@@ -30,7 +30,7 @@
 <div class="d-flex flex-column flex-root">
     <div class="page d-flex flex-row flex-column-fluid">
         <div id="kt_aside" class="aside aside-default bg-white" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_toggle">
-            <div class="aside-logo flex-column-auto pt-9 pb-10" id="kt_aside_logo">
+            <div class="aside-logo flex-column-auto pt-9 pb-10 mb-5" id="kt_aside_logo">
                 <a href="{{route('user.dashboard')}}">
                     <img alt="Logo" src="{{asset('asset/images/'.getUi()->dashboard_logo.'.png')}}" class="logo-default" @style(getUi()->dashboard_light_css)/>
                     <img alt="Logo" src="{{asset('asset/images/'.getUi()->dashboard_logo.'.png')}}" class="h-50px logo-minimize" @style(getUi()->dashboard_light_css)/>

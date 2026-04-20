@@ -69,9 +69,9 @@
             <div class="axora-doc-mobile-section">
                 <p class="axora-doc-mobile-title">{{__('API Reference')}}</p>
                 <ul class="axora-doc-mobile-nav">
+                    <li><a class="{{ Request::is('api-reference/countries') ? 'active' : '' }}" href="{{url('/api-reference/countries')}}"><i class="bi bi-globe"></i> {{__('Countries')}}</a></li>
                     <li><a class="{{ Request::is('api-reference/gift-cards*') ? 'active' : '' }}" href="{{url('/api-reference/gift-cards/all')}}"><i class="bi bi-gift"></i> {{__('Gift Cards')}}</a></li>
                     <li><a class="{{ Request::is('api-reference/transactions*') ? 'active' : '' }}" href="{{url('/api-reference/transactions/all')}}"><i class="bi bi-arrow-left-right"></i> {{__('Transactions')}}</a></li>
-                    <li><a class="{{ Request::is('api-reference/countries') ? 'active' : '' }}" href="{{url('/api-reference/countries')}}"><i class="bi bi-globe"></i> {{__('Countries')}}</a></li>
                     <li><a class="{{ Request::is('api-reference/quote') ? 'active' : '' }}" href="{{url('/api-reference/quote')}}"><i class="bi bi-receipt-cutoff"></i> {{__('Quote')}}</a></li>
                     <li><a class="{{ Request::is('api-reference/order') ? 'active' : '' }}" href="{{url('/api-reference/order')}}"><i class="bi bi-box-seam"></i> {{__('Order')}}</a></li>
                     <li><a class="{{ Request::is('api-reference/balance') ? 'active' : '' }}" href="{{url('/api-reference/balance')}}"><i class="bi bi-wallet2"></i> {{__('Balance')}}</a></li>
