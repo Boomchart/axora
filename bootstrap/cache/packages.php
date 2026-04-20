@@ -35,35 +35,35 @@
   ),
   'hisorange/browser-detect' => 
   array (
-    'aliases' => 
-    array (
-      'Browser' => 'hisorange\\BrowserDetect\\Facade',
-    ),
     'providers' => 
     array (
       0 => 'hisorange\\BrowserDetect\\ServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'Browser' => 'hisorange\\BrowserDetect\\Facade',
+    ),
   ),
   'intervention/image' => 
   array (
-    'aliases' => 
-    array (
-      'Image' => 'Intervention\\Image\\Facades\\Image',
-    ),
     'providers' => 
     array (
       0 => 'Intervention\\Image\\ImageServiceProvider',
     ),
+    'aliases' => 
+    array (
+      'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
   ),
   'jenssegers/agent' => 
   array (
-    'aliases' => 
-    array (
-      'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
-    ),
     'providers' => 
     array (
       0 => 'Jenssegers\\Agent\\AgentServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
     ),
   ),
   'josiasmontag/laravel-recaptchav3' => 
@@ -193,13 +193,13 @@
   ),
   'nwidart/laravel-modules' => 
   array (
-    'aliases' => 
-    array (
-      'Module' => 'Nwidart\\Modules\\Facades\\Module',
-    ),
     'providers' => 
     array (
       0 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Module' => 'Nwidart\\Modules\\Facades\\Module',
     ),
   ),
   'propaganistas/laravel-phone' => 
@@ -211,13 +211,13 @@
   ),
   'simplesoftwareio/simple-qrcode' => 
   array (
-    'aliases' => 
-    array (
-      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
-    ),
     'providers' => 
     array (
       0 => 'SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'QrCode' => 'SimpleSoftwareIO\\QrCode\\Facades\\QrCode',
     ),
   ),
   'spatie/laravel-ignition' => 
@@ -240,13 +240,13 @@
   ),
   'stevebauman/location' => 
   array (
-    'aliases' => 
-    array (
-      'Location' => 'Stevebauman\\Location\\Facades\\Location',
-    ),
     'providers' => 
     array (
       0 => 'Stevebauman\\Location\\LocationServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Location' => 'Stevebauman\\Location\\Facades\\Location',
     ),
   ),
 );

@@ -22,7 +22,7 @@
             <a href="{{route('view.transactions', ['transaction' => $val->transaction->ref_id])}}" target="_blank">
                 <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4">
                     <div class="symbol symbol-45px symbol-circle me-2">
-                        <div class="symbol-label fs-3 fw-bolder bg-dark text-white">
+                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
                             <i class="bi bi-clipboard-data"></i>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             <div class="card w-100">
                                 <div class="card-header pe-5 border-0">
                                     <div class="card-title">
-                                        <div class="d-flex justify-content-center flex-column me-3">
+                                        <div class="d-flex justify-content-center flex-column mb-5">
                                             <div class="fs-5 text-gray-900 text-hover-info me-1 lh-1">{{__('Webhook Details')}}</div>
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@
                                                     </pre>
                                             </div>
                                         </div>
-                                        <a wire:click="resendWebhook('{{$webhook->id}}')" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="resendWebhook('{{$webhook->id}}')" class="btn btn-block btn-info">
+                                        <a wire:click="resendWebhook('{{$webhook->id}}')" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="resendWebhook('{{$webhook->id}}')" class="btn btn-block btn-secondary">
                                             <span wire:loading.remove wire:target="resendWebhook('{{$webhook->id}}')">{{__('Resend Webhook')}}</span>
                                             <span wire:loading wire:target="resendWebhook('{{$webhook->id}}')">{{__('Processing Request...')}}</span>
                                         </a>

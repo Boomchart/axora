@@ -4,7 +4,7 @@
         <div class="card-body">
             <form wire:submit.prevent="profile">
                 @csrf
-                <div class="row fv-row">
+                <div class="row">
                     <div class="col-xl-6 mb-6">
                         <label class="form-label text-dark fs-7">{{__('First Name')}}</label>
                         <input class="form-control form-control-solid" type="text" name="first_name" autocomplete="off" value="{{$user->first_name}}" required readonly />
@@ -12,7 +12,7 @@
                         <span class="form-text">{{$message}}</span>
                         @enderror
                     </div>
-                    <div class="col-xl-6 mb-6">
+                    <div class="col-xl-6">
                         <label class="form-label text-dark fs-7">{{__('Last Name')}}</label>
                         <input class="form-control form-control-solid" type="text" name="last_name" autocomplete="off" value="{{$user->last_name}}" required readonly />
                         @error('last_name')

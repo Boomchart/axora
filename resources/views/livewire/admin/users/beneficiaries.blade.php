@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
                             <input type="search" class="form-control form-control-solid bg-white rounded-4" wire:model="search" placeholder="{{__('Search Beneficiary')}}" />

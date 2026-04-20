@@ -17,7 +17,7 @@
                     <div class="card w-100">
                         <div class="card-header pe-5 border-0">
                             <div class="card-title">
-                                <div class="d-flex justify-content-center flex-column me-3">
+                                <div class="d-flex justify-content-center flex-column mb-5">
                                     <div class="fs-5 text-gray-900 text-hover-success me-1 lh-1">{{__('Open Ticket')}}</div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="col-md-12">
                             <div class="position-relative">
                                     <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-gray-500">

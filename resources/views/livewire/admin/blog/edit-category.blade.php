@@ -3,7 +3,7 @@
         <div class="card w-100">
             <div class="card-header pe-5 border-0">
                 <div class="card-title">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Edit Category')}}</div>
                     </div>
                 </div>

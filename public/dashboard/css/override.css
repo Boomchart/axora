@@ -126,12 +126,6 @@ a:hover {
     color: var(--primary-dark);
 }
 
-.text-dark,
-.text-gray-900,
-.text-gray-800 {
-    color: var(--text-primary) !important;
-}
-
 .text-gray-700,
 .text-gray-600,
 .text-gray-500,
@@ -211,7 +205,7 @@ a:hover {
 
 .toolbar {
     background: transparent !important;
-    padding: 2rem 0 1.5rem !important;
+    /* padding: 2rem 0 1.5rem !important; */
 }
 
 .toolbar h1.text-success {
@@ -230,44 +224,12 @@ a:hover {
     row-gap: 1.5rem;
 }
 
-.card {
-    background-color: var(--background-primary) !important;
-    border: 1px solid rgba(223, 230, 233, 0.8) !important;
-    border-radius: 20px !important;
-    box-shadow: var(--shadow-teal) !important;
-}
-
-.card.bg-transparent {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-.card-header {
-    background-color: transparent !important;
-    border-bottom: 1px solid rgba(223, 230, 233, 0.8) !important;
-    padding: 1.5rem !important;
-}
-
-.card-body {
-    color: var(--text-secondary);
-}
-
 .rounded-4 {
     border-radius: 20px !important;
 }
 
 .card-rounded {
     border-radius: 22px !important;
-}
-
-.border,
-.border-top,
-.border-bottom,
-.border-start,
-.border-end,
-.border-secondary {
-    border-color: rgba(223, 230, 233, 0.9) !important;
 }
 
 hr.bg-axora-secondary {
@@ -391,7 +353,7 @@ hr.bg-axora-secondary {
     font-family: var(--font-heading);
     font-weight: 600 !important;
     letter-spacing: -0.01em;
-    border-radius: 12px !important;
+    border-radius: 50rem !important;
     transition: all 0.3s ease !important;
 }
 
@@ -436,7 +398,7 @@ hr.bg-axora-secondary {
 .btn-secondary:active {
     background-color: var(--secondary-dark) !important;
     border-color: var(--secondary-dark) !important;
-    color: #ffffff !important;
+    color: var(--primary-dark) !important;
     transform: translateY(-2px);
 }
 
@@ -562,7 +524,7 @@ hr.bg-axora-secondary {
 }
 
 .form-label {
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     color: var(--text-primary) !important;
     margin-bottom: 0.5rem;
     font-size: 0.9375rem;
@@ -738,38 +700,6 @@ hr.bg-axora-secondary {
     font-weight: 800 !important;
 }
 
-#kt_post .card.p-5.mb-5 {
-    background-color: var(--background-primary) !important;
-    border: 1px solid rgba(223, 230, 233, 0.8) !important;
-    border-radius: 20px !important;
-    box-shadow: var(--shadow-teal) !important;
-    transition: all 0.25s ease !important;
-}
-
-#kt_post .card.p-5.mb-5 p {
-    color: var(--text-secondary) !important;
-    font-weight: 600 !important;
-}
-
-#kt_post .card.p-5.mb-5 h3 {
-    color: var(--text-primary) !important;
-    font-family: var(--font-heading);
-    font-weight: 800 !important;
-    margin-bottom: 0;
-}
-
-#kt_post .p-5.rounded-4.border.border-secondary.mb-5 p:first-child {
-    color: var(--text-secondary) !important;
-    font-weight: 600 !important;
-}
-
-#kt_post .p-5.rounded-4.border.border-secondary.mb-5 .fs-5 {
-    color: var(--text-primary) !important;
-    font-family: var(--font-heading);
-    font-weight: 800 !important;
-    margin-bottom: 0;
-}
-
 #logChart {
     background-color: #ffffff;
     border: 1px solid rgba(223, 230, 233, 0.8);
@@ -777,42 +707,6 @@ hr.bg-axora-secondary {
     padding: 1.5rem;
     box-shadow: var(--shadow-teal);
     /*min-height: 420px;*/
-}
-
-#kt_deposit_money .card,
-#kt_bank_deposit .card {
-    border-radius: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-}
-
-#kt_deposit_money .card-header,
-#kt_bank_deposit .card-header {
-    border-bottom: 1px solid rgba(223, 230, 233, 0.8) !important;
-}
-
-#kt_deposit_money .bg-axora-secondary,
-#kt_bank_deposit .bg-axora-secondary {
-    background-color: #ffffff !important;
-    border: 1px solid rgba(223, 230, 233, 0.8);
-    box-shadow: var(--shadow-teal);
-    transition: all 0.25s ease;
-}
-
-#kt_deposit_money .bg-axora-secondary:hover,
-#kt_bank_deposit .bg-axora-secondary:hover {
-    background-color: var(--primary-lighter) !important;
-    transform: translateY(-2px);
-}
-
-#kt_bank_deposit .bg-light-warning {
-    background-color: #FFF8E5 !important;
-    border: 1px solid rgba(253, 204, 110, 0.65);
-}
-
-#kt_bank_deposit .bg-light-primary {
-    background-color: var(--secondary-lighter) !important;
-    border: 1px solid rgba(244, 194, 194, 0.55);
 }
 
 .castro-copy {
@@ -1090,7 +984,7 @@ hr.bg-axora-secondary {
 
 #kt_aside_menu .menu-item {
     width: 100% !important;
-    margin: 0 0 0.45rem !important;
+    margin: 0 0 1rem !important;
     padding: 0 !important;
 }
 
@@ -1102,7 +996,7 @@ hr.bg-axora-secondary {
     gap: 0.85rem !important;
     padding: 0.85rem .5rem !important;
     margin: 0 !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     background: transparent !important;
     color: var(--text-secondary) !important;
     box-shadow: none !important;
@@ -1111,7 +1005,7 @@ hr.bg-axora-secondary {
 }
 
 #kt_aside_menu .menu-link:hover {
-    background: var(--primary-lighter) !important;
+    background: var(--secondary-lighter) !important;
     color: var(--primary-dark) !important;
     transform: none !important;
     box-shadow: none !important;
@@ -1144,7 +1038,7 @@ hr.bg-axora-secondary {
 #kt_aside_menu .menu-link .menu-title {
     color: inherit !important;
     font-size: 0.95rem !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     line-height: 1.25 !important;
     margin: 0 !important;
     white-space: normal !important;

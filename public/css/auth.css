@@ -28,10 +28,9 @@
 /* Base */
 
 body {
-    font-family: 'Montserrat', sans-serif;
     background:
-            radial-gradient(circle at top left, var(--secondary-lighter), transparent 35%),
-            linear-gradient(180deg, #ffffff 0%, var(--bg-soft) 100%);
+        radial-gradient(circle at top left, var(--secondary-lighter), transparent 35%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg-soft) 100%);
     color: var(--text-primary);
     min-height: 100vh;
 }
@@ -204,8 +203,8 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
 }
 
 .form-label {
-    color: #334155;
-    font-weight: 800;
+    color: #000000;
+    font-weight: 500;
     margin-bottom: 0.5rem;
     font-size: 0.9375rem;
 }
@@ -325,8 +324,8 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
 
 .axora-sidebar {
     background:
-            radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 35%),
-            linear-gradient(160deg, var(--primary-dark) 0%, #033A3A 100%);
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 35%),
+        linear-gradient(160deg, var(--primary-dark) 0%, #033A3A 100%);
     color: #ffffff;
     min-height: 100vh;
     border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -624,6 +623,7 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
 .auth-form-options .form-check-input {
     margin-top: 0.2rem;
 }
+
 .auth-action-stack {
     display: grid;
     gap: 0.85rem;
@@ -1063,4 +1063,29 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
     .auth-phone-group .form-control {
         border-radius: 16px;
     }
+}
+
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--primary-dark) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background-color: var(--secondary-dark) !important;
+    border-color: var(--secondary-dark) !important;
+    color: var(--primary-dark) !important;
+    transform: translateY(-2px);
+}
+
+.axora-dashboard-icon {
+    background-color: var(--secondary-lighter) !important;
+    color: var(--primary-dark) !important;
+}
+
+.axora-dashboard-icon i {
+    color: var(--primary-dark) !important;
 }

@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-block btn-info" type="submit" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="save"><i class="bi bi-filetype-csv"></i>
+                                <button class="btn btn-block btn-secondary" type="submit" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="save"><i class="bi bi-filetype-csv"></i>
                                     <span wire:loading.remove wire:target="save">{{__('Export')}}</span>
                                     <span wire:loading wire:target="save">{{__('Exporting file...')}}</span>
                                 </button>

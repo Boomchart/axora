@@ -39,7 +39,7 @@
                         </div>
                         @if($gateway->instructions || $gateway->crypto=1)
 
-                        <div class="bg-light-warning p-5 mb-7 rounded-4 text-wrap" wire:ignore style="overflow-wrap: break-word;">
+                        <div class="axora-dashboard-icon p-5 mb-7 rounded-4 text-wrap" wire:ignore style="overflow-wrap: break-word;">
                             @if($gateway->crypto)
                             <p class="fw-bold fs-7 mb-0">{{__('Wallet address')}}</p>
                             <p class="fs-7">{{$gateway->val2}} <i class="bi bi-clipboard-check text-dark castro-copy fs-5" data-clipboard-text="{{$gateway->val2}}" title="{{__('Copy')}}"></i></p>

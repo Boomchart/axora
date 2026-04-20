@@ -100,7 +100,7 @@
 
 .axora-kyc-brand p {
     color: rgba(255, 255, 255, 0.68);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.7;
     margin-bottom: 0;
 }
@@ -150,14 +150,14 @@
 
 .axora-kyc-step-content h6 {
     color: #ffffff;
-    font-weight: 900;
+    font-weight: 600;
     margin-bottom: 0.2rem;
 }
 
 .axora-kyc-step-content p {
     color: rgba(255, 255, 255, 0.65);
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0;
 }
 
@@ -210,7 +210,7 @@
     padding: 4rem 1.5rem;
 }
 
-.axora-kyc-content > form {
+.axora-kyc-content>form {
     width: 100%;
 }
 
@@ -242,7 +242,7 @@
 .axora-kyc-header p {
     color: #64748b;
     line-height: 1.7;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0;
 }
 
@@ -350,8 +350,8 @@
 
 
 .axora-director-summary {
-    display: flex;
-    align-items: flex-start;
+    /* display: flex;
+    align-items: flex-start; */
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 2rem;
@@ -518,4 +518,20 @@
     .axora-kyc-actions {
         padding: 0 1rem;
     }
+}
+
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--primary-dark) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background-color: var(--secondary-dark) !important;
+    border-color: var(--secondary-dark) !important;
+    color: var(--primary-dark) !important;
+    transform: translateY(-2px);
 }

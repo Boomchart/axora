@@ -86,7 +86,7 @@
         "name": "John Doe",
         "email": "john@somebody.live",
         "phone": "+12025550125",
-        "phone_code": "+1",
+        "phone_code": "US",
    }'
     </code></pre>
     </div>
@@ -111,7 +111,7 @@ $response = $client->post('/order', [
         'name' => 'John Doe',
         'email' => 'john@somebody.live',
         'phone' => '+12025550125',
-        'phone_code' => '+1',
+        'phone_code' => 'US',
     ]
 ]);
 $order = json_decode($response->getBody(), true);</code></pre>
@@ -134,7 +134,7 @@ $order = json_decode($response->getBody(), true);</code></pre>
     name: 'John Doe',
     email: 'john@somebody.live',
     phone: '+12025550125',
-    phone_code: '+1',
+    phone_code: 'US',
   })
 });
 

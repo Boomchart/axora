@@ -59,7 +59,7 @@
         <div class="card w-100">
             <div class="card-header pe-5 border-0">
                 <div class="card-title">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="fs-4 text-gray-900 text-hover-danger me-1 lh-1">{{__('Add Registration Type')}}</div>
                     </div>
                 </div>
@@ -110,10 +110,10 @@
                     <td>{{$val->name}}</td>
                     <td>{{$val->created_at->setTimezone($admin->timezone)->format('Y/m/d h:i:A')}}</td>
                     <td class="text-center">
-                        <button id="kt_edit_{{$val->id}}_button" class="btn btn-sm btn-info rounded-pill me-2">{{__('Edit')}}</button>
+                        <button id="kt_edit_{{$val->id}}_button" class="btn btn-sm btn-secondary rounded-pill me-2">{{__('Edit')}}</button>
                         <a href="{{route('admin.reg.kyc', ['reg' => $val->id])}}" target="_blank" class="btn btn-sm btn-dark rounded-pill me-2">{{__('KYC Documents')}}</a>
                         <a data-bs-toggle="modal" data-bs-target="#delete{{$val->id}}" href="" class="btn btn-sm btn-danger rounded-pill">{{__('Delete')}}</a>
-                        <button wire:click="duplicate('{{$val->id}}')" class="btn btn-sm btn-info rounded-pill me-2">
+                        <button wire:click="duplicate('{{$val->id}}')" class="btn btn-sm btn-secondary rounded-pill me-2">
                             <span wire:loading.remove wire:target="duplicate('{{$val->id}}')">{{__('Duplicate')}}</span>
                             <span wire:loading wire:target="duplicate('{{$val->id}}')">{{__('Processing Request...')}}</span>
                         </button>

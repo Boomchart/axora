@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="{{$set->site_name}}" />
     <meta name="application-name" content="{{$set->site_name}}" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="description" content="@yield('meta_description', $set->site_desc)" /
+    <meta name="description" content="@yield('meta_description', $set->site_desc)" />
     <link rel="shortcut icon" href="{{asset('front/img/favicon.png')}}" />
     <!-- Google Fonts - Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link rel="preload" href="{{asset('front/css/cookie.css')}}" type="text/css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="{{asset('front/css/toast.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{asset('front/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('front/css/custom.css')}}?v={{ filemtime(public_path('front/css/custom.css')) }}">
     <link href="{{asset('asset/fonts/fontawesome/css/all.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
     @yield('css')

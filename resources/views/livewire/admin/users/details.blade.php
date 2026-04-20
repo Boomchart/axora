@@ -1,8 +1,8 @@
 <div>
     <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post" wire:loading.class.delay="opacity-50" wire:target="approveKYC">
         <div class="container">
-            <div class="row g-6 g-xl-9">
-                <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 mb-5">
                     <div class="card h-100 rounded-5">
                         <div class="card-body p-9">
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card h-100 rounded-5 bg-success text-white">
                         <div class="card-body p-9">
                             <div class="row">
@@ -80,7 +80,7 @@
                                     <div class="card w-100">
                                         <div class="card-header pe-5 border-0">
                                             <div class="card-title">
-                                                <div class="d-flex justify-content-center flex-column me-3">
+                                                <div class="d-flex justify-content-center flex-column mb-5">
                                                     <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Edit Balance')}}</div>
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@
                     </div>
                     <!--end::Budget-->
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center justify-content-center">

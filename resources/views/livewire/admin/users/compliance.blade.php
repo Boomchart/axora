@@ -1,8 +1,8 @@
 <div>
     <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post" wire:loading.class.delay="opacity-50" wire:target="approveKYC">
         <div class="container">
-            <div class="row g-6 g-xl-9">
-                <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <div class="fs-5 mb-6 fw-bold">{{__('Flag Features on this Account')}}</div>
@@ -31,21 +31,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <form class="form w-100" wire:submit.prevent="updateIssuing">
                                 <p class="fs-6 fw-bold mb-5">{{__('Gift Card Issuing Fee & Rev Share')}}</p>
-                                <div class="fv-row mb-6 form-floating">
-                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="issuing_fc" />
+                                <div class="fv-row mb-6">
                                     <label class="form-label fs-7 text-dark fw-bold required">{{__('Flat Fee')}} ({{$currency->currency}})</label>
+                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="issuing_fc" />
                                     @error('issuing_fc')
                                     <span class="form-text text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-                                <div class="fv-row mb-6 form-floating">
-                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="issuing_pc" />
+                                <div class="fv-row mb-6">
                                     <label class="form-label fs-7 text-dark fw-bold required">{{__('Percent Fee')}} (%)</label>
+                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="issuing_pc" />
                                     @error('issuing_pc')
                                     <span class="form-text text-danger">{{$message}}</span>
                                     @enderror
@@ -66,23 +66,23 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="fv-row mb-6 form-floating">
-                                                <input type="text" class="form-control form-control-solid" autocomplete="off" placeholder="{{__('Enter Agent Account Id')}}" wire:model.debounce.1000ms="issuing_agents.{{$index}}.account_id">
+                                            <div class="fv-row mb-6">
                                                 <label class="form-label text-dark fs-7 fw-bold">{{__('Account ID')}}</label>
+                                                <input type="text" class="form-control form-control-solid" autocomplete="off" placeholder="{{__('Enter Agent Account Id')}}" wire:model.debounce.1000ms="issuing_agents.{{$index}}.account_id">
                                                 @error('issuing_agents.'.$index.'.account_id')<p class="form-text text-danger">{{$message}}</p>@enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="fv-row mb-6 form-floating">
-                                                <input type="text" steps="any" class="form-control form-control-solid" min="0" autocomplete="off" required wire:model.debounce.1000ms="issuing_agents.{{$index}}.rev_fc">
+                                            <div class="fv-row mb-6">
                                                 <label class="form-label text-dark fs-7 fw-bold">{{__('Rev Fc')}} ({{$currency->currency}})</label>
+                                                <input type="text" steps="any" class="form-control form-control-solid" min="0" autocomplete="off" required wire:model.debounce.1000ms="issuing_agents.{{$index}}.rev_fc">
                                                 @error('issuing_agents.'.$index.'.rev_fc')<p class="form-text text-danger">{{$message}}</p>@enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="fv-row mb-6 form-floating">
-                                                <input type="text" steps="any" class="form-control form-control-solid" autocomplete="off" required wire:model.debounce.1000ms="issuing_agents.{{$index}}.rev_pc">
+                                            <div class="fv-row mb-6">
                                                 <label class="form-label text-dark fs-7 fw-bold">{{__('Rev Pc')}} (%)</label>
+                                                <input type="text" steps="any" class="form-control form-control-solid" autocomplete="off" required wire:model.debounce.1000ms="issuing_agents.{{$index}}.rev_pc">
                                                 @error('issuing_agents.'.$index.'.rev_pc')<p class="form-text text-danger">{{$message}}</p>@enderror
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card h-100">
                         <div class="card-body p-9">
                             <div class="fs-5 mb-6 fw-bold">{{ __('Company Data') }}</div>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Legal Name') }}</div>
                                     <div class="ms-auto text-dark">{{ $client->first_name.' '.$client->last_name }}
                                     </div>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Business Name') }}</div>
                                     <div class="ms-auto text-dark">{{ $client->business->name }}
                                     </div>
@@ -131,35 +131,35 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Staff Size') }}</div>
                                     <div class="ms-auto text-dark">{{ $client->business->staff_size }}</div>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Business Monthly Limits') }}</div>
                                     <div class="ms-auto text-dark">{{ $client?->business->business_monthly_limits}}</div>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('MCC') }}</div>
                                     <div class="ms-auto text-dark">{{ $client->business->getMcc?->name }}</div>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Registration Type') }}</div>
                                     <div class="ms-auto text-dark">{{ $client?->business->getRegType?->name }}</div>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Incorporation Date') }}</div>
                                     <div class="ms-auto text-dark">
                                         {{ ucwords($client->business->incorporation_date) }}
@@ -168,7 +168,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Registration Location') }}</div>
                                     <div class="ms-auto text-dark">
                                         {{ ucwords($client->business->registration_location) }}
@@ -177,7 +177,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ __('Business Address') }}</div>
                                     <div class="ms-auto text-dark">
                                         {{ $client->business->business_street . ', ' . $client->business->business_state . ', ' . $client->business->business_city . ', ' . $client->business->business_postal_code . ', ' . $client->business->business_country }}
@@ -221,7 +221,7 @@
                             @foreach ($client->kycs as $kyc)
                             <div class="d-flex flex-column justify-content-center flex-row-fluid pe-11">
                                 <div class="d-flex fs-7 align-items-center mb-3">
-                                    <div class="bullet bg-danger me-3"></div>
+                                    <div class="bullet bg-success me-3"></div>
                                     <div class="text-gray-800 fw-bold">{{ $kyc?->doc?->title }} @if ($kyc->doc->deleted_at != null)
                                         <span
                                             class="badge badge-danger badge-sm">{{ __('Deleted Doc Type') }}</span>
@@ -284,7 +284,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <p class="text-dark fw-bold mb-0 fs-5">{{__('Block Account')}}</p>
@@ -292,12 +292,12 @@
                             @if($client->status==0)
                             <a wire:click="block" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-ban"></i> {{__('Block Account')}}</a>
                             @else
-                            <a wire:click="unblock" class="btn btn-sm btn-info rounded-pill"><i class="bi bi-check2-circle"></i> {{__('Unblock Account')}}</a>
+                            <a wire:click="unblock" class="btn btn-sm btn-secondary rounded-pill"><i class="bi bi-check2-circle"></i> {{__('Unblock Account')}}</a>
                             @endif
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <p class="text-dark fw-bold mb-0 fs-5">{{__('Change Password')}}</p>
@@ -307,7 +307,7 @@
                                 <div class="card w-100">
                                     <div class="card-header pe-5 border-0">
                                         <div class="card-title">
-                                            <div class="d-flex justify-content-center flex-column me-3">
+                                            <div class="d-flex justify-content-center flex-column mb-5">
                                                 <div class="fs-4 text-gray-900 text-hover-info me-1 lh-1">{{__('Change Password')}}</div>
                                             </div>
                                         </div>
@@ -344,7 +344,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="text-center mt-10">
-                                                    <button type="submit" class="btn btn-info btn-block my-2" wire:loading.attr="disabled" wire:loading.class="opacity-50">
+                                                    <button type="submit" class="btn btn-secondary btn-block my-2" wire:loading.attr="disabled" wire:loading.class="opacity-50">
                                                         <span wire:loading.remove wire:target="editPassword">{{__('Submit Request')}}</span>
                                                         <span wire:loading wire:target="editPassword">{{__('Processing Request...')}}</span>
                                                     </button>
@@ -357,7 +357,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">
                             <p class="text-dark fw-bold mb-0 fs-5">{{__('Ban Account')}}</p>
@@ -365,7 +365,7 @@
                             @if($client->ban == 0)
                             <a wire:click="ban" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-ban"></i> {{__('Ban Account')}}</a>
                             @else
-                            <a wire:click="unban" class="btn btn-sm btn-info rounded-pill"><i class="bi bi-check2-circle"></i> {{__('Unban Account')}}</a>
+                            <a wire:click="unban" class="btn btn-sm btn-secondary rounded-pill"><i class="bi bi-check2-circle"></i> {{__('Unban Account')}}</a>
                             @endif
                         </div>
                     </div>

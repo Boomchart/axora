@@ -38,7 +38,7 @@
             </div>
             <div class="aside-menu flex-column-fluid">
                 <div class="menu menu-column menu-fit menu-rounded menu-title-dark menu-icon-dark menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fs-7 my-5 mt-lg-2 mb-lg-0" id="kt_aside_menu" data-kt-menu="true">
-                    <div class="menu-fit hover-scroll-y me-lg-n5 pe-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="20px" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer">
+                    <div class="menu-fit me-lg-n5 pe-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="20px" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer">
                         <div class="menu-item"><!--begin:Menu link-->
                             <a class="menu-link @if(route('user.dashboard')==url()->current()) active @endif" href="{{route('user.dashboard')}}">
                                     <span class="menu-icon"><!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
@@ -100,7 +100,7 @@
                         <div x-data="{ open: false }" class="position-relative">
                             <div @click="open = !open" class="d-flex align-items-center rounded-4 bg-white p-3 cursor-pointer shadow-lg mb-3">
                                 <div class="symbol symbol-40px symbol-circle me-2">
-                                    <div class="symbol-label fs-5 text-dark fw-bold bg-secondary">{{strtoupper(substr($user->business->name, 0, 2))}}</div>
+                                    <div class="symbol-label fs-5 fw-bold axora-dashboard-icon">{{strtoupper(substr($user->business->name, 0, 2))}}</div>
                                 </div>
                                 <div class="ps-1">
                                     <p class="fs-8 text-dark fw-bold mb-0">

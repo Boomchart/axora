@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-xl navbar-light sticky-top">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/">
+        <a class="navbar-brand d-flex align-items-center" href="{{route('home')}}">
             <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="navbar-logo">
         </a>
 

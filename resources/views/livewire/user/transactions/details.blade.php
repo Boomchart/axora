@@ -21,7 +21,7 @@
         <div class="container">
             <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4">
                 <div class="symbol symbol-45px symbol-circle me-2">
-                    <div class="symbol-label fs-3 fw-bolder bg-dark text-white">
+                    <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
                         @if($val->trx_type == 'debit')
                         <i class="bi bi-dash-lg"></i>
                         @else

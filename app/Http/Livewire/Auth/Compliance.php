@@ -18,7 +18,7 @@ class Compliance extends Component
 	use WithFileUploads;
 	public $settings;
 	public $user;
-	public $stage;
+	public $stage = 'business_details';
 	public $link = [];
 	public $fields = [];
 	public $files = [];
@@ -64,7 +64,7 @@ class Compliance extends Component
 
 	public $uploadedFiles;
 
-    public $page_ready = false;
+	public $page_ready = false;
 
 	protected $listeners = [
 		'saved' => '$refresh',
@@ -72,105 +72,6 @@ class Compliance extends Component
 		'processApplicant' => 'processApplicant',
 		'fetchDocs' => 'fetchDocs'
 	];
-
-	public function fetchDocs()
-	{
-		$this->uploadedFiles = UserKyc::whereUserId($this->user->id)->whereRelation('doc', 'doc', '=', 1)->get();
-		$this->emit('saved');
-	}
-
-	public function updatedBusinessCountry()
-	{
-		if ($this->business_country) {
-			$this->reset(['states']);
-			if (State::whereCountryCode($this->business_country)->count()) {
-				$this->states = State::whereCountryCode($this->business_country)->orderBy('name', 'asc')->get();
-			} else {
-				$this->reset(['states']);
-			}
-		}
-	}
-
-	public function updatedDirectorCountry()
-	{
-		if ($this->director_country) {
-			$this->reset(['director_states']);
-			if (State::whereCountryCode($this->director_country)->count()) {
-				$this->director_states = State::whereCountryCode($this->director_country)->orderBy('name', 'asc')->get();
-			} else {
-				$this->reset(['director_states']);
-			}
-		}
-	}
-
-	public function showWarning($data)
-	{
-		return $this->emit('alert', $data);
-	}
-
-	public function navigateBack()
-	{
-		if ($this->stage == 'business_documents') {
-			$this->stage = 'business_details';
-			$this->link['business_details'] = true;
-			$this->link['business_documents'] = false;
-		} elseif ($this->stage == 'business_directors') {
-			$this->stage = 'business_documents';
-			$this->link['business_documents'] = true;
-			$this->link['business_directors'] = false;
-			$this->emit('filepond');
-		}
-		cache()->put('compliance_menu_' . $this->user->business_id, $this->stage);
-		$this->emit('disableSpinner');
-	}
-
-	public function refreshBack()
-	{
-		$this->stage = 'business_details';
-		$this->link[$this->stage] = true;
-		foreach (array_keys($this->link) as $key) {
-			$this->link[$key] = true;
-			if ($key === $this->stage) {
-				break;
-			}
-		}
-        $this->page_ready = true;
-	}
-
-	public function getFieldData()
-	{
-		$data = [];
-
-		if (count($this->kyc_fields)) {
-			foreach ($this->kyc_fields as $index => $item) {
-				$data[$index][$item->slug] = $this->user->getKyc($item->id)?->value ?? '';
-			}
-		}
-
-		return $data;
-	}
-
-	public function getFilesData()
-	{
-		$data = [];
-		if (count($this->kyc_files)) {
-			foreach ($this->kyc_files as $index => $item) {
-				$data[$index][$item->slug] = $this->user->getKyc($item->id)?->value ?? '';
-			}
-		}
-
-		return $data;
-	}
-
-	public function updatedRegistrationType()
-	{
-		if ($this->registration_type) {
-			$this->kyc_files = KycDoc::whereStatus(1)->whereRegId($this->registration_type)->whereDoc(1)->orderBy('title', 'asc')->get();
-			$this->kyc_fields = KycDoc::whereStatus(1)->whereRegId($this->registration_type)->whereDoc(0)->orderBy('title', 'asc')->get();
-			$this->fields = $this->getFieldData();
-			$this->files = $this->getFilesData();
-		}
-	}
 
 	public function mount()
 	{
@@ -215,7 +116,76 @@ class Compliance extends Component
 			$this->updatedBusinessCountry();
 			$this->business_state = $business->business_state;
 		}
+	}
 
+	public function fetchDocs()
+	{
+		$this->uploadedFiles = UserKyc::whereUserId($this->user->id)->whereRelation('doc', 'doc', '=', 1)->get();
+		$this->emit('saved');
+	}
+
+	public function updatedBusinessCountry()
+	{
+		if ($this->business_country) {
+			$this->reset(['states']);
+			if (State::whereCountryCode($this->business_country)->count()) {
+				$this->states = State::whereCountryCode($this->business_country)->orderBy('name', 'asc')->get();
+			} else {
+				$this->reset(['states']);
+			}
+		}
+	}
+
+	public function updatedDirectorCountry()
+	{
+		if ($this->director_country) {
+			$this->reset(['director_states']);
+			if (State::whereCountryCode($this->director_country)->count()) {
+				$this->director_states = State::whereCountryCode($this->director_country)->orderBy('name', 'asc')->get();
+			} else {
+				$this->reset(['director_states']);
+			}
+		}
+	}
+
+	public function showWarning($data)
+	{
+		return $this->emit('alert', $data);
+	}
+
+	public function getFieldData()
+	{
+		$data = [];
+
+		if (count($this->kyc_fields)) {
+			foreach ($this->kyc_fields as $index => $item) {
+				$data[$index][$item->slug] = $this->user->getKyc($item->id)?->value ?? '';
+			}
+		}
+
+		return $data;
+	}
+
+	public function getFilesData()
+	{
+		$data = [];
+		if (count($this->kyc_files)) {
+			foreach ($this->kyc_files as $index => $item) {
+				$data[$index][$item->slug] = $this->user->getKyc($item->id)?->value ?? '';
+			}
+		}
+
+		return $data;
+	}
+
+	public function updatedRegistrationType()
+	{
+		if ($this->registration_type) {
+			$this->kyc_files = KycDoc::whereStatus(1)->whereRegId($this->registration_type)->whereDoc(1)->orderBy('title', 'asc')->get();
+			$this->kyc_fields = KycDoc::whereStatus(1)->whereRegId($this->registration_type)->whereDoc(0)->orderBy('title', 'asc')->get();
+			$this->fields = $this->getFieldData();
+			$this->files = $this->getFilesData();
+		}
 	}
 
 	public function processApplicant()
@@ -294,9 +264,10 @@ class Compliance extends Component
 				$this->fields = $this->getFieldData();
 				$this->files = $this->getFilesData();
 			}
-			$this->stage = 'business_documents';
 			cache()->put('compliance_menu_' . $this->user->business_id, $this->stage);
-			$this->link['business_documents'] = true;
+			$this->stage = 'business_documents';
+			$this->link['business_details'] = true;
+			$this->emit('updateStage', $this->stage);
 			$this->emit('filepond');
 		} elseif ($this->stage == 'business_documents') {
 			$business = $this->user->business;
@@ -307,6 +278,7 @@ class Compliance extends Component
 			}
 
 			$this->stage = 'business_directors';
+			$this->emit('updateStage', $this->stage);
 			cache()->put('compliance_menu_' . $this->user->business_id, $this->stage);
 			$this->link['business_directors'] = true;
 		} elseif ($this->stage == 'business_directors') {
@@ -319,7 +291,7 @@ class Compliance extends Component
 			$this->user->business->update([
 				'kyc_status' => 'PROCESSING'
 			]);
-			
+
 			cache()->forget('compliance_menu_' . $this->user->business_id);
 			updateLocale('admin');
 			foreach (Admin::whereStatus(0)->whereProfile(1)->get() as $admin) {

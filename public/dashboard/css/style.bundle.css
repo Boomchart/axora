@@ -234,7 +234,7 @@ sup {
 }
 
 a {
-    color: #286453;
+    color: #0a5f5f;
     text-decoration: none
 }
 
@@ -713,7 +713,7 @@ progress {
     max-width: 100%;
     padding-right: calc(var(--bs-gutter-x)/ 2);
     padding-left: calc(var(--bs-gutter-x)/ 2);
-    margin-top: var(--bs-gutter-y)
+    /* margin-top: var(--bs-gutter-y) */
 }
 
 .col {
@@ -1999,7 +1999,7 @@ progress {
         --bs-gutter-y: 1.75rem
     }
 
-    .g-xl-8,
+    /* .g-xl-8,
     .gx-xl-8 {
         --bs-gutter-x: 2rem
     }
@@ -2007,7 +2007,7 @@ progress {
     .g-xl-8,
     .gy-xl-8 {
         --bs-gutter-y: 2rem
-    }
+    } */
 
     .g-xl-9,
     .gx-xl-9 {
@@ -7794,7 +7794,7 @@ fieldset:disabled .btn {
 }
 
 .border-warning {
-    border-color: #FFE86B !important
+    border-color: rgba(253, 204, 110, 0.65) !important
 }
 
 .border-danger {
@@ -11209,7 +11209,7 @@ fieldset:disabled .btn {
 }
 
 .text-success {
-    color: #286453 !important
+    color: #0a5f5f !important
 }
 
 .text-info {
@@ -54407,7 +54407,7 @@ canvas {
 
 @media (min-width:992px) {
     .aside.aside-default {
-        padding: 0 40px;
+        padding: 0 20px;
         width: 300px;
         transition: width .3s ease
     }
@@ -54426,9 +54426,9 @@ canvas {
         display: none
     }
 
-    .aside.aside-default .aside-menu {
+    /* .aside.aside-default .aside-menu {
         width: 220px
-    }
+    } */
 
     .aside-fixed .aside.aside-default {
         position: fixed;
@@ -54943,12 +54943,12 @@ canvas {
 
 .checkoutButton:hover {
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15),
-    0 3px 6px rgba(0, 0, 0, 0.1);
+        0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .checkoutButton:active {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
-    0 1px 3px rgba(0, 0, 0, 0.08);
+        0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .dot {
@@ -55092,8 +55092,8 @@ canvas {
     display: grid;
     border-radius: 50%;
     background:
-            linear-gradient(0deg, rgb(0 0 0/50%) 30%, #0000 0 70%, rgb(0 0 0/100%) 0) 50%/8% 100%,
-            linear-gradient(90deg, rgb(0 0 0/25%) 30%, #0000 0 70%, rgb(0 0 0/75%) 0) 50%/100% 8%;
+        linear-gradient(0deg, rgb(0 0 0/50%) 30%, #0000 0 70%, rgb(0 0 0/100%) 0) 50%/8% 100%,
+        linear-gradient(90deg, rgb(0 0 0/25%) 30%, #0000 0 70%, rgb(0 0 0/75%) 0) 50%/100% 8%;
     background-repeat: no-repeat;
     animation: l23 0.5s infinite steps(12);
 }
@@ -55328,13 +55328,18 @@ canvas {
 }
 
 .otp-input-fa {
-    width: 100%; /* Take 100% of parent's available width */
-    max-width: 50px; /* But don't exceed 50px wide on larger screens */
-    aspect-ratio: 1 / 1; /* This makes the height equal to the calculated width, keeping it square */
-    display: inline-block; /* Keeps it inline with other elements but respects width/height */
+    width: 100%;
+    /* Take 100% of parent's available width */
+    max-width: 50px;
+    /* But don't exceed 50px wide on larger screens */
+    aspect-ratio: 1 / 1;
+    /* This makes the height equal to the calculated width, keeping it square */
+    display: inline-block;
+    /* Keeps it inline with other elements but respects width/height */
     border-color: #000;
     border-radius: 11px;
-    box-sizing: border-box; /* Ensures padding and border are included in the element's total width/height */
+    box-sizing: border-box;
+    /* Ensures padding and border are included in the element's total width/height */
 }
 
 @media (max-width: 576px) {
@@ -55352,8 +55357,10 @@ canvas {
     max-width: 800px;
     display: flex;
     align-items: center;
-    justify-content: center; /* changed from space-between */
-    gap: 0.3rem; /* adjust as needed */
+    justify-content: center;
+    /* changed from space-between */
+    gap: 0.3rem;
+    /* adjust as needed */
     position: relative;
 }
 
@@ -55436,4 +55443,12 @@ canvas {
         width: 200px;
         z-index: 1030;
     }
+}
+
+.axora-text-color {
+    color: var(--primary-dark) !important;
+}
+
+.axora-dashboard-bg {
+    background-color: var(--secondary-lighter) !important;
 }

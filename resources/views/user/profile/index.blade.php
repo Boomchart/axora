@@ -35,8 +35,8 @@
       <div class="d-flex flex-stack cursor-pointer mt-6" data-bs-toggle="modal" data-bs-target="#resetpassword">
         <div class="d-flex align-items-center">
           <div class="symbol symbol-45px symbol-circle me-4">
-            <div class="symbol-label bg-warning">
-              <i class="bi bi-unlock text-dark fs-3"></i>
+            <div class="symbol-label axora-dashboard-icon">
+              <i class="bi bi-unlock fs-3"></i>
             </div>
           </div>
           <div class="ps-1">

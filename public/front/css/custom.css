@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap');
+
+
 :root {
-    --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-heading: 'TikTok Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'TikTok Sans', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     --primary-color: #0D7373;
     --primary-dark: #0A5F5F;
@@ -14,7 +17,7 @@
     --secondary-vibrant: #FF6B6B;
 
     --text-primary: #2D3436;
-    --text-secondary: #636E72;
+    --text-secondary: #151516;
     --text-light: #B2BEC3;
     --text-muted: #8898AA;
 
@@ -81,7 +84,7 @@ b {
     font-family: var(--font-heading), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-weight: 600;
     letter-spacing: -0.01em;
-    border-radius: 12px;
+    border-radius: 25px;
 }
 
 .btn-primary {
@@ -156,7 +159,7 @@ b {
     font-size: 1.125rem;
     border: none;
     transition: all 0.3s ease;
-    border-radius: 12px;
+    border-radius: 25px;
 }
 
 .btn-light:hover {
@@ -172,7 +175,7 @@ b {
     padding: 0.875rem 2rem;
     font-size: 1rem;
     transition: all 0.3s ease;
-    border-radius: 12px;
+    border-radius: 25px;
 }
 
 .btn-outline-light:hover {
@@ -246,7 +249,7 @@ b {
 }
 
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-lighter) 0%, var(--background-primary) 100%);
+    background: var(--background-accent);
     padding: 6rem 0 4rem;
     position: relative;
     overflow: hidden;
@@ -583,7 +586,7 @@ b {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
     font-size: 1rem;
     color: var(--text-secondary);
 }
@@ -595,17 +598,33 @@ b {
 }
 
 .code-snippet-container {
-    background-color: var(--primary-dark);
-    border-radius: 16px;
+    --vscode-editor-bg: #1F1F1F;
+    --vscode-chrome-bg: #181818;
+    --vscode-border: #2B2B2B;
+    --vscode-fg: #CE9178;
+    --vscode-fg-muted: #9D9D9D;
+    --vscode-accent: #0078D4;
+    --vscode-token-comment: #6A9955;
+    --vscode-token-keyword: #569CD6;
+    --vscode-token-string: #CE9178;
+    --vscode-token-number: #B5CEA8;
+    --vscode-token-function: #DCDCAA;
+    --vscode-token-type: #4EC9B0;
+    --vscode-token-variable: #9CDCFE;
+    --vscode-token-operator: #D4D4D4;
+
+    background-color: var(--vscode-editor-bg);
+    border: 1px solid var(--vscode-border);
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     position: relative;
 }
 
-.code-tabs {
+.code-snippet-container .code-tabs {
     display: flex;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--vscode-chrome-bg);
+    border-bottom: 1px solid var(--vscode-border);
     overflow-x: auto;
     scrollbar-width: thin;
 }
@@ -623,28 +642,31 @@ b {
     border-radius: 2px;
 }
 
-.code-tab {
+.code-snippet-container .code-tab {
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.6);
-    padding: 1rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+    color: var(--vscode-fg-muted);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    border-top: 1px solid transparent;
+    border-right: 1px solid transparent;
     white-space: nowrap;
 }
 
-.code-tab:hover {
-    color: rgba(255, 255, 255, 0.9);
-    background-color: rgba(255, 255, 255, 0.05);
+.code-snippet-container .code-tab:hover {
+    color: var(--vscode-fg);
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
-.code-tab.active {
+.code-snippet-container .code-tab.active {
     color: #ffffff;
-    border-bottom-color: var(--secondary-color);
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--vscode-editor-bg);
+    border-top-color: var(--vscode-accent);
+    border-right-color: var(--vscode-border);
 }
 
 .code-content {
@@ -690,39 +712,75 @@ b {
     background: transparent !important;
 }
 
-.code-block code,
-.code-block code[class*="language-"],
-.code-block pre[class*="language-"] {
-    color: #E6F5F5;
+.code-snippet-container .code-block code,
+.code-snippet-container .code-block code[class*="language-"],
+.code-snippet-container .code-block pre[class*="language-"] {
+    color: var(--vscode-fg) !important;
     background: transparent !important;
     padding: 0;
     white-space: pre;
     text-shadow: none !important;
 }
 
-.code-copy-btn {
+.code-snippet-container .token.comment,
+.code-snippet-container .token.block-comment,
+.code-snippet-container .token.prolog,
+.code-snippet-container .token.doctype,
+.code-snippet-container .token.cdata { color: var(--vscode-token-comment) !important; font-style: italic; }
+.code-snippet-container .token.keyword,
+.code-snippet-container .token.atrule,
+.code-snippet-container .token.selector,
+.code-snippet-container .token.important,
+.code-snippet-container .token.boolean,
+.code-snippet-container .token.null,
+.code-snippet-container .token.tag { color: var(--vscode-token-keyword) !important; }
+.code-snippet-container .token.string,
+.code-snippet-container .token.char,
+.code-snippet-container .token.attr-value,
+.code-snippet-container .token.regex,
+.code-snippet-container .token.url { color: var(--vscode-token-string) !important; }
+.code-snippet-container .token.number,
+.code-snippet-container .token.symbol,
+.code-snippet-container .token.constant { color: var(--vscode-token-number) !important; }
+.code-snippet-container .token.function,
+.code-snippet-container .token.function-name,
+.code-snippet-container .token.method { color: var(--vscode-token-function) !important; }
+.code-snippet-container .token.class-name,
+.code-snippet-container .token.builtin,
+.code-snippet-container .token.namespace { color: var(--vscode-token-type) !important; }
+.code-snippet-container .token.variable,
+.code-snippet-container .token.property,
+.code-snippet-container .token.parameter,
+.code-snippet-container .token.attr-name { color: var(--vscode-token-variable) !important; }
+.code-snippet-container .token.operator,
+.code-snippet-container .token.entity,
+.code-snippet-container .token.punctuation { color: var(--vscode-token-operator) !important; }
+
+.code-snippet-container .code-copy-btn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--vscode-border);
+    color: var(--vscode-fg-muted);
+    padding: 0.375rem 0.625rem;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    font-size: 0.875rem;
     z-index: 10;
 }
 
-.code-copy-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+.code-snippet-container .code-copy-btn:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--vscode-fg);
+    border-color: var(--vscode-accent);
 }
 
-.code-copy-btn.copied {
-    background-color: var(--success-color);
-    border-color: var(--success-color);
+.code-snippet-container .code-copy-btn.copied {
+    background-color: var(--vscode-accent);
+    border-color: var(--vscode-accent);
+    color: #ffffff;
 }
 
 .code-copy-btn i {

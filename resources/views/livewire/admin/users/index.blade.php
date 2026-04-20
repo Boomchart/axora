@@ -102,7 +102,7 @@
         <div class="container">
             <div class="row g-xl-8">
                 <div class="col-lg-12 col-md-12">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="col-md-12">
                             <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
                                 <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>

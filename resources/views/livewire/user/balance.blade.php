@@ -1,7 +1,7 @@
 <div>
     <div class="toolbar" id="kt_toolbar" wire:init="launchChart">
-        <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
-            <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
+        <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap mb-5">
+            <div class="d-flex flex-column align-items-start justify-content-center flex-wrap">
                 <h1 class="text-success fw-bolder my-1 fs-2x mb-6">{{__('Hi').' '.$user->first_name}},</h1>
             </div>
         </div>
@@ -19,27 +19,25 @@
                     @endif
                     @if($user->business->kyc_status==null || $user->business->kyc_status=="RESUBMIT" || $user->business->kyc_status=="PENDING")
                     <div class="col-md-12">
-                        <div class="d-flex align-items-center bg-white rounded-4 p-4">
+                        <div class="d-flex align-items-center bg-white rounded-4 p-4 cursor-pointer" data-href="{{route('user.compliance')}}">
                             <div class="symbol symbol-45px me-5 symbol-circle">
-                                <span class="symbol-label axora-warning-icon">
+                                <span class="symbol-label axora-dashboard-icon">
                                     <i class="bi bi-globe fs-3"></i>
                                 </span>
                             </div>
                             <div class="d-flex align-items-center flex-wrap w-100">
-                                <a href="{{route('user.compliance')}}">
-                                    <div class="mb-1 pe-3 flex-grow-1">
-                                        <div class="fs-7 text-dark text-hover-success fw-bold">{{__('Verify Business')}}</div>
-                                        <div class="text-gray-800 fw-semibold">{{__('Kindly update your account information to enable gift card issuance for your customers through our API.')}}</div>
-                                    </div>
-                                </a>
+                                <div class="mb-1 pe-3 flex-grow-1">
+                                    <div class="fs-7 text-dark text-hover-success fw-bold">{{__('Verify Business')}}</div>
+                                    <div class="text-gray-800 fw-semibold">{{__('Kindly update your account information to enable gift card issuance for your customers through our API.')}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     @endif
                     <div class="card bg-transparent h-md-100">
                         <div class="card-body p-0">
-                            <div class="px-9 pt-6 card-rounded w-100 axora-wallet-card">
-                                <div class="fw-bold fs-7 text-start pb-5 text-warning">
+                            <div class="px-9 pt-6 card-rounded w-100 axora-dashboard-bg">
+                                <div class="fw-bold fs-7 text-start pb-5 axora-text-color">
                                     <div class="mb-5"
                                         x-data="{
                                             show: @js($user->business->reveal_balance),
@@ -48,21 +46,21 @@
                                                 $wire.displayBalance(); // Call Livewire method
                                             }
                                         }">
-                                        <p class="text-white">
+                                        <p class="axora-text-color">
                                             <span class="me-2">{{__('Available Balance')}}</span>
-                                            <span class="ml-3 fs-3 cursor-pointer wallet-text" @click="toggle">
-                                                <i class="bi bi-eye-slash text-white" x-show="show" x-transition></i>
-                                                <i class="bi bi-eye text-white" x-show="!show" x-transition></i>
+                                            <span class="ml-3 fs-3 cursor-pointer axora-text-color" @click="toggle">
+                                                <i class="bi bi-eye-slash" x-show="show" x-transition></i>
+                                                <i class="bi bi-eye" x-show="!show" x-transition></i>
                                             </span>
                                         </p>
-                                        <span class="fw-bold fs-7 text-start text-white">
+                                        <span class="fw-bold fs-7 text-start axora-text-color">
                                             <span class="fw-bolder fs-2hx" x-cloak x-show="show" x-transition>
                                                 {{$currency->currency_symbol.currencyFormat(number_format($user->getBalance($currency->id)->amount,2)).' '.$currency->currency}}
                                             </span>
                                             <span class="fw-bolder fs-2hx" x-cloak x-show="!show" x-transition>************</span>
                                         </span>
                                         @if($user->business->kyc_status=="APPROVED")
-                                        <p class="text-white">
+                                        <p class="axora-text-color">
                                             <span class="fs-8">{{__('Issuing Fee')}}: {{$user->business->issuing_fc + collect(json_decode($user->business->issuing_agents, true) ?? [])->sum('rev_fc')}} {{$currency->currency}} + {{$user->business->issuing_pc + collect(json_decode($user->business->issuing_agents, true) ?? [])->sum('rev_pc')}}%</span>
                                         </p>
                                         @endif
@@ -71,13 +69,13 @@
                                         @foreach(getGateways() as $gateway)
                                         <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
                                         @endforeach
-                                        <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg"></i> {{__('Add Funds')}}</button>
-                                        <button id="kt_withdraw_money_button" class="btn btn-dark"><i class="bi bi-bank"></i> {{__('Withdraw')}}</button>
+                                        <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
+                                        <button id="kt_withdraw_money_button" class="btn btn-dark"><i class="bi bi-bank text-white"></i> {{__('Withdraw')}}</button>
                                         <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
                                             <div class="card w-100">
                                                 <div class="card-header pe-5 border-0">
                                                     <div class="card-title">
-                                                        <div class="d-flex justify-content-center flex-column me-3">
+                                                        <div class="d-flex justify-content-center flex-column mb-5">
                                                             <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Top up')}}</div>
                                                         </div>
                                                     </div>
@@ -90,29 +88,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body text-wrap">
+                                                    <div class="btn-wrapper text-center mb-3">
+                                                        <div class="symbol symbol-100px symbol-circle me-5 mb-10">
+                                                            <div class="symbol-label fs-1 axora-dashboard-icon">
+                                                                <i class="bi bi-bank fa-2x" style="font-size:46px;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="pb-5 mt-10 position-relative zindex-1">
                                                         <!--begin::Item-->
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 @if($set->bk_status == 1)
-                                                                <div class="d-flex flex-stack cursor-pointer bg-secondary rounded-4 p-3 mb-5" id="kt_bank_deposit_button">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="symbol symbol-45px symbol-circle me-4">
-                                                                            <div class="symbol-label bg-danger">
-                                                                                <i class="bi bi-bank text-white fs-3"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="ps-1">
-                                                                            <p href="#" class="fs-7 text-dark fw-bold mb-0">{{__('ACH (Bank Transfer)')}}</p>
-                                                                            <p class="fs-7 text-gray-600 mb-0">@if($set->deposit_percent_pc!=null){{$set->deposit_percent_pc}}% @else 0% @endif+ @if($set->deposit_fiat_pc!=null){{$set->deposit_fiat_pc}} @else 0 @endif{{$currency->currency}}</p>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" id="kt_bank_deposit_button">
+                                                                    <p href="#" class="fs-7 text-dark fw-bold mb-0">{{__('ACH (Bank Transfer)')}}</p>
+                                                                    <p class="fs-7 text-gray-600 mb-0">@if($set->deposit_percent_pc!=null){{$set->deposit_percent_pc}}% @else 0% @endif+ @if($set->deposit_fiat_pc!=null){{$set->deposit_fiat_pc}} @else 0 @endif{{$currency->currency}}</p>
                                                                 </div>
                                                                 <div wire:ignore.self id="kt_bank_deposit" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_bank_deposit_button" data-kt-drawer-close="#kt_bank_deposit_close" data-kt-drawer-width="{'md': '500px'}">
                                                                     <div class="card w-100">
                                                                         <div class="card-header pe-5 border-0">
                                                                             <div class="card-title">
-                                                                                <div class="d-flex justify-content-center flex-column me-3">
+                                                                                <div class="d-flex justify-content-center flex-column mb-5">
                                                                                     <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Bank Transfer')}}</div>
                                                                                 </div>
                                                                             </div>
@@ -150,8 +146,8 @@
                                                                                         @enderror
                                                                                         <div wire:loading wire:target="image">{{__('Uploading')}}...</div>
                                                                                     </div>
-                                                                                    <div class="bg-light-warning px-6 py-5 mb-10 rounded-4">
-                                                                                        <p class="text-dark fs-7 fw-bold">{{__('Account Details')}}</p>
+                                                                                    <div class="axora-dashboard-icon px-6 py-5 mb-10 rounded-4">
+                                                                                        <p class="fs-7 fw-bold">{{__('Account Details')}}</p>
                                                                                         <li class="d-flex align-items-center py-1">
                                                                                             <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Bank Name')}}: {{$set->dp_bank_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->dp_bank_name}}" title="{{__('Copy')}}"></i></span>
                                                                                         </li>
@@ -166,9 +162,6 @@
                                                                                         </li>
                                                                                         <li class="d-flex align-items-center py-1">
                                                                                             <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Account Name')}}: {{$set->bk_acct_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_acct_name}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                        <li class="d-flex align-items-center py-1" wire:ignore>
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Transaction Description')}}: {{$trx}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$trx}}" title="{{__('Copy')}}"></i></span>
                                                                                         </li>
                                                                                     </div>
                                                                                     <div class="bg-light-primary px-6 py-5 mb-10 rounded-4">
@@ -190,16 +183,9 @@
                                                             </div>
                                                             @foreach(getGateways() as $gateway)
                                                             <div class="col-md-12">
-                                                                <div class="d-flex flex-stack cursor-pointer bg-secondary rounded-4 p-3 mb-5" data-bs-toggle="modal" data-bs-target="#gateway_deposit{{$gateway->id}}">
-                                                                    <div class="d-flex align-items-center me-2">
-                                                                        <div class="symbol symbol-45px me-5 symbol-circle">
-                                                                            <span class="symbol-label" style="background-image:url({{url('/').'/storage/app/'.$gateway->image}});"></span>
-                                                                        </div>
-                                                                        <div class="me-5">
-                                                                            <p class="fs-7 text-dark fw-bold mb-0">{{$gateway->name}}</p>
-                                                                            <p class="fs-7 text-gray-600 mb-0">@if($gateway->percent_charge!=null){{$gateway->percent_charge}}% @else 0% @endif+ @if($gateway->fiat_charge!=null){{$gateway->fiat_charge}} @else 0 @endif{{$currency->currency}}</p>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" data-bs-toggle="modal" data-bs-target="#gateway_deposit{{$gateway->id}}">
+                                                                    <p class="fs-7 text-dark fw-bold mb-0">{{$gateway->name}}</p>
+                                                                    <p class="fs-7 text-gray-600 mb-0">@if($gateway->percent_charge!=null){{$gateway->percent_charge}}% @else 0% @endif+ @if($gateway->fiat_charge!=null){{$gateway->fiat_charge}} @else 0 @endif{{$currency->currency}}</p>
                                                                 </div>
                                                             </div>
                                                             @endforeach
@@ -229,8 +215,8 @@
                             </div>
                         </div>
                     </a>
-                    <hr class="bg-secondary mb-0 mt-5">
-                    <h4 class="mb-0 fw-bold mb-5">{{__('Sales')}} ({{__('Last 30 days')}})</h4>
+                    <hr class="bg-secondary mb-0 mt-3">
+                    <h4 class="mb-0 fw-bold mb-3">{{__('Sales')}} ({{__('Last 30 days')}})</h4>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card p-5 mb-5">
@@ -245,8 +231,8 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="bg-secondary mb-0 mt-5">
-                    <h5 class="fw-bold mb-5">{{__('API Response Codes')}}</h5>
+                    <hr class="bg-secondary mb-0 mt-1">
+                    <h5 class="fw-bold mb-3">{{__('API Response Codes')}}</h5>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="p-5 rounded-4 border border-secondary mb-5">

@@ -3,7 +3,7 @@
         <div class="card w-100">
             <div class="card-header pe-5 border-0">
                 <div class="card-title">
-                    <div class="d-flex justify-content-center flex-column me-3">
+                    <div class="d-flex justify-content-center flex-column mb-5">
                         <div class="fs-5 text-gray-900 text-hover-danger me-1 lh-1">{{__('Manage Ticket')}}</div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="ps-1">
-                                <p class="fs-7 text-white text-hover-danger fw-bold mb-0">{{$val?->business?->name}} {{__('is on watchlist')}}</p>
+                                <p class="fs-7 text-dark fw-bold mb-0">{{$val?->business?->name}} {{__('is on watchlist')}}</p>
                             </div>
                         </div>
                     </div>

@@ -4,8 +4,8 @@
         @foreach($directors as $val)
         <div class="d-flex flex-stack">
             <div class="d-flex align-items-center">
-                <div class="symbol symbol-40px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="{{$val->first_name.' '.$val->last_name}}">
-                    <span class="symbol-label bg-danger text-white fw-boldest">{{substr($val->first_name, 0, 1)}}{{substr($val->last_name, 0, 1)}}</span>
+                <div class="symbol symbol-40px symbol-circle">
+                    <span class="symbol-label axora-dashboard-icon">{{substr($val->first_name, 0, 1)}}{{substr($val->last_name, 0, 1)}}</span>
                 </div>
                 <div class="ps-2">
                     <p class="fs-7 text-dark text-hover-danger fw-bold mb-0"> {{$val->first_name.' '.$val->last_name}} <span class="dot"></span> {{$val->position}}</p>

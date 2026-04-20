@@ -11,7 +11,7 @@
             <div class="card w-100">
                 <div class="card-header pe-5 border-0">
                     <div class="card-title">
-                        <div class="d-flex justify-content-center flex-column me-3">
+                        <div class="d-flex justify-content-center flex-column mb-5">
                             <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Filter')}}</div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
             <div class="container">
                 <div class="row g-xl-8">
                     <div class="col-lg-12 col-md-12">
-                        <div class="d-flex justify-content-center flex-column me-3">
+                        <div class="d-flex justify-content-center flex-column mb-5">
                             <div class="col-md-12">
                                 <div class="input-group input-group-solid mb-5 rounded-4 bg-white">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
@@ -103,7 +103,7 @@
                                             @foreach($transactions as $k=>$val)
                                             <tr class="cursor-pointer">
                                                 <td>
-                                                    <a href="{{route('admin.view.orders', ['order' => $val->id])}}" class="btn btn-info btn-sm rounded-pill" target="_blank">{{__('Manage')}}</a>
+                                                    <a href="{{route('admin.view.orders', ['order' => $val->id])}}" class="btn btn-secondary btn-sm rounded-pill" target="_blank">{{__('Manage')}}</a>
                                                 </td>
                                                 <td class="fw-bold">{{$val->transaction->card_name}} ({{$val->transaction->card_country}})</td>
                                                 <td class="fw-bold">{{currencyFormat(number_format($val->amount, 2)).' '.$val->currency}}</td>
