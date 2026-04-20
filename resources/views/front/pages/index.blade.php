@@ -161,7 +161,7 @@
                         <li><i class="bi bi-check-circle-fill"></i><span>{{__('Comprehensive documentation')}}</span></li>
                         <li><i class="bi bi-check-circle-fill"></i><span>{{__('Sandbox environment for testing')}}</span></li>
                     </ul>
-                    <div class="d-flex gap-3 mt-4">
+                    <div class="d-flex flex-wrap gap-3 mt-4">
                         <a href="{{route('developer.index')}}" target="_blank" class="btn btn-primary">{{__('View Full Documentation')}} <i class="fa-solid fa-long-arrow-alt-right"></i></a>
                         <a href="{{route('register')}}" class="btn btn-outline-primary">{{__('Get API Key')}}</a>
                     </div>
