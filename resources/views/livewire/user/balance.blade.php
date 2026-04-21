@@ -47,7 +47,7 @@
                                             }
                                         }">
                                         <p class="axora-text-color">
-                                            <span class="me-2">{{__('Available Balance')}}</span>
+                                            <span class="me-2 fw-bolder">{{__('Available Balance')}}</span>
                                             <span class="ml-3 fs-3 cursor-pointer axora-text-color" @click="toggle">
                                                 <i class="bi bi-eye-slash" x-show="show" x-transition></i>
                                                 <i class="bi bi-eye" x-show="!show" x-transition></i>
@@ -70,7 +70,7 @@
                                         <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
                                         @endforeach
                                         <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
-                                        <button id="kt_withdraw_money_button" class="btn btn-dark"><i class="bi bi-bank text-white"></i> {{__('Withdraw')}}</button>
+                                        <button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>
                                         <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
                                             <div class="card w-100">
                                                 <div class="card-header pe-5 border-0">

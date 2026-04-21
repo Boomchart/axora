@@ -1251,7 +1251,7 @@ b {
 }
 
 .axora-b2b-notice {
-    background: linear-gradient(135deg, var(--secondary-lighter), #ffffff);
+    /* background: linear-gradient(135deg, var(--secondary-lighter), #ffffff); */
     border: 1px solid rgba(15, 23, 42, 0.08);
     border-radius: 24px;
     padding: 2rem;
@@ -1574,7 +1574,7 @@ body.axora-menu-open .axora-mobile-drawer {
 
 .axora-pricing-info,
 .axora-pricing-explainer {
-    background: linear-gradient(135deg, var(--secondary-lighter), #ffffff);
+    /* background: linear-gradient(135deg, var(--secondary-lighter), #ffffff); */
     border: 1px solid rgba(15, 23, 42, 0.08);
     box-shadow: 0 20px 55px rgba(15, 23, 42, 0.06);
 }

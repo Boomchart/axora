@@ -4238,14 +4238,15 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-dark {
-    color: #181c32;
-    border-color: #181c32
+    color: #0a5f5f;
+    border: 2px solid #0a5f5f;
+    
 }
 
 .btn-outline-dark:hover {
     color: #fff;
-    background-color: #181c32;
-    border-color: #181c32
+    background-color: #0a5f5f;
+    border-color: #0a5f5f
 }
 
 .btn-check:focus+.btn-outline-dark,
@@ -39268,7 +39269,7 @@ a:hover {
 }
 
 .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
-    border: 0;
+    /* border: 0; */
     padding: calc(.75rem + 1px) calc(1.5rem + 1px)
 }
 
