@@ -1,20 +1,15 @@
 @extends('auth.menu')
 
 @section('content')
+    <div class="auth-logo-wrap auth-logo-outside">
+        <a href="{{ route('home') }}" class="auth-logo-link">
+            <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo"@style(getUi()->light_css)>
+        </a>
+    </div>
     <div class="auth-card auth-login-card">
         <div class="auth-header">
-            <div class="auth-logo-wrap">
-                <a href="{{ route('home') }}" class="auth-logo-link">
-                    <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo"@style(getUi()->light_css)>
-                </a>
-            </div>
-
-            <span class="auth-badge">
-                <i class="bi bi-shield-check"></i>
-                {{ __('Account Verification') }}
-            </span>
+            <span class="auth-badge"><i class="bi bi-shield-check"></i>{{ __('Account Verification') }}</span>
             <h1 class="auth-title">{{ __('Enter Your OTP') }}</h1>
-
             <p class="auth-subtitle">
                 {{ __('We sent a one-time password to') }}
                 <strong>{{ ($set->otp_type == 'email') ? $user->email : $user->phone }}</strong>

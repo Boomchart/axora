@@ -1,94 +1,240 @@
-// Toggle Submenu
+// ===========================
+// Sidebar submenu toggle
+// ===========================
 function toggleSubmenu(event) {
     event.preventDefault();
-    event.stopPropagation(); // Prevent event bubbling
+    event.stopPropagation();
 
-    const parentItem = event.target.closest('.sidebar-item');
+    const parentItem = event.currentTarget.closest('.sidebar-item');
+    if (!parentItem) return;
+
     const submenu = parentItem.querySelector('.sidebar-submenu');
+    if (!submenu) return;
 
-    // Toggle open class and submenu visibility
     parentItem.classList.toggle('open');
     submenu.classList.toggle('show');
 }
 
+// ===========================
 // Generate Table of Contents
-document.addEventListener('DOMContentLoaded', function() {
+// ===========================
+document.addEventListener('DOMContentLoaded', function () {
     const content = document.querySelector('.docs-content');
     const tocList = document.getElementById('tocList');
 
-    if (content && tocList) {
-        const headings = content.querySelectorAll('h2, h3');
+    if (!content || !tocList) return;
 
-        headings.forEach((heading, index) => {
-            // Add ID to heading if it doesn't have one
-            if (!heading.id) {
-                heading.id = `heading-${index}`;
-            }
+    const headings = content.querySelectorAll('h2, h3');
 
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = `#${heading.id}`;
-            a.textContent = heading.textContent;
+    headings.forEach((heading, index) => {
+        if (!heading.id) {
+            heading.id = `heading-${index}`;
+        }
 
-            // Indent h3 headings
-            if (heading.tagName === 'H3') {
-                a.style.paddingLeft = '1.5rem';
-                a.style.fontSize = '0.8125rem';
-            }
+        const li = document.createElement('li');
+        const a = document.createElement('a');
 
-            li.appendChild(a);
-            tocList.appendChild(li);
-        });
+        a.href = `#${heading.id}`;
+        a.textContent = heading.textContent;
 
-        // Highlight active section on scroll
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.id;
-                        const tocLinks = document.querySelectorAll('.toc-list a');
-                        tocLinks.forEach((link) => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
+        if (heading.tagName === 'H3') {
+            a.classList.add('toc-child-link');
+        }
+
+        li.appendChild(a);
+        tocList.appendChild(li);
+    });
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+
+                const id = entry.target.id;
+                const tocLinks = document.querySelectorAll('.toc-list a');
+
+                tocLinks.forEach((link) => {
+                    link.classList.remove('active');
+
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
                     }
                 });
-            },
-            { rootMargin: '-100px 0px -66%' }
-        );
+            });
+        },
+        {
+            rootMargin: '-100px 0px -66%',
+            threshold: 0.1
+        }
+    );
 
-        headings.forEach((heading) => observer.observe(heading));
-    }
+    headings.forEach((heading) => observer.observe(heading));
 });
 
-// Copy Code Button
-document.querySelectorAll('.code-copy-button').forEach((button) => {
-    button.addEventListener('click', function() {
-        const codeBlock = this.closest('.code-block-wrapper').querySelector('code');
-        const text = codeBlock.textContent;
 
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = this.textContent;
-            this.textContent = 'Copied!';
-            this.classList.add('copied');
+// ===========================
+// Copy code button
+// ===========================
+document.addEventListener('click', function (event) {
+    const button = event.target.closest('.code-copy-button');
 
-            setTimeout(() => {
-                this.textContent = originalText;
-                this.classList.remove('copied');
+    if (!button) return;
+
+    const wrapper = button.closest('.code-block-wrapper');
+
+    let codeBlock = null;
+
+    if (wrapper) {
+        codeBlock = wrapper.querySelector('code');
+    }
+
+    if (!codeBlock) {
+        const nextPre = button.closest('.code-block-header')?.nextElementSibling;
+        codeBlock = nextPre ? nextPre.querySelector('code') : null;
+    }
+
+    if (!codeBlock) {
+        console.warn('No code block found for copy button.');
+        return;
+    }
+
+    const text = codeBlock.innerText || codeBlock.textContent || '';
+
+    if (!text.trim()) {
+        console.warn('Code block is empty.');
+        return;
+    }
+
+    copyTextToClipboard(text)
+        .then(function () {
+            const originalText = button.dataset.originalText || button.textContent;
+
+            button.dataset.originalText = originalText;
+            button.textContent = 'Copied!';
+            button.classList.add('copied');
+
+            setTimeout(function () {
+                button.textContent = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        })
+        .catch(function (error) {
+            console.error('Copy failed:', error);
+
+            const originalText = button.dataset.originalText || button.textContent;
+            button.dataset.originalText = originalText;
+            button.textContent = 'Failed';
+
+            setTimeout(function () {
+                button.textContent = originalText;
             }, 2000);
         });
+});
+
+function copyTextToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+    }
+
+    return new Promise(function (resolve, reject) {
+        const textarea = document.createElement('textarea');
+
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        textarea.style.opacity = '0';
+
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            if (successful) {
+                resolve();
+            } else {
+                reject(new Error('document.execCommand copy failed'));
+            }
+        } catch (error) {
+            document.body.removeChild(textarea);
+            reject(error);
+        }
+    });
+}
+
+// ===========================
+// Mobile drawer
+// ===========================
+document.addEventListener('DOMContentLoaded', function () {
+    const body = document.body;
+    const toggler = document.querySelector('.axora-doc-menu-toggler');
+    const closeBtn = document.querySelector('.axora-doc-mobile-close');
+    const backdrop = document.querySelector('.axora-doc-mobile-backdrop');
+    const drawer = document.querySelector('.axora-doc-mobile-drawer');
+
+    function openMenu() {
+        body.classList.add('axora-doc-menu-open');
+
+        if (drawer) {
+            drawer.setAttribute('aria-hidden', 'false');
+        }
+    }
+
+    function closeMenu() {
+        body.classList.remove('axora-doc-menu-open');
+
+        if (drawer) {
+            drawer.setAttribute('aria-hidden', 'true');
+        }
+    }
+
+    if (toggler) {
+        toggler.addEventListener('click', openMenu);
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeMenu);
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeMenu);
+    }
+
+    document.querySelectorAll('.axora-doc-mobile-submenu-toggle').forEach((toggle) => {
+        toggle.addEventListener('click', function () {
+            const parent = this.closest('.axora-doc-mobile-submenu-item');
+            if (!parent) return;
+
+            parent.classList.toggle('is-open');
+        });
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeMenu();
+        }
     });
 });
 
-// Mobile Sidebar Toggle
-const sidebarToggle = document.createElement('button');
-sidebarToggle.className = 'btn btn-primary d-lg-none position-fixed';
-sidebarToggle.style.cssText = 'bottom: 2rem; right: 2rem; z-index: 1000; border-radius: 50%; width: 56px; height: 56px;';
-sidebarToggle.innerHTML = '<i class="bi bi-list"></i>';
-document.body.appendChild(sidebarToggle);
+// ===========================
+// Desktop sidebar submenu toggle
+// ===========================
+document.addEventListener('click', function (event) {
+    const toggle = event.target.closest('.submenu-toggle');
 
-sidebarToggle.addEventListener('click', function() {
-    document.querySelector('.docs-sidebar').classList.toggle('show');
+    if (!toggle) return;
+
+    event.preventDefault();
+
+    const parent = toggle.closest('.has-submenu');
+    const submenu = parent ? parent.querySelector('.sidebar-submenu') : null;
+
+    if (!parent || !submenu) return;
+
+    parent.classList.toggle('open');
+    submenu.classList.toggle('show');
 });
