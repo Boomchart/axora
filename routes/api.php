@@ -14,7 +14,7 @@ use App\Http\Controllers\APIController;
 |
 */
 
-Route::middleware(['throttle:60,1'])->group(function () {
+Route::middleware(['throttle.api:60,1'])->group(function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('balance', [APIController::class, 'balance']);
         Route::get('countries/{return?}', [APIController::class, 'countries']);

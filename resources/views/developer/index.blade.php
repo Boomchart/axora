@@ -14,11 +14,10 @@
   <h2 id="key-features">Key Features</h2>
   <ul>
     <li><strong>Global Coverage:</strong> Access gift cards from 3,000+ brands across 52+ countries</li>
-    <li><strong>Real-time Delivery:</strong> Gift cards are delivered instantly via API</li>
+    <li><strong>Real-time Delivery:</strong> Gift cards are delivered webhook</li>
     <li><strong>Flexible Denominations:</strong> Choose from pre-defined or custom amounts</li>
     <li><strong>Webhook Support:</strong> Receive real-time notifications for transaction updates</li>
     <li><strong>Developer-Friendly:</strong> RESTful JSON API with comprehensive documentation</li>
-    <li><strong>Secure:</strong> Bank-level encryption and PCI DSS compliant</li>
   </ul>
 
   <div class="info-box note">
