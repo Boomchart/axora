@@ -40,19 +40,6 @@
         </p>
     </div>
 
-    <h3 id="sandbox-test-cards">Test Gift Card Codes</h3>
-    <p>
-        In the Sandbox environment, all gift cards will return test codes that follow this pattern:
-    </p>
-
-    <div class="code-block-wrapper">
-        <div class="code-block-header">
-            <span class="code-block-title">Test Gift Card Code Format</span>
-            <button class="code-copy-button">Copy</button>
-        </div>
-        <pre><code class="language-bash">TEST-XXXX-XXXX-XXXX-XXXX</code></pre>
-    </div>
-
     <h2 id="production-environment">Production Environment</h2>
     <p>
         The Production environment is where real transactions occur. Use your Production API keys to process actual gift card purchases and deliveries.

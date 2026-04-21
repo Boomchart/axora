@@ -435,7 +435,7 @@ class APIController extends Controller
                         }
                     }
 
-                    dispatch(new SendEmail($this->settings->email, $this->settings->site_name, __('New giftcard order'), __('Hello admin, you have a giftcard purchase request for') . ' ' . $this->client->name, null, null, 0));
+                    // dispatch(new SendEmail($this->settings->email, $this->settings->site_name, __('New giftcard order'), __('Hello admin, you have a giftcard purchase request for') . ' ' . $this->client->name, null, null, 0));
                 }
                 $this->logError(200);
                 return response()->json(['message' => __('Payment successful'), 'status' => 'success', 'data' => new TransactionResource($trx)], 200);
