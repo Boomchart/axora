@@ -1,22 +1,15 @@
 @extends('auth.menu')
 
 @section('content')
+  <div class="auth-logo-wrap auth-logo-outside">
+    <a href="{{ route('home') }}" class="auth-logo-link">
+      <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo"@style(getUi()->light_css)>
+    </a>
+  </div>
   <div class="auth-card auth-login-card">
     <div class="auth-header">
-      <div class="auth-logo-wrap">
-        <a href="{{ route('home') }}" class="auth-logo-link">
-          <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo" @style(getUi()->light_css)>
-        </a>
-      </div>
-
-      <span class="auth-badge">
-          <i class="bi bi-exclamation-triangle"></i>
-          {{ __('Account Suspended') }}
-      </span>
-
-      <h1 class="auth-title">
-        {{ __('Your Account Has Been Suspended') }}
-      </h1>
+      <span class="auth-badge"><i class="bi bi-exclamation-triangle"></i>{{ __('Account Suspended') }}</span>
+      <h1 class="auth-title">{{ __('Your Account Has Been Suspended') }}</h1>
 
       <p class="auth-subtitle">
         {{ __('Your access is currently restricted. Please contact support for more information or assistance with your account.') }}

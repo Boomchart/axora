@@ -1089,3 +1089,21 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
 .axora-dashboard-icon i {
     color: var(--primary-dark) !important;
 }
+
+.auth-logo-outside {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-logo-outside .auth-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-logo-outside .auth-logo {
+    max-height: 56px;
+    width: auto;
+    object-fit: contain;
+}

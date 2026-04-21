@@ -1,14 +1,13 @@
 @extends('auth.menu')
 
 @section('content')
+  <div class="auth-logo-wrap auth-logo-outside">
+    <a href="{{ route('home') }}" class="auth-logo-link">
+      <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo"@style(getUi()->light_css)>
+    </a>
+  </div>
   <div class="auth-card auth-login-card">
     <div class="auth-header">
-      <div class="auth-logo-wrap">
-        <a href="{{ route('home') }}" class="auth-logo-link">
-          <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-logo"@style(getUi()->light_css)>
-        </a>
-      </div>
-
       <span class="auth-badge"><i class="bi bi-lock"></i>{{ __('Account Recovery') }}</span>
       <h1 class="auth-title">{{ __('Create a New Password') }}</h1>
       <p class="auth-subtitle">{{ __('Choose a strong password to recover access to your account.') }}</p>
