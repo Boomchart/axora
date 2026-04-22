@@ -5,7 +5,7 @@
     <p class="lead-text">{{__('Retrieves all gift cards')}}</p>
 
     <div class="endpoint-box">
-        <span class="endpoint-method get">POST</span>
+        <span class="endpoint-method get">GET</span>
         <span class="endpoint-url">{{url('/')}}/api/v1/cards/{iso2}/{card}</span>
     </div>
 

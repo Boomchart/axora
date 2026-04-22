@@ -5,9 +5,31 @@
     <p class="lead-text">{{__('Retrieves all gift cards')}}</p>
 
     <div class="endpoint-box">
-        <span class="endpoint-method get">POST</span>
-        <span class="endpoint-url">{{url('/')}}/api/v1/cards</span>
+        <span class="endpoint-method get">GET</span>
+        <span class="endpoint-url">{{url('/')}}/api/v1/cards/{iso2}</span>
     </div>
+
+    <h2 id="request-parameters">Path Parameters</h2>
+
+    <table class="params-table">
+        <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><span class="param-name">iso2</span></td>
+            <td><span class="param-type">string</span></td>
+            <td>required</td>
+            <td>The country ISO2</td>
+        </tr>
+
+        </tbody>
+    </table>
 
     <h2 id="request-parameters">Query Parameters</h2>
 
@@ -38,14 +60,14 @@
 
     <h2 id="example-request">Example Request</h2>
 
-    <h3 id="list-all-countries">Get all orders</h3>
+    <h3 id="list-all-countries">Get all Cards</h3>
 
     <div class="code-block-wrapper">
         <div class="code-block-header">
             <span class="code-block-title">cURL</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">curl {{url('/')}}/api/v1/cards \
+        <pre><code class="language-bash">curl {{url('/')}}/api/v1/cards/{iso2} \
   -H "Authorization: Bearer sk_live_your_api_key"</code></pre>
     </div>
 
@@ -61,7 +83,7 @@
     ],
 ]);
 
-$response = $client->get('cards');
+$response = $client->get('cards/{iso2}');
 $cards = json_decode($response->getBody(), true);</code></pre>
     </div>
 
@@ -70,7 +92,7 @@ $cards = json_decode($response->getBody(), true);</code></pre>
             <span class="code-block-title">JavaScript</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-javascript">const response = await fetch('{{url('/api/v1/cards')}}', {
+        <pre><code class="language-javascript">const response = await fetch('{{url('/api/v1/cards/{iso2}')}}', {
   headers: {
     'Authorization': 'Bearer sk_live_your_api_key'
   }

@@ -122,7 +122,7 @@ $order = json_decode($response->getBody(), true);</code></pre>
             <span class="code-block-title">JavaScript</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-javascript">const response = await fetch('{{url('/').'/api/v1/orders'}}', {
+        <pre><code class="language-javascript">const response = await fetch('{{url('/').'/api/v1/order'}}', {
   headers: {
     'Authorization': 'Bearer sk_live_your_api_key',
     'Content-Type': 'application/json'

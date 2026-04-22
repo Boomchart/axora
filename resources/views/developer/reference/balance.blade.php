@@ -8,7 +8,7 @@
 
     <div class="endpoint-box">
         <span class="endpoint-method get">GET</span>
-        <span class="endpoint-url">/v1/balance</span>
+        <span class="endpoint-url">{{url('')}}/api/v1/balance</span>
     </div>
 
     <h2 id="overview">Overview</h2>
@@ -16,26 +16,6 @@
        This endpoint returns information about the current account balance held.
     </p>
 
-    <h2 id="request-parameters">Path Parameters</h2>
-
-    <table class="params-table">
-        <thead>
-        <tr>
-            <th>Parameter</th>
-            <th>Type</th>
-            <th>Required</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><span class="param-name">country_id</span></td>
-            <td><span class="param-type">string</span></td>
-            <td>optional</td>
-            <td>The country ID</td>
-        </tr>
-        </tbody>
-    </table>
 
     <h2 id="example-request">Example Request</h2>
 
@@ -46,7 +26,7 @@
             <span class="code-block-title">cURL</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">curl -GET {{url('/').'/api/v1/balance/334254211'}} \
+        <pre><code class="language-bash">curl -GET {{url('/').'/api/v1/balance'}} \
   -H "Authorization: Bearer sk_live_your_api_key" \
   -H "Content-Type: application/json" \
             </code></pre>
