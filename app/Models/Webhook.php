@@ -21,7 +21,7 @@ class Webhook extends Model
         'reference',
         'mode',
         'status',
-        'resend_time'
+        'resend_time',
     ];
 
     public function business()

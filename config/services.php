@@ -43,4 +43,19 @@ return [
         'redirect' => null,
     ],
 
+    'reloadly' => [
+        'client_id' => env('RELOADLY_CLIENT_ID'),
+        'client_secret' => env('RELOADLY_CLIENT_SECRET'),
+        'auth_url' => env('RELOADLY_AUTH_URL', 'https://auth.reloadly.com'),
+        'airtime_url' => env('RELOADLY_AIRTIME_URL', 'https://topups.reloadly.com'),
+        'base_url' => env('RELOADLY_GIFTCARDS_URL', 'https://giftcards.reloadly.com'),
+        'audience' => env('RELOADLY_GIFTCARDS_AUDIENCE', 'https://giftcards.reloadly.com'),
+        'timeout' => (int) env('RELOADLY_TIMEOUT', 30),
+    ],
+    
+    'redboxx' => [
+        'base_url' => env('REDBOXX_URL'),
+        'api_key' => env('REDBOXX_API_KEY'),
+        'webhook_hash' => env('REDBOXX_WEBHOOK_HASH'),
+    ]
 ];

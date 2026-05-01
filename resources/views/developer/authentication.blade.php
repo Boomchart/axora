@@ -8,7 +8,7 @@
 
     <h2 id="api-keys">API Keys</h2>
     <p>
-        Authentication to the API is performed via HTTP Bearer Token authentication. All API requests must include your API key in the <code>Authorization</code> header.
+        Authentication to the API is performed via HTTP Bearer Token authentication. All API requests must include your API key in the <code>Authorization</code> header, along with a unique <code>Idempotency-Key</code> header for every request.
     </p>
 
     <div class="code-block-wrapper">
@@ -16,7 +16,18 @@
             <span class="code-block-title">Authentication Header</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">Authorization: Bearer YOUR_API_KEY</code></pre>
+        <pre><code class="language-bash">Authorization: Bearer YOUR_API_KEY
+Idempotency-Key: YOUR_UNIQUE_REQUEST_KEY</code></pre>
+    </div>
+
+    <div class="info-box note">
+        <div class="info-box-title">
+            <i class="bi bi-info-circle"></i>
+            About the Idempotency-Key
+        </div>
+        <p>
+            The <code>Idempotency-Key</code> header is <strong>required on every request</strong> and must be unique per request (e.g. a UUID v4). It prevents the same operation from being processed twice if a request is retried due to a network error. Reusing a key that has already been seen will return a <code>403</code> error.
+        </p>
     </div>
 
     <h2 id="obtaining-api-keys">Obtaining API Keys</h2>
@@ -49,6 +60,7 @@
         </div>
         <pre><code class="language-bash">curl {{config('app.url').'/api/v1'}}/balance \
   -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Idempotency-Key: $(uuidgen)" \
   -H "Content-Type: application/json"</code></pre>
     </div>
 
@@ -60,11 +72,13 @@
         </div>
         <pre><code class="language-php">$apiKey = 'sk_live_your_api_key';
 $baseUrl = '{{config('app.url').'/api/v1'}}';
+$idempotencyKey = bin2hex(random_bytes(16));
 
 $ch = curl_init($baseUrl . '/balance');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ' . $apiKey,
+    'Idempotency-Key: ' . $idempotencyKey,
     'Content-Type: application/json'
 ]);
 
@@ -80,13 +94,16 @@ $data = json_decode($response, true);</code></pre>
             <span class="code-block-title">JavaScript (Node.js)</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-javascript">const apiKey = 'sk_live_your_api_key';
+        <pre><code class="language-javascript">const { randomUUID } = require('crypto');
+
+const apiKey = 'sk_live_your_api_key';
 const baseUrl = '{{config('app.url').'/api/v1'}}';
 
 fetch(`${baseUrl}/balance`, {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${apiKey}`,
+    'Idempotency-Key': randomUUID(),
     'Content-Type': 'application/json'
   }
 })
@@ -102,12 +119,14 @@ fetch(`${baseUrl}/balance`, {
             <button class="code-copy-button">Copy</button>
         </div>
         <pre><code class="language-python">import requests
+import uuid
 
 api_key = 'sk_live_your_api_key'
 base_url = '{{config('app.url').'/api/v1'}}'
 
 headers = {
     'Authorization': f'Bearer {api_key}',
+    'Idempotency-Key': str(uuid.uuid4()),
     'Content-Type': 'application/json'
 }
 

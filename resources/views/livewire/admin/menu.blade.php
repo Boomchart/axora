@@ -31,7 +31,7 @@
                             <span class="menu-icon">
                                 <i class="bi bi-cart fs-3 text-whitelabel-menu"></i>
                             </span>
-                            <span class="menu-title">{{__('Orders')}}</span>
+                            <span class="menu-title">{{__('Order History')}}</span>
                         </a>
                     </div>
                     @endif
@@ -120,6 +120,22 @@
                     </div>
                     @endif
                     @if($admin->general_settings)
+                    <div class="menu-item"><!--begin:Menu link-->
+                        <a wire:ignore.self class="menu-link @if(route('admin.giftcard.country')==url()->current()) active @endif" href="{{route('admin.giftcard.country')}}">
+                            <span class="menu-icon">
+                                <i class="bi bi-globe fs-3 text-whitelabel-menu"></i>
+                            </span>
+                            <span class="menu-title">{{__('Countries')}}</span>
+                        </a>
+                    </div>
+                    <div class="menu-item"><!--begin:Menu link-->
+                        <a wire:ignore.self class="menu-link @if(route('admin.giftcard.category')==url()->current()) active @endif" href="{{route('admin.giftcard.category')}}">
+                            <span class="menu-icon">
+                                <i class="bi bi-back fs-3 text-whitelabel-menu"></i>
+                            </span>
+                            <span class="menu-title">{{__('Gift Card Category')}}</span>
+                        </a>
+                    </div>
                     <div class="menu-item"><!--begin:Menu link-->
                         <a wire:ignore.self class="menu-link @if(strpos(url()->current(), 'admin/settings') !== false) active @endif" href="{{route('admin.settings', ['type' => 'system'])}}">
                             <span class="menu-icon"><!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->

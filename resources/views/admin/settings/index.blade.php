@@ -18,9 +18,6 @@
                     <a class="nav-link text-dark @if(route('admin.settings', ['type' => 'payout'])==url()->current()) active @endif" id="tabs-icons-text-2-tab" href="{{route('admin.settings', ['type' => 'payout'])}}" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">{{__('Withdrawal')}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark @if(route('admin.settings', ['type' => 'country'])==url()->current()) active @endif" id="tabs-icons-text-1-tab" href="{{route('admin.settings', ['type' => 'country'])}}" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">{{__('Country supported')}}</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link text-dark @if(route('admin.settings', ['type' => 'policies'])==url()->current()) active @endif" id="tabs-icons-text-2-tab" href="{{route('admin.settings', ['type' => 'policies'])}}" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">{{__('Legal Policies')}}</a>
                 </li>
                 <li class="nav-item">

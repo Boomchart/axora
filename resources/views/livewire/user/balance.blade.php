@@ -59,18 +59,13 @@
                                             </span>
                                             <span class="fw-bolder fs-2hx" x-cloak x-show="!show" x-transition>************</span>
                                         </span>
-                                        @if($user->business->kyc_status=="APPROVED")
-                                        <p class="axora-text-color">
-                                            <span class="fs-8">{{__('Issuing Fee')}}: {{$user->business->issuing_fc + collect(json_decode($user->business->issuing_agents, true) ?? [])->sum('rev_fc')}} {{$currency->currency}} + {{$user->business->issuing_pc + collect(json_decode($user->business->issuing_agents, true) ?? [])->sum('rev_pc')}}%</span>
-                                        </p>
-                                        @endif
 
                                         @if($user->business->kyc_status == 'APPROVED')
                                         @foreach(getGateways() as $gateway)
                                         <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
                                         @endforeach
                                         <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
-                                        <button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>
+                                        @if($user->business->flag_withdraw == 0)<button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>@endif
                                         <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
                                             <div class="card w-100">
                                                 <div class="card-header pe-5 border-0">

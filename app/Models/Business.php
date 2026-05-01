@@ -85,6 +85,9 @@ class Business extends Model
         'issuing_fc',
         'issuing_pc',
         'issuing_agents',
+        'airtime_issuing_fc',
+        'airtime_issuing_pc',
+        'airtime_issuing_agents',
         'agent',
         'charge_account'
     ];

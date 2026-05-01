@@ -85,12 +85,9 @@
                         {!!trxDetails(__('Charge'), number_format($val->charge, 2).' '.$val->currency)!!}
                         {!!trxDetails(__('Total'), number_format($val->amount + $val->charge, 2).' '.$val->currency)!!}
 
-                        @if($val->type == 'giftcard_purchase')
-                        {!!trxDetails(__('Gift Card Name'), ucwords($val->card_name).' - '.$val->card_country)!!}
-                        {!!trxDetails(__('Gift Card Quantity'), $val->quantity)!!}
-                        {!!trxDetails(__('Gift Card Amount'), $val->card_amount.' '.$val->card_currency)!!}
-                        {!!trxDetails(__('Customer Name'), $val->name)!!}
-                        {!!trxDetails(__('Customer Email'), $val->email)!!}
+                        @if($val->type == 'airtime_purchase')
+                        {!!trxDetails(__('Operator Name'), ucwords($val->operator_name).' - '.$val->operator_country)!!}
+                        {!!trxDetails(__('Airtime Amount'), $val->operator_amount.' '.$val->operator_currency)!!}
                         {!!trxDetails(__('Customer Phone'), \Propaganistas\LaravelPhone\PhoneNumber::make($val->phone, strtoupper($val->phone_code)))!!}
                         {!!trxDetails(__('Exchange Rate'), $val->rate.' '.$val->currency)!!}
                         @endif
@@ -98,8 +95,15 @@
                         @if($val->type == 'agent_payment')
                         @php $agentTrx = $val->agentTransaction; @endphp
                         {!!trxDetails(__('Merchant Name'), $agentTrx->business->name)!!}
-                        {!!trxDetails(__('Gift Card Name'), ucwords($agentTrx->card_name).' - '.$agentTrx->card_country)!!}
-                        {!!trxDetails(__('Gift Card Amount'), $agentTrx->card_amount.' '.$agentTrx->card_currency)!!}
+                        <div>
+                            @if($val->type == 'giftcard_purchase')
+                            {!!trxDetails(__('Gift Card Name'), ucwords($agentTrx->card_name).' - '.$agentTrx->card_country)!!}
+                            {!!trxDetails(__('Gift Card Amount'), $agentTrx->card_amount.' '.$agentTrx->card_currency)!!}
+                            @elseif($val->type == 'airtime_purchase')
+                            {!!trxDetails(__('Operator Name'), ucwords($agentTrx->airtime_name).' - '.$agentTrx->airtime_country)!!}
+                            {!!trxDetails(__('Airtime Amount'), $agentTrx->airtime_amount.' '.$agentTrx->airtime_currency)!!}
+                            @endif
+                        </div>
                         @endif
 
                         @if($val->type == 'deposit')
@@ -236,6 +240,111 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        @endif
+
+                        @if($val->type == 'giftcard_purchase')
+                        <div class="mt-5">
+                            @foreach($val->giftcardOrdersByExternalReference() as $data)
+                            <div class="mb-5 p-5 bg-white rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-gift"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Gift Card')}}: {{$data['card']['amount'].' '.$data['card']['currency']}} {{ucwords($data['card']['name'])}} (x{{$data['card']['quantity']}})
+                                        </p>
+                                        <p class="text-gray-600 fs-8 mb-0">
+                                            {{__('External Reference')}}: {{$data['external_reference']}} 
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Recipient')}}: {{$data['customer']['name']}}
+                                        </p>
+                                        <p class="text-gray-600 fs-8 mb-0">
+                                            {{__('Email')}}: {{$data['customer']['email']}} <span class="dot"></span> {{__('Phone')}}: {{$data['customer']['phone']}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-0">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-bank"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Total')}}: {{$data['payment']['total'].' '.$data['payment']['currency']}} <span class="fs-8">(1 {{$data['card']['currency']}} = {{$data['payment']['rate'].' '.$data['payment']['currency']}})</span>
+                                        </p>
+                                        <p class="text-gray-600 fs-8 mb-0">
+                                            {{__('Amount')}}: {{$data['payment']['amount'].' '.$data['payment']['currency']}} <span class="dot"></span> {{__('Fee')}}: {{$data['payment']['charge'].' '.$data['payment']['currency']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        @endif
+
+                        @if($val->type == 'airtime_purchase')
+                        <div class="mt-5">
+                            @foreach($val->airtimeOrdersByExternalReference() as $data)
+                            <div class="mb-5 p-5 bg-white rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-gift"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Operator')}}: {{ucwords($data['operator']['name'])}} - {{$data['operator']['amount'].' '.$data['operator']['currency']}}
+                                        </p>
+                                        <p class="text-gray-600 fs-8 mb-0">
+                                            {{__('External Reference')}}: {{$data['external_reference']}} 
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Recipient')}}: {{$data['customer']['phone']}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-0">
+                                    <div class="symbol symbol-45px symbol-circle me-2">
+                                        <div class="symbol-label fs-3 fw-bolder axora-dashboard-icon">
+                                            <i class="bi bi-bank"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ps-2">
+                                        <p class="text-dark fw-bold fs-7 mb-0">
+                                            {{__('Total')}}: {{$data['payment']['total'].' '.$data['payment']['currency']}} <span class="fs-8">(1 {{$data['operator']['currency']}} = {{$data['payment']['rate'].' '.$data['payment']['currency']}})</span>
+                                        </p>
+                                        <p class="text-gray-600 fs-8 mb-0">
+                                            {{__('Amount')}}: {{$data['payment']['amount'].' '.$data['payment']['currency']}} <span class="dot"></span> {{__('Fee')}}: {{$data['payment']['charge'].' '.$data['payment']['currency']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                         @endif
 

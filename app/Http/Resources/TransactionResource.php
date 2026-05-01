@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Orders;
 
 class TransactionResource extends JsonResource
 {
@@ -14,44 +15,112 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
-        $issued = [];
-
-        foreach (\App\Models\CardIssued::whereTrxId($this->id)->get() as $data) {
-            $issued[] = [
-                'id' => $data->id,
-                'card_id' => $data->card_id,
-                'name' => $data->name,
-                'amount' => (float) $data->amount,
-                'currency' => $data->currency,
-                'rate' => (float) number_format($data->rate, 5, '.', ''),
-                'value' => (float) number_format($data->amount * $data->rate, 2, '.', ''),
-                'status' => $data->status,
-                'card_url' => $data->card_url,
-                'card_code' => $data->card_code,
-                'expires' => $data->expires
+        if ($this->type == 'giftcard_purchase') {
+            $data = [
+                'id' => $this->ref_id,
+                'currency' => $this->currency,
+                'amount' => (float) number_format($this->amount, 2, '.', ''),
+                'charge' => (float) number_format($this->charge, 2, '.', ''),
+                'total' => (float) number_format(($this->charge + $this->amount), 2, '.', ''),
+                'status' => $this->status,
+                'mode' => $this->mode,
+                'balance' => [
+                    'old_balance' => (float) $this->balance_before,
+                    'new_balance' => (float) $this->balance_after,
+                ],
+                'orders' => Orders::whereTrxId($this->id)->whereType('giftcard')
+                    ->get()
+                    ->groupBy('external_reference')
+                    ->map(function ($group, $reference) {
+                        $first = $group->first();
+                        return [
+                            'external_reference' => $reference !== '' ? $reference : null,
+                            'card' => [
+                                'id' => $first->card_id,
+                                'name' => $first->card_name,
+                                'quantity' => $group->count(),
+                                'amount' => (float) $first->amount,
+                                'currency' => $first->currency,
+                            ],
+                            'payment' => [
+                                'currency' => $this->currency,
+                                'rate' => $first->rate,
+                                'amount' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                                'charge' => (float) number_format($first->rev_share + $first->profit + $first->vendor_share, 2, '.', ''),
+                                'sub_total' => (float) number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', ''),
+                                'total' => (float) (number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', '')) * $group->count()
+                            ],
+                            'customer' => [
+                                'name' => $first->name,
+                                'email' => $first->email,
+                                'phone' => $first->phone,
+                                'phone_code' => $first->phone_code,
+                            ],
+                            'items' => $group->map(function ($data) {
+                                return [
+                                    'id' => $data->id,
+                                    'status' => $data->status,
+                                    'redeem_code' => [
+                                        'url' => !empty(decryptRSA($data->card_url)) ? decryptRSA($data->card_url) : null,
+                                        'card_code' => !empty(decryptRSA($data->card_code)) ? decryptRSA($data->card_code) : null,
+                                        'pin' => !empty(decryptRSA($data->pin_code)) ? decryptRSA($data->pin_code) : null,
+                                    ],
+                                ];
+                            })->values()->all(),
+                        ];
+                    })
+                    ->values()
+                    ->all(),
+                'created_at' => $this->created_at,
             ];
         }
 
-        return [
-            'id' => $this->ref_id,
-            'amount' => (float) number_format($this->amount, 2, '.', ''),
-            'charge' => (float) number_format($this->charge, 2, '.', ''),
-            'quantity' => $this->quantity,
-            'currency' => $this->currency,
-            'status' => $this->status,
-            'mode' => $this->mode,
-            'customer' => [
-                'name' => $this->name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'phone_code' => $this->phone_code,
-            ],
-            'card' => [
-                'id' => $this->card_id,
-                'name' => $this->card_name,
-            ],
-            'order' => $issued,
-            'created_at' => $this->created_at,
-        ];
+        if ($this->type == 'airtime_purchase' || $this->type == 'data_purchase') {
+            $data = [
+                'id' => $this->ref_id,
+                'currency' => $this->currency,
+                'amount' => (float) number_format($this->amount, 2, '.', ''),
+                'charge' => (float) number_format($this->charge, 2, '.', ''),
+                'total' => (float) number_format(($this->charge + $this->amount), 2, '.', ''),
+                'status' => $this->status,
+                'mode' => $this->mode,
+                'balance' => [
+                    'old_balance' => $this->balance_before,
+                    'new_balance' => $this->balance_after,
+                ],
+                'orders' => Orders::whereTrxId($this->id)->whereIn('type', ['airtime', 'data'])
+                    ->get()
+                    ->groupBy('external_reference')
+                    ->map(function ($group, $reference) {
+                        $first = $group->first();
+                        return [
+                            'external_reference' => $reference !== '' ? $reference : null,
+                            'operator' => [
+                                'id' => $first->operator_id,
+                                'name' => $first->operator_name,
+                                'amount' => (float) $first->amount,
+                                'currency' => $first->currency,
+                            ],
+                            'payment' => [
+                                'currency' => $this->currency,
+                                'rate' => $first->rate,
+                                'amount' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                                'charge' => (float) number_format($first->rev_share + $first->profit + $first->vendor_share, 2, '.', ''),
+                                'sub_total' => (float) number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', ''),
+                                'total' => (float) (number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', '')) * $group->count()
+                            ],
+                            'customer' => [
+                                'phone' => $first->phone,
+                                'phone_code' => $first->phone_code,
+                            ],
+                        ];
+                    })
+                    ->values()
+                    ->all(),
+                'created_at' => $this->created_at,
+            ];
+        }
+
+        return $data;
     }
 }

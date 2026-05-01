@@ -87,55 +87,189 @@ const cards = await response.json();</code></pre>
             <button class="code-copy-button">Copy</button>
         </div>
         <pre><code class="language-json">{
-  "data": [
-    {
-            "id": "5484cb55-2961-4848-b2e5-6395bca69a07",
-            "amount": 67.95,
-            "charge": 2.72,
-            "total": 70.67,
+    "data": [
+        {
+            "id": "7666daeb-b3f3-496a-96e5-7d65fe288ddf",
+            "amount": 22.97,
+            "charge": 5.3,
+            "quantity": 3,
+            "currency": "USD",
             "status": "success",
             "mode": "test",
             "customer": {
                 "name": "John Doe",
                 "email": "name@remote.com",
-                "phone": "+12345678990",
-                "phone_code": "NG"
+                "phone": "+12025550136",
+                "phone_code": "US"
             },
             "card": {
-                "id": "e6d64c61-7459-4f1b-8d8d-4d06346c429f",
-                "name": "Farmfoods"
+                "id": "50f9cbb1-0624-43e7-84b8-e8fe12450845",
+                "name": "Google Play Canada"
             },
             "order": [
                 {
-                    "id": "c5fed9ce-f9dc-4120-ab3e-ea446ebea312",
-                    "card_id": "e6d64c61-7459-4f1b-8d8d-4d06346c429f",
-                    "name": "Farmfoods",
-                    "amount": 25,
-                    "currency": "GBP",
-                    "rate": 1.35908,
-                    "value": 33.98,
-                    "status": "success",
-                    "card_url": "R1D4-3LUR-SNB0-XKCN",
-                    "card_code": null,
-                    "expires": "2026-07-06T17:14:58.000000Z"
+                    "id": "053155b2-8e14-40ed-9a88-71e49f51e03d",
+                    "card_id": "50f9cbb1-0624-43e7-84b8-e8fe12450845",
+                    "name": "John Doe",
+                    "amount": 10,
+                    "currency": "CAD",
+                    "rate": 0.76552,
+                    "value": 7.66,
+                    "status": "pending",
+                    "payment": {
+                        "currency": "USD",
+                        "charge": 1.9,
+                        "amount": 10,
+                        "total": 11.9
+                    },
+                    "redeem_code": {
+                        "url": null,
+                        "card_code": null,
+                        "pin": null
+                    }
                 },
                 {
-                    "id": "e1a88d14-f8a7-4f10-bced-1da043ca890c",
-                    "card_id": "e6d64c61-7459-4f1b-8d8d-4d06346c429f",
-                    "name": "Farmfoods",
-                    "amount": 25,
-                    "currency": "GBP",
-                    "rate": 1.35908,
-                    "value": 33.98,
-                    "status": "success",
-                    "card_url": "UDCV-SHXV-XPAV-41FG",
-                    "card_code": null,
-                    "expires": "2026-07-06T17:14:58.000000Z"
+                    "id": "6fb3ee0a-44f3-4558-8ad3-e16280b98d33",
+                    "card_id": "50f9cbb1-0624-43e7-84b8-e8fe12450845",
+                    "name": "John Doe",
+                    "amount": 10,
+                    "currency": "CAD",
+                    "rate": 0.76552,
+                    "value": 7.66,
+                    "status": "pending",
+                    "payment": {
+                        "currency": "USD",
+                        "charge": 1.9,
+                        "amount": 10,
+                        "total": 11.9
+                    },
+                    "redeem_code": {
+                        "url": null,
+                        "card_code": null,
+                        "pin": null
+                    }
+                },
+                {
+                    "id": "7ac0b19a-4e5a-4c8b-bcf4-c009a5dcaee2",
+                    "card_id": "50f9cbb1-0624-43e7-84b8-e8fe12450845",
+                    "name": "John Doe",
+                    "amount": 10,
+                    "currency": "CAD",
+                    "rate": 0.76552,
+                    "value": 7.66,
+                    "status": "pending",
+                    "payment": {
+                        "currency": "USD",
+                        "charge": 1.9,
+                        "amount": 7.65,
+                        "total": 9.55
+                    },
+                    "redeem_code": {
+                        "url": null,
+                        "card_code": null,
+                        "pin": null
+                    }
                 }
             ],
-            "created_at": "2025-07-06T17:14:58.000000Z"
+            "created_at": "2026-04-26T20:29:17.000000Z"
+        },
+        {
+            "id": "1f60b4a3-3259-4a0b-843a-0bcca882200a",
+            "amount": 20,
+            "charge": 4,
+            "quantity": 2,
+            "currency": "USD",
+            "status": "success",
+            "mode": "test",
+            "customer": {
+                "name": "John Doe",
+                "email": "name@remote.com",
+                "phone": "+12025550136",
+                "phone_code": "US"
+            },
+            "card": {
+                "id": "84b70dc9-47fb-45a9-89b9-87399febbc1d",
+                "name": "PlayStation US"
+            },
+            "order": [
+                {
+                    "id": "97d82e6a-6bb7-4dca-8ab5-5c6c1525e99e",
+                    "card_id": "84b70dc9-47fb-45a9-89b9-87399febbc1d",
+                    "name": "John Doe",
+                    "amount": 10,
+                    "currency": "USD",
+                    "rate": 1,
+                    "value": 10,
+                    "status": "pending",
+                     "payment": {
+                        "currency": "USD",
+                        "charge": 1.9,
+                        "amount": 10,
+                        "total": 11.9
+                    },
+                    "redeem_code": {
+                        "url": null,
+                        "card_code": null,
+                        "pin": null
+                    }
+                },
+                {
+                    "id": "e5f2419c-7077-4d2a-aa05-ec6a2b390643",
+                    "card_id": "84b70dc9-47fb-45a9-89b9-87399febbc1d",
+                    "name": "John Doe",
+                    "amount": 10,
+                    "currency": "USD",
+                    "rate": 1,
+                    "value": 10,
+                    "status": "pending",
+                    "payment": {
+                        "currency": "USD",
+                        "charge": 1.9,
+                        "amount": 10,
+                        "total": 11.9
+                    },
+                    "redeem_code": {
+                        "url": null,
+                        "card_code": null,
+                        "pin": null
+                    }
+                }
+            ],
+            "created_at": "2026-04-26T20:26:33.000000Z"
         }
-  ]
+    ],
+    "links": {
+        "first": "{{url('/')}}/api/v1/transactions?page=1",
+        "last": "{{url('/')}}/api/v1/transactions?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "{{url('/')}}/api/v1/transactions?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "{{url('/')}}/api/v1/transactions",
+        "per_page": 20,
+        "to": 2,
+        "total": 2
+    }
 }</code></pre>
     </div>
 @endsection

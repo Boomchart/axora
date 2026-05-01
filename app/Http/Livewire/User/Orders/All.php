@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use Livewire\WithPagination;
 
 class All extends Component
@@ -73,7 +73,7 @@ class All extends Component
 
     protected function pages()
     {
-        return CardIssued::with(['user', 'business', 'transaction'])
+        return Orders::with(['user', 'business', 'transaction'])
             ->whereUserId($this->user->id)
             ->whereBusinessId($this->user->business_id)
             ->when($this->search, function ($query) {
@@ -83,6 +83,7 @@ class All extends Component
                         ->orWhere('card_name', 'like', '%' . $this->search . '%')
                         ->orWhere('email', 'like', '%' . $this->search . '%')
                         ->orWhere('phone', 'like', '%' . $this->search . '%')
+                        ->orWhere('trx_id', 'like', '%' . $this->search . '%')
                         ->orWhere('id', 'like', '%' . $this->search . '%');
                 });
             })

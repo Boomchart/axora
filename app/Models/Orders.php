@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CardIssued extends Model
+class Orders extends Model
 {
     use HasFactory, Uuid, SoftDeletes;
 
@@ -32,12 +32,26 @@ class CardIssued extends Model
         'agents',
         'paid_agents',
         'paid_profit',
-        'redboxx_share',
+        'vendor_share',
         'card_amount',
         'card_currency',
         'card_name',
         'email',
         'phone',
+        'phone_code',
+        'provider',
+        'vendor_id',
+        'pin_code',
+        'card_country',
+        'failed_order',
+        'discount',
+        'external_reference',
+        'type',
+        'operator_name',
+        'operator_id',
+        'operator_amount',
+        'operator_country',
+        'operator_currency',
     ];
 
     public function business()

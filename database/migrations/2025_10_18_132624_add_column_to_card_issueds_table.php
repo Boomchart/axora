@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             $columns = [
                 'user_id',
                 'business_id',
@@ -47,7 +47,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }

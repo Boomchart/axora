@@ -27,6 +27,7 @@
                             <option value="">{{__('Select status')}}</option>
                             <option value="success">{{__('Completed')}}</option>
                             <option value="pending">{{__('Pending')}}</option>
+                            <option value="processing">{{__('Processing')}}</option>
                             <option value="failed">{{__('Failed/Cancelled')}}</option>
                             <option value="declined">{{__('Declined')}}</option>
                         </select>
@@ -125,7 +126,7 @@
                                             @foreach($transactions as $k=>$val)
                                             <tr class="cursor-pointer">
                                                 <td>
-                                                    <a href="{{route('view.transactions', ['transaction' => $val->ref_id])}}" class="btn btn-secondary btn-sm rounded-pill" target="_blank">{{__('Manage')}}</a>
+                                                    <a href="{{route('admin.view.transactions', ['transaction' => $val->ref_id])}}" class="btn btn-secondary btn-sm rounded-pill" target="_blank">{{__('Manage')}}</a>
                                                 </td>
                                                 <td>
                                                     <div class="symbol symbol-40px symbol-circle me-5">

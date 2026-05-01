@@ -18,6 +18,14 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="min-w-250px fs-7">{{__('Flag Withdraw (No access to initiate new withdrawal)')}}</td>
+                                            <td class="w-125px">
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" wire:click="save" wire:model="flag_withdraw">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td class="min-w-250px fs-7">{{__('Agent')}}</td>
                                             <td class="w-125px">
                                                 <div class="form-check form-check-custom form-check-solid">
@@ -96,6 +104,77 @@
                                     <button type="submit" class="btn btn-secondary" wire:loading.attr="disabled" wire:loading.class="opacity-50">
                                         <span wire:loading.remove wire:target="updateIssuing">{{__('Save Settings')}}</span>
                                         <span wire:loading wire:target="updateIssuing">{{__('Processing Request...')}}</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>                
+                <div class="col-md-12 mb-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="form w-100" wire:submit.prevent="updateAirtimeIssuing">
+                                <p class="fs-6 fw-bold mb-5">{{__('Airtime & Data Issuing Fee & Rev Share')}}</p>
+                                <div class="fv-row mb-6">
+                                    <label class="form-label fs-7 text-dark fw-bold required">{{__('Flat Fee')}} ({{$currency->currency}})</label>
+                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="airtime_issuing_fc" />
+                                    @error('airtime_issuing_fc')
+                                    <span class="form-text text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class="fv-row mb-6">
+                                    <label class="form-label fs-7 text-dark fw-bold required">{{__('Percent Fee')}} (%)</label>
+                                    <input class="form-control form-control-solid" type="text" wire:model.debounce.1000ms="airtime_issuing_pc" />
+                                    @error('airtime_issuing_pc')
+                                    <span class="form-text text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="p-5 border rounded-4 mb-10">
+                                    <p class="fs-9 fw-bold mb-5 text-uppercase text-gray-700">{{__('Agent Rev Share')}}</p>
+                                    @foreach($airtime_issuing_agents as $index => $item)
+                                    <div class="row align-items-center">
+                                        <div class="col-6">
+                                            <p class="fs-7 fw-bold">{{__('Item')}} {{$loop->iteration}}</p>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            @if($index > 0)
+                                            <a class="text-danger mb-0 cursor-pointer" wire:click.prevent="removeAirtimeIssuingAgent({{ $index }})"><i class="bi bi-trash text-danger"></i> <u>{{__('Remove')}}</u></a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="fv-row mb-6">
+                                                <label class="form-label text-dark fs-7 fw-bold">{{__('Account ID')}}</label>
+                                                <input type="text" class="form-control form-control-solid" autocomplete="off" placeholder="{{__('Enter Agent Account Id')}}" wire:model.debounce.1000ms="airtime_issuing_agents.{{$index}}.account_id">
+                                                @error('airtime_issuing_agents.'.$index.'.account_id')<p class="form-text text-danger">{{$message}}</p>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-6">
+                                                <label class="form-label text-dark fs-7 fw-bold">{{__('Rev Fc')}} ({{$currency->currency}})</label>
+                                                <input type="text" steps="any" class="form-control form-control-solid" min="0" autocomplete="off" required wire:model.debounce.1000ms="issuing_agents.{{$index}}.rev_fc">
+                                                @error('airtime_issuing_agents.'.$index.'.rev_fc')<p class="form-text text-danger">{{$message}}</p>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="fv-row mb-6">
+                                                <label class="form-label text-dark fs-7 fw-bold">{{__('Rev Pc')}} (%)</label>
+                                                <input type="text" steps="any" class="form-control form-control-solid" autocomplete="off" required wire:model.debounce.1000ms="airtime_issuing_agents.{{$index}}.rev_pc">
+                                                @error('airtime_issuing_agents.'.$index.'.rev_pc')<p class="form-text text-danger">{{$message}}</p>@enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    <div class="text-center">
+                                        <a class="text-info fw-bold cursor-pointer" wire:click.prevent="addAirtimeIssuingAgent"><i class="bi bi-plus-lg"></i> <u>{{__('Add Rev Share')}}</u></a>
+                                    </div>
+                                </div>
+                                <div class="text-start mt-10">
+                                    <button type="submit" class="btn btn-secondary" wire:loading.attr="disabled" wire:loading.class="opacity-50">
+                                        <span wire:loading.remove wire:target="updateAirtimeIssuing">{{__('Save Settings')}}</span>
+                                        <span wire:loading wire:target="updateAirtimeIssuing">{{__('Processing Request...')}}</span>
                                     </button>
                                 </div>
                             </form>

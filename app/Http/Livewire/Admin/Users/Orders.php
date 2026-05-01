@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdminOrderExport;
 use Carbon\Carbon;
 use App\Jobs\SendEmail;
-use App\Models\CardIssued;
+use App\Models\Orders as TRX;
 use Livewire\WithPagination;
 
 class Orders extends Component
@@ -72,7 +72,7 @@ class Orders extends Component
 
     protected function pages()
     {
-        return CardIssued::with(['user', 'business', 'transaction'])
+        return TRX::with(['user', 'business', 'transaction'])
             ->whereUserId($this->client->id)->withTrashed()
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {

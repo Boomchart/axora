@@ -5,7 +5,7 @@ namespace App\Http\Livewire\User\Settings;
 use Livewire\Component;
 use Carbon\Carbon;
 use App\Models\Webhook as Transactions;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use Livewire\WithPagination;
 use App\Jobs\SendWebhook;
 use App\Jobs\Webhook\Issue;
@@ -27,7 +27,7 @@ class Webhook extends Component
 
     public function resendWebhook(Transactions $webhook)
     {
-        $issue = \App\Models\CardIssued::whereId($webhook->reference)->first();
+        $issue = \App\Models\Orders::whereId($webhook->reference)->first();
         if (now() < $webhook->resend_time) {
             return $this->emit('alert', __('You can resend webhook after') . ' ' . $webhook->resend_time->setTimezone($this->user->user_timezone)->toDayDateTimeString());
         }

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Settings;
 use App\Models\UserKyc;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use App\Models\Transactions;
 use Carbon\Carbon;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
@@ -46,13 +46,13 @@ class UserController extends Controller
         $payload = (array) $request->all();
 
         if ($payload['event'] == 'issued') {
-            $issue = \App\Models\CardIssued::whereOrderId($payload['data']['id'])->first();
+            $issue = \App\Models\Orders::whereOrderId($payload['data']['id'])->first();
             if ($issue) {
                 if ($issue->status == 'pending') {
                     $issue->update([
                         'status' => $payload['data']['status'],
-                        'card_code' => $payload['data']['card_code'],
-                        'card_url' => $payload['data']['card_url'],
+                        'card_code' => encryptRSA($payload['data']['card_code']),
+                        'card_url' => encryptRSA($payload['data']['card_url']),
                         'data' => json_encode($payload['data']),
                     ]);
 
@@ -66,11 +66,11 @@ class UserController extends Controller
                 }
             }
         } elseif ($payload['event'] == 'redemption') {
-            $issue = \App\Models\CardIssued::whereOrderId($payload['data']['id'])->first();
+            $issue = \App\Models\Orders::whereOrderId($payload['data']['id'])->first();
             if ($issue) {
                 $issue->update([
-                    'card_code' => $payload['data']['card_code'],
-                    'card_url' => $payload['data']['card_url'],
+                    'card_code' => encryptRSA($payload['data']['card_code']),
+                    'card_url' => encryptRSA($payload['data']['card_url']),
                 ]);
                 if ($issue->business_id) {
                     if ($issue->business->webhook_url) {
@@ -90,7 +90,7 @@ class UserController extends Controller
         }
     }
 
-    public function detailsOrder(CardIssued $order)
+    public function detailsOrder(Orders $order)
     {
         if ($order->business_id == $this->user->business_id) {
             return view('user.orders.details', ['title' => __('Order Details'), 'val' => $order]);
@@ -123,13 +123,7 @@ class UserController extends Controller
                 $mimeType = $file->getMimeType();
 
                 // Different upload settings for PDFs
-                if ($mimeType === 'application/pdf') {
-                    $upload = $file->store('kyc', 'public');
-                    $path = asset('storage/' . $upload);
-                } else {
-                    // Regular upload for images/other files
-                    $path = Cloudinary::upload($file->getRealPath())->getSecurePath();
-                }
+                $path = Cloudinary::upload($file->getRealPath())->getSecurePath();
 
                 $folder = uniqid() . '-' . now()->timestamp;
 

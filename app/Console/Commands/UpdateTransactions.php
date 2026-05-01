@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Carbon\Carbon;
 use App\Models\Settings;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use App\Services\Reloadly\{ReloadlyGiftcardService, ReloadlyAirtimeService};
+use App\Services\Redboxx\RedboxxGiftcardService;
+use App\Jobs\Webhook\{Giftcard, Airtime, Data};
 
 class UpdateTransactions extends Command
 {
@@ -41,56 +43,140 @@ class UpdateTransactions extends Command
      * @return int
      */
 
-    public function getDuration($duration)
+    public function sendWebhook($val)
     {
-        if ($duration == 'monday') {
-            return Carbon::MONDAY;
-        } else if ($duration == 'tuesday') {
-            return Carbon::TUESDAY;
-        } else if ($duration == 'wednesday') {
-            return Carbon::WEDNESDAY;
-        } else if ($duration == 'thursday') {
-            return Carbon::THURSDAY;
-        } else if ($duration == 'friday') {
-            return Carbon::FRIDAY;
-        } else if ($duration == 'saturday') {
-            return Carbon::SATURDAY;
-        } else if ($duration == 'sunday') {
-            return Carbon::SUNDAY;
+        if ($val->business_id) {
+            if ($val->business->webhook_url) {
+                if ($val->type == 'giftcard_purchase') {
+                    dispatch(new Giftcard($val));
+                } elseif ($val->type == 'airtime_purchase') {
+                    dispatch(new Airtime($val));
+                }elseif ($val->type == 'data_purchase') {
+                    dispatch(new Data($val));
+                }
+            }
+        }
+    }
+
+    public function failedOrder($orderResponse)
+    {
+        $responseStatus = $orderResponse['status'];
+        $responseBody = json_encode($orderResponse['error'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $emailBody = __('Hello admin, you have a new failed order')
+            . '<br><br><strong>' . __('Response Status') . ':</strong> ' . e($responseStatus)
+            . '<br><strong>' . __('Response Body') . ':</strong><br>'
+            . '<pre>' . e($responseBody) . '</pre>';
+        foreach (\App\Models\Admin::whereGiftcard(1)->get() as $admin) {
+            dispatch(new \App\Jobs\SendEmail($admin->email, $this->settings->site_name, __('New failed order'), $emailBody, null, null, 0));
         }
     }
 
     public function handle()
     {
-        if ($this->settings->redboxx_low_notify == 0) {
-            foreach (\App\Models\CardIssued::whereStatus('pending')->whereMode('live')->take(5)->whereNull('order_id')->with('transaction')->get() as $val) {
-                $orderResponse = Http::withHeaders([
-                    'Authorization' => 'Bearer ' . config('settings.redboxx_api_key'),
-                ])->post(config('settings.redboxx_url') . '/v1/order', [
-                    'card_id' => $val->card_id,
-                    'name' => $val->name,
-                    'quantity' => 1,
-                    'email' => $val->email,
-                    'phone' => $val->phone,
-                    'phone_code' => $val->transaction->phone_code,
-                    'amount' => $val->amount,
-                ]);
+        // //Reloadly
+        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereType('giftcard')->whereMode('live')->whereFailedOrder(0)->take(5)->whereNull('order_id')->get() as $val) {
+            $reloadly = new ReloadlyGiftcardService();
+            $order = $reloadly->order([
+                'customIdentifier' => $val->id,
+                'productAdditionalRequirements' => [
+                    'userId' => $val->email
+                ],
+                'productId' => $val->vendor_id,
+                'quantity' => 1,
+                'senderName' => $val->name,
+                'unitPrice' => $val->amount,
+            ]);
 
-                if ($orderResponse->status() == 200) {
-                    $this->settings->update([
-                        'redboxx_low_notify' => 0
+
+            if ($order['success'] == true) {
+                $order = $order['data'];
+                $val->update([
+                    'order_id' => $order['transactionId'],
+                ]);
+                $getCard = $reloadly->redeemCodes($order['transactionId']);
+
+                if ($getCard['success'] == true) {
+                    $val->update([
+                        'status' => 'success',
+                        'card_code' => encryptRSA($getCard['data'][0]['cardNumber']) ?? null,
+                        'pin_code' => encryptRSA($getCard['data'][0]['pinCode']) ?? null,
+                        'card_url' => encryptRSA($getCard['data'][0]['redemptionUrl']) ?? null,
                     ]);
-                    $data = $orderResponse->json()['data'];
-                    foreach ($data['order'] as $order) {
-                        $val->update([
-                            'order_id' => $order['id'],
-                            'data' => json_encode($order),
-                            'expires' => $order['expires'],
-                        ]);
-                    }
+                    $this->sendWebhook($val);
                 }
+            } else {
+                $val->update([
+                    'failed_order' => 1
+                ]);
+                $this->failedOrder($order);
             }
         }
-        $this->info('Failed Order Retried updated!!!');
+
+        //Reloadly Airtime/Data
+        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereIn('type', ['airtime', 'data'])->whereMode('live')->whereFailedOrder(0)->take(1)->whereNull('order_id')->get() as $val) {
+            $reloadly = new ReloadlyAirtimeService();
+            $order = $reloadly->order([
+                'customIdentifier' => $val->id,
+                'operatorId' => $val->vendor_id,
+                'recipientPhone' => [
+                    'countryCode' => $val->phone_code,
+                    'number' => $val->phone
+                ],
+                'amount' => (float) $val->amount * $val->rate,
+            ]);
+
+
+            if ($order['success'] == true) {
+                $order = $order['data'];
+                $val->update([
+                    'status' => 'success',
+                    'order_id' => $order['transactionId'],
+                ]);
+                $this->sendWebhook($val);
+            } else {
+                $val->update([
+                    'failed_order' => 1
+                ]);
+                $this->failedOrder($order);
+            }
+        }
+
+        // //Redboxx
+        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('redboxx')->whereMode('live')->whereFailedOrder(0)->take(5)->whereNull('order_id')->get() as $val) {
+            $redboxx = new RedboxxGiftcardService();
+            $order = $redboxx->order([
+                'card_id' => $val->vendor_id,
+                'name' => $val->name,
+                'quantity' => 1,
+                'email' => $val->email,
+                'phone' => $val->phone,
+                'phone_code' => $val->phone_code,
+                'amount' => $val->amount,
+            ]);
+
+            if ($order['success'] == true) {
+                $order = $order['data']['order'][0];
+                $val->update([
+                    'order_id' => $order['id'],
+                ]);
+            } else {
+                $val->update([
+                    'failed_order' => 1
+                ]);
+                $this->failedOrder($order);
+            }
+        }
+
+        // //Test orders
+        foreach (\App\Models\Orders::whereStatus('pending')->whereMode('test')->whereFailedOrder(0)->take(100)->whereNull('order_id')->get() as $val) {
+            $val->update([
+                'order_id' => Str::uuid(),
+                'status' => 'success',
+                'card_code' => ($val->type == 'giftcard') ? encryptRSA(generateRandomCode()) : null,
+                'card_url' => ($val->type == 'giftcard') ? encryptRSA(url('/')) : null,
+            ]);
+            $this->sendWebhook($val);
+        }
+        $this->info('Processed Orders!!!');
     }
 }

@@ -136,7 +136,7 @@ class Balance extends Component
 
     public function render()
     {
-        $issued = \App\Models\CardIssued::whereUserId($this->user->id)
+        $issued = \App\Models\Orders::whereUserId($this->user->id)
             ->whereMode('live')
             ->whereStatus('success')
             ->whereBetween('created_at', [Carbon::now()->subDays(30), Carbon::now()])

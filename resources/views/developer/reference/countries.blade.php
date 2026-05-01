@@ -1,7 +1,7 @@
 @extends('developer.reference.menu')
 
 @section('content')
-    <h1>Countries</h1>
+    <h1>{{$title}}</h1>
     <p class="lead-text">
         Retrieve a list of all countries supported by Axora.
     </p>
@@ -75,33 +75,41 @@ const countries = await response.json();</code></pre>
         <pre><code class="language-json">{
     "data": [
         {
-            "name": "Benin",
-            "iso2": "BJ"
-        },
-        {
-            "name": "France",
-            "iso2": "FR"
+            "name": "Canada",
+            "iso2": "CA",
+            "iso3": "CAN",
+            "currency": "CAD",
+            "currency_symbol": "$",
+            "phone_code": "1"
         },
         {
             "name": "Nigeria",
-            "iso2": "NG"
+            "iso2": "NG",
+            "iso3": "NGA",
+            "currency": "NGN",
+            "currency_symbol": "₦",
+            "phone_code": "234"
         },
         {
             "name": "United Kingdom",
-            "iso2": "GB"
+            "iso2": "GB",
+            "iso3": "GBR",
+            "currency": "GBP",
+            "currency_symbol": "£",
+            "phone_code": "44"
         },
         {
             "name": "United States",
-            "iso2": "US"
-        },
-        {
-            "name": "Zimbabwe",
-            "iso2": "ZW"
+            "iso2": "US",
+            "iso3": "USA",
+            "currency": "USD",
+            "currency_symbol": "$",
+            "phone_code": "1"
         }
     ],
     "links": {
-        "first": "{{url('')}}/api/v1/countries?page=1",
-        "last": "{{url('')}}/api/v1/countries?page=1",
+        "first": "{{url('/')}}/api/v1/countries?page=1",
+        "last": "{{url('/')}}/api/v1/countries?page=1",
         "prev": null,
         "next": null
     },
@@ -116,7 +124,7 @@ const countries = await response.json();</code></pre>
                 "active": false
             },
             {
-                "url": "{{url('')}}/api/v1/countries?page=1",
+                "url": "{{url('/')}}/api/v1/countries?page=1",
                 "label": "1",
                 "active": true
             },
@@ -126,10 +134,10 @@ const countries = await response.json();</code></pre>
                 "active": false
             }
         ],
-        "path": "{{url('')}}/api/v1/countries",
+        "path": "{{url('/')}}/api/v1/countries",
         "per_page": 20,
-        "to": 6,
-        "total": 6
+        "to": 4,
+        "total": 4
     }
 }</code></pre>
     </div>

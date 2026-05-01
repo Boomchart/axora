@@ -34,6 +34,7 @@
                             <option value="">{{__('Select status')}}</option>
                             <option value="success">{{__('Completed')}}</option>
                             <option value="pending">{{__('Pending')}}</option>
+                            <option value="processing">{{__('Processing')}}</option>
                             <option value="failed">{{__('Failed/Cancelled')}}</option>
                             <option value="declined">{{__('Declined')}}</option>
                         </select>

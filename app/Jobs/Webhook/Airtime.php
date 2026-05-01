@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Spatie\WebhookServer\WebhookCall;
 use App\Models\Webhook;
 
-class Issue implements ShouldQueue
+class Airtime implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,19 +37,27 @@ class Issue implements ShouldQueue
     public function handle()
     {
         $data = [
-            'event' => 'issued',
+            'event' => 'airtime',
             'data' => [
                 'id' => $this->issue->id,
-                'card_id' => $this->issue->card_id,
-                'name' => $this->issue->name,
-                'amount' => $this->issue->amount,
-                'currency' => $this->issue->currency,
-                'rate' => (float)number_format($this->issue->rate, 5, '.', ''),
-                'value' => (float)number_format($this->issue->amount * $this->issue->rate, 2, '.', ''),
+                'external_reference' => $this->issue->external_reference,
+                'operator' => [
+                    'id' => $this->issue->operator_id,
+                    'name' => $this->issue->operator_name,
+                    'amount' => $this->issue->amount,
+                ],
+                'payment' => [
+                    'currency' => $this->issue->currency,
+                    'rate' => $this->issue->rate,
+                    'amount' => (float) number_format($this->issue->amount * $this->issue->rate, 2, '.', ''),
+                    'charge' => (float) number_format($this->issue->rev_share + $this->issue->profit + $this->issue->vendor_share, 2, '.', ''),
+                    'total' => (float) number_format(($this->issue->rev_share + $this->issue->profit + $this->issue->vendor_share) + ($this->issue->amount * $this->issue->rate), 2, '.', '')
+                ],
                 'status' => $this->issue->status,
-                'card_code' => $this->issue->card_code,
-                'card_url' => $this->issue->card_url,
-                'expires' => $this->issue->expires,
+                'customer' => [
+                    'phone' => $this->issue->phone,
+                    'phone_code' => $this->issue->phone_code,
+                ],
                 'mode' => $this->issue->mode
             ]
         ];

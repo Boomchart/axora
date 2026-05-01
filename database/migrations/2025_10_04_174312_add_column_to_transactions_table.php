@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             $table->text('agents')->nullable();
             $table->integer('paid_agents')->default(0)->nullable();
         });

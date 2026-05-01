@@ -5,8 +5,7 @@
                 <h1 class="text-dark fw-bold my-1 fs-4">{{__('Dashboard')}}</h1>
             </div>
             <div class="d-flex align-items-center flex-nowrap text-nowrap py-1 mb-6">
-                <a href="{{route('run.migration')}}" class="btn btn-primary me-4"><i class="bi bi-database"></i> {{__('Run migrations')}}</a>
-                <a href="{{route('optimize.system')}}" class="btn btn-secondary me-4"><i class="bi bi-lightning"></i> {{__('Clear Data Cache')}}</a>
+                <a href="{{route('optimize.system')}}" class="btn btn-secondary"><i class="bi bi-lightning"></i> {{__('Clear Data Cache')}}</a>
             </div>
         </div>
         <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post">
@@ -19,6 +18,42 @@
                 </div>
                 @endif
                 <div class="row mb-5">
+                    <div class="col-md-3 mb-5">
+                        <div class="card p-5 bg-danger">
+                            <div class="d-flex justify-content-between">
+                                <p class="fs-7 text-dark">{{__('Needs Attention')}}</p>
+                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                            </div>
+                            <h3 class="text-dark">{{number_format_short($admin->needsAttentionCard())}}</h3>
+                        </div>
+                    </div>                  
+                    <div class="col-md-3 mb-5">
+                        <div class="card p-5 bg-secondary">
+                            <div class="d-flex justify-content-between">
+                                <p class="fs-7 text-dark">{{__('Completed Orders')}}</p>
+                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                            </div>
+                            <h3 class="text-dark">{{number_format_short($admin->completedOrders())}}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-5">
+                        <div class="card p-5 bg-secondary">
+                            <div class="d-flex justify-content-between">
+                                <p class="fs-7 text-dark">{{__('Pending Orders')}}</p>
+                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                            </div>
+                            <h3 class="text-dark">{{number_format_short($admin->pendingOrders())}}</h3>
+                        </div>
+                    </div>                    
+                    <div class="col-md-3 mb-5">
+                        <div class="card p-5 bg-secondary">
+                            <div class="d-flex justify-content-between">
+                                <p class="fs-7 text-dark">{{__('Failed Orders')}}</p>
+                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                            </div>
+                            <h3 class="text-dark">{{number_format_short($admin->failedOrders())}}</h3>
+                        </div>
+                    </div>
                     <div class="col-md-3 mb-5">
                         <div class="card p-5 bg-secondary">
                             <div class="d-flex justify-content-between">
@@ -53,24 +88,6 @@
                                 <a href="{{route('admin.watchlist')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
                             </div>
                             <h3 class="text-dark">{{number_format_short($admin->watchList())}}</h3>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-5">
-                        <div class="card p-5 bg-secondary">
-                            <div class="d-flex justify-content-between">
-                                <p class="fs-7 text-dark">{{__('Pending Orders')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
-                            </div>
-                            <h3 class="text-dark">{{number_format_short($admin->pendingOrders())}}</h3>
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-5">
-                        <div class="card p-5 bg-warning">
-                            <div class="d-flex justify-content-between">
-                                <p class="fs-7 text-dark">{{__('Completed Orders')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
-                            </div>
-                            <h3 class="text-dark">{{number_format_short($admin->completedOrders())}}</h3>
                         </div>
                     </div>
                     <div class="col-md-3 mb-5">

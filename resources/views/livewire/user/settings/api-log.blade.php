@@ -87,11 +87,11 @@
                                     </span>
 
                                     <input type="search" class="form-control form-control-solid bg-white rounded-4"
-                                           wire:model="search"
-                                           placeholder="{{__('Search')}}" style="padding-left: 45px !important;"/>
+                                        wire:model="search"
+                                        placeholder="{{__('Search')}}" style="padding-left: 45px !important;" />
 
                                     <span class="position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
-                                          id="kt_filter_button">
+                                        id="kt_filter_button">
                                         <i class="bi bi-filter"></i>
                                     </span>
                                 </div>
@@ -108,6 +108,7 @@
                                                 <th class="min-w-50px">{{__('Response')}}</th>
                                                 <th class="min-w-50px">{{__('Method')}}</th>
                                                 <th class="min-w-50px">{{__('Environment')}}</th>
+                                                <th class="min-w-200px">{{__('Idempotency Key')}}</th>
                                                 <th class="min-w-400px">{{__('Url')}}</th>
                                                 <th class="min-w-200px">{{__('IP Address')}}</th>
                                                 <th class="min-w-300px">{{__('Created')}}</th>
@@ -117,7 +118,7 @@
                                         <tbody class="fw-semibold fs-7">
                                             @foreach($transactions as $k=>$val)
                                             <tr class="cursor-pointer">
-                                                <td @if($val->message) id="kt_webhook{{$val->id}}_button" @endif>
+                                                <td @if($val->message || $val->payload) id="kt_webhook{{$val->id}}_button" @endif>
                                                     <div class="symbol symbol-40px symbol-circle me-5 okay">
                                                         <div class="symbol-label fs-3 fw-bolder bg-white">
                                                             <i class="bi bi-code-square"></i>
@@ -127,6 +128,7 @@
                                                 <td>{{$val->status_code}}</td>
                                                 <td>{{$val->method}}</td>
                                                 <td>{{$val->mode}}</td>
+                                                <td>{{$val->idempotency_key}}</td>
                                                 <td>{{str_replace(url('/'), '', $val->url)}}</td>
                                                 <td>{{$val->ip_address}}</td>
                                                 <td>{{$val->created_at->setTimezone($user->user_timezone)->toDayDateTimeString()}}</td>
@@ -151,8 +153,8 @@
                                                     <div class="card-body text-wrap">
                                                         <div class="text-center mb-3">
                                                             <div class="symbol symbol-100px symbol-circle okay mb-5">
-                                                                <span class="symbol-label bg-secondary text-dark fw-bold fs-1">
-                                                                    <i class="bi bi-code-square text-dark" style="font-size:56px;"></i>
+                                                                <span class="symbol-label axora-dashboard-icon text-dark fw-bold fs-1">
+                                                                    <i class="bi bi-code-square" style="font-size:56px;"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -160,15 +162,15 @@
                                                         <div class="pb-5 mt-10 position-relative zindex-1">
                                                             <div class="row mb-5">
                                                                 <div class="col-12" wire:ignore>
+                                                                    @if($val->payload)
+                                                                    <p class="mb-1 fs-7">{{__('Payload')}}</p>
+<pre class="rounded-4 mb-5"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) !!}</code></pre>
+                                                                    @endif
                                                                     <p class="mb-1 fs-7">{{__('Message')}}</p>
-                                                                    @if(is_array($val->message) == false)
+                                                                    @if(is_array(json_decode($val->message, true)) == false)
                                                                     <p class="mb-1 fs-7">{{$val->message}}</p>
                                                                     @else
-                                                                    <pre class="rounded-4">
-                                                                        <code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">   
-                                                                        {!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}
-                                                                        </code>
-                                                                    </pre>
+<pre class="rounded-4"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}</code></pre>
                                                                     @endif
                                                                 </div>
                                                             </div>

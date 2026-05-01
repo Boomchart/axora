@@ -18,12 +18,16 @@ class Compliance extends Component
     public $g_expiry;
     public $issuing_fc;
     public $issuing_pc;
+    public $issuing_agents;
+    public $airtime_issuing_fc;
+    public $airtime_issuing_pc;
+    public $airtime_issuing_agents;
     public $watchlist;
+    public $flag_withdraw;
     public $agent;
     public $admin;
     public $new_password;
     public $password;
-    public $issuing_agents;
 
     protected $listeners = ['saved' => '$refresh'];
 
@@ -31,6 +35,20 @@ class Compliance extends Component
     {
         $data = [];
         foreach ($this->client->business->issuing_agents ? json_decode($this->client->business->issuing_agents, true) : [] as $key => $item) {
+            $data[] = [
+                'account_id' => $item['account_id'],
+                'rev_pc' => $item['rev_pc'],
+                'rev_fc' => $item['rev_fc'],
+            ];
+        }
+
+        return $data;
+    }    
+    
+    public function getAirtimeIssuingAgentData()
+    {
+        $data = [];
+        foreach ($this->client->business->airtime_issuing_agents ? json_decode($this->client->business->airtime_issuing_agents, true) : [] as $key => $item) {
             $data[] = [
                 'account_id' => $item['account_id'],
                 'rev_pc' => $item['rev_pc'],
@@ -59,19 +77,42 @@ class Compliance extends Component
         $this->issuing_agents[] = ['account_id' => null, 'rev_fc' => 0, 'rev_pc' => 0];
     }
 
+    public function removeAirtimeIssuingAgent($index)
+    {
+        unset($this->airtime_issuing_agents[$index]);
+        $this->airtime_issuing_agents = array_values($this->airtime_issuing_agents); // Reindex array
+    }
+
+    public function updatedAirtimeIssuingAgents()
+    {
+        if (count($this->airtime_issuing_agents) == 20) {
+            return $this->emit('alert', __('Max agents exceeded'));
+        }
+    }
+
+    public function addAirtimeIssuingAgent()
+    {
+        $this->airtime_issuing_agents[] = ['account_id' => null, 'rev_fc' => 0, 'rev_pc' => 0];
+    }
+
     public function mount()
     {
         $this->watchlist = (bool) ($this->client->business->watchlist == 1) ? true : false;
+        $this->flag_withdraw = (bool) ($this->client->business->flag_withdraw == 1) ? true : false;
         $this->agent = (bool) ($this->client->business->agent == 1) ? true : false;
         $this->issuing_fc = $this->client->business->issuing_fc;
         $this->issuing_pc = $this->client->business->issuing_pc;
-        $this->issuing_agents = !empty($this->getIssuingAgentData()) ? $this->getIssuingAgentData() :  [['account_id' => null, 'rev_pc' => 0, 'rev_fc' => 0]];
+        $this->issuing_agents = !empty($this->getIssuingAgentData()) ? $this->getIssuingAgentData() :  [];
+        $this->airtime_issuing_fc = $this->client->business->airtime_issuing_fc;
+        $this->airtime_issuing_pc = $this->client->business->airtime_issuing_pc;
+        $this->airtime_issuing_agents = !empty($this->getAirtimeIssuingAgentData()) ? $this->getAirtimeIssuingAgentData() :  [];
     }
 
     public function save()
     {
         $this->client->business->update([
             'watchlist' => $this->watchlist,
+            'flag_withdraw' => $this->flag_withdraw,
             'agent' => $this->agent,
         ]);
 
@@ -107,6 +148,39 @@ class Compliance extends Component
         ]);
 
         createAudit('edited giftcard issuing & revshare', $this->client, null, $this->admin->id);
+
+        $this->emit('saved');
+        $this->emit('success', __('Updated'));
+    }    
+    
+    public function updateAirtimeIssuing()
+    {
+        if ($this->admin->rev_share == 0) {
+            return $this->emit('alert', __('Permission denied'));
+        }
+        $this->validate([
+            'airtime_issuing_fc' => ['required', 'numeric'],
+            'airtime_issuing_pc' => ['required', 'numeric'],
+        ]);
+        $airtime_issuing_agents = [];
+        foreach ($this->airtime_issuing_agents as $index => $item) {
+            if (\App\Models\Business::whereReference($item['account_id'])->exists() == false) {
+                return $this->emit('alert', __('Invalid Agent ID'));
+            }
+            $airtime_issuing_agents[] = $item;
+        }
+
+        $this->airtime_issuing_agents = collect($airtime_issuing_agents)
+            ->unique(fn($item) => serialize($item))
+            ->all();
+
+        $this->client->business->update([
+            'issuing_fc' => $this->airtime_issuing_fc,
+            'issuing_pc' => $this->airtime_issuing_pc,
+            'issuing_agents' => json_encode($airtime_issuing_agents)
+        ]);
+
+        createAudit('edited airtime/data issuing & revshare', $this->client, null, $this->admin->id);
 
         $this->emit('saved');
         $this->emit('success', __('Updated'));

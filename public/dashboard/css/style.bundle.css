@@ -40065,10 +40065,6 @@ a:hover {
     background-color: #e4e6ef
 }
 
-.btn.btn-secondary i {
-    color: #3f4254
-}
-
 .btn.btn-secondary .svg-icon svg [fill]:not(.permanent):not(g) {
     transition: fill .3s ease;
     fill: #3f4254

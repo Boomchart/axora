@@ -1,7 +1,7 @@
 @extends('developer.reference.menu')
 
 @section('content')
-    <h1>Balance</h1>
+    <h1>{{$title}}</h1>
     <p class="lead-text">
         Retrieves Account Balance
     </p>

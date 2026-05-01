@@ -52,7 +52,7 @@
                                     <span class="menu-icon"><!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
                                         <i class="bi bi-cart fs-3 text-whitelabel-menu"></i>
                                     </span>
-                                <span class="menu-title">{{__('Orders History')}}</span>
+                                <span class="menu-title">{{__('Order History')}}</span>
                             </a>
                         </div>
                         <div class="menu-item"><!--begin:Menu link-->

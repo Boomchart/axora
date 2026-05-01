@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             $columns = [
                 'card_amount',
                 'card_currency',
@@ -66,7 +66,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }

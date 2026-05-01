@@ -19,7 +19,10 @@ class ApiLogs extends Model
         'mode',
         'method',
         'ip_address',
-        'message'
+        'message',
+        'origin_host',
+        'payload',
+        'idempotency_key'
     ];
 
     public function business()

@@ -47,6 +47,7 @@ class ApiLog extends Component
                 $this->emit('drawer');
                 $query->where(function ($query) {
                     $query->Where('ip_address', 'like', '%' . $this->search . '%')
+                        ->orWhere('idempotency_key', 'like', '%' . $this->search . '%')
                         ->orWhere('url', 'like', '%' . $this->search . '%');
                 });
             })

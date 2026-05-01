@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\ApiLogs;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Queue::class, 
         Commands\UpdateTransactions::class, 
+        Commands\UpdateCards::class, 
+        Commands\UpdateAirtimeOperators::class, 
+        Commands\UpdateDataOperators::class, 
     ];
 
     /**
@@ -27,6 +31,11 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('command:queue')->everyFiveMinutes();
         $schedule->command('update:transactions')->everyTenMinutes();
+        $schedule->command('update:cards')->everyThreeMinutes();
+        $schedule->command('update:airtime:operators')->everyThreeMinutes();
+        $schedule->command('update:data:operators')->everyThreeMinutes();
+        $schedule->call(fn () => ApiLogs::where('created_at', '<', now()->subDays(90))->delete())
+            ->daily();
     }
 
     /**

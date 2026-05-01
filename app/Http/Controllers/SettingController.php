@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\App;
 use App\Models\CountryReg;
 use App\Models\Settings;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use App\Models\Design;
 use App\Models\Transactions;
 use App\Models\Admin;
@@ -35,6 +35,26 @@ class SettingController extends Controller
         });
     }
 
+    public function orderTrxFilter($card)
+    {
+        return view('admin.giftcard.orders', ['title' => __('Gift Card Orders'), 'card' => $card]);
+    }
+
+    public function countryAirtimeProviders(CountryReg $country)
+    {
+        return view('admin.airtime.providers', ['title' => __('Airtime Provider'), 'country' => $country]);
+    }
+
+    public function countryDataProviders(CountryReg $country)
+    {
+        return view('admin.data.providers', ['title' => __('Data Provider'), 'country' => $country]);
+    }
+
+    public function countryCards(CountryReg $country)
+    {
+        return view('admin.giftcard.cards', ['title' => __('Provider Cards'), 'country' => $country]);
+    }
+
     public function users($type)
     {
         return view('admin.user.index', ['title' => __('Users'), 'type' => $type]);
@@ -45,7 +65,7 @@ class SettingController extends Controller
         return view('admin.transactions.details', ['title' => __('Transaction Details'), 'val' => $transaction]);
     }
 
-    public function detailsOrder(CardIssued $order)
+    public function detailsOrder(Orders $order)
     {
         return view('admin.orders.details', ['title' => __('Order Details'), 'val' => $order]);
     }
@@ -222,7 +242,7 @@ class SettingController extends Controller
             $data->fill($request->all())->save();
             $data->language = (empty($request->language)) ? 0 : $request->language;
             $data->save();
-        }  else if ($type == "bank_deposit") {
+        } else if ($type == "bank_deposit") {
             $validate = Validator::make($request->all(), [
                 'deposit_pct' => ['required'],
                 'deposit_fiat_pc' => ['required', 'numeric'],
@@ -234,7 +254,7 @@ class SettingController extends Controller
             $data->fill($request->all())->save();
             $data->bk_status = (empty($request->bk_status)) ? 0 : $request->bk_status;
             $data->save();
-        }else if ($type == "security") {
+        } else if ($type == "security") {
             $admin = Admin::whereId(auth()->guard('admin')->user()->id)->first();
             $admin->update([
                 'username' => $request->username,

@@ -43,9 +43,9 @@ Route::prefix('api-reference')->group(function () {
     });
 
     Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');
-    Route::view('order', 'developer.reference.order', ['title' => __('Order Card')])->name('developer.order');
+    Route::view('order', 'developer.reference.order', ['title' => __('Order Gift Card')])->name('developer.order');
     Route::view('balance', 'developer.reference.balance', ['title' => __('Account Balance')])->name('developer.balance');
-    Route::view('quote', 'developer.reference.quote', ['title' => __('Get a Quote')])->name('developer.quote');
+    Route::view('quote', 'developer.reference.quote', ['title' => __('Gift Card Quote')])->name('developer.quote');
 });
 
 Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
@@ -62,15 +62,15 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
     Route::post('contact', [FrontendController::class, 'contactSubmit'])->name('contact-submit');
     Route::prefix('help-center')->group(function () {
         Route::view('index', 'front.helpcenter.index', ['title' => __('Help Center')])->name('help.center');
-        Route::get('articles/{article:slug}',[ FrontEndController::class, 'helpCenterArticle' ])->name('help.article');
-        Route::get('topic/{topic}',[ FrontEndController::class, 'helpCenterTopic' ])->name('help.topic');
-        Route::get('search-results', [ FrontEndController::class, 'searchHelpCenter' ])->name('help.search-results');
+        Route::get('articles/{article:slug}', [FrontEndController::class, 'helpCenterArticle'])->name('help.article');
+        Route::get('topic/{topic}', [FrontEndController::class, 'helpCenterTopic'])->name('help.topic');
+        Route::get('search-results', [FrontEndController::class, 'searchHelpCenter'])->name('help.search-results');
     });
     Route::name('blog.')->group(function () {
-        Route::get('blog', [ FrontendController::class,'blog' ])->name('index');
-        Route::get('posts/{blog:slug}',[ FrontEndController::class, 'blogArticle' ])->name('article');
-        Route::get('categories/{category}/{slug}',[ FrontEndController::class, 'blogCategory' ])->name('category');
-        Route::get('blog/results', [ FrontEndController::class, 'searchBlog' ])->name('search');
+        Route::get('blog', [FrontendController::class, 'blog'])->name('index');
+        Route::get('posts/{blog:slug}', [FrontEndController::class, 'blogArticle'])->name('article');
+        Route::get('categories/{category}/{slug}', [FrontEndController::class, 'blogCategory'])->name('category');
+        Route::get('blog/results', [FrontEndController::class, 'searchBlog'])->name('search');
     });
     Route::view('pricing', 'front.pages.pricing', ['title' => __('Pricing')])->name('pricing');
 
@@ -108,7 +108,7 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
                 });
 
                 Route::group(['prefix' => 'orders'], function () {
-                    Route::view('all', 'user.orders.index', ['title' => __('Orders')])->name('user.orders');
+                    Route::view('all', 'user.orders.index', ['title' => __('Gift Card Orders')])->name('user.orders');
                     Route::get('details/{order}', [UserController::class, 'detailsOrder'])->name('view.orders');
                 });
 
@@ -195,7 +195,7 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
             });
 
             Route::group(['prefix' => 'orders'], function () {
-                Route::view('all', 'admin.orders.index', ['title' => __('Orders')])->name('admin.orders');
+                Route::view('all', 'admin.orders.index', ['title' => __('Gift Card Orders')])->name('admin.orders');
                 Route::get('details/{order}', [SettingController::class, 'detailsOrder'])->name('admin.view.orders');
             });
 
@@ -243,6 +243,21 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
                 Route::group(['prefix' => 'firewall', 'middleware' => 'Admin'], function () {
                     Route::view('staff', 'admin.firewall.index', ['title' => __('Firewall')])->name('admin.firewall');
                 });
+            });
+
+            Route::group(['prefix' => 'airtime'], function () {
+                Route::get('providers/{country}', [SettingController::class, 'countryAirtimeProviders'])->name('admin.airtime.providers');
+            });
+
+            Route::group(['prefix' => 'data'], function () {
+                Route::get('providers/{country}', [SettingController::class, 'countryDataProviders'])->name('admin.data.providers');
+            });
+
+            Route::group(['prefix' => 'giftcard'], function () {
+                Route::view('countries', 'admin.giftcard.country', ['title' => __('Countries')])->name('admin.giftcard.country');
+                Route::get('cards/{country}', [SettingController::class, 'countryCards'])->name('admin.giftcard.cards');
+                Route::get('orders-filter/{card}', [SettingController::class, 'orderTrxFilter'])->name('admin.giftcard.orders.filter');
+                Route::view('category', 'admin.giftcard.category', ['title' => __('Giftcard Category')])->name('admin.giftcard.category');
             });
         });
     });

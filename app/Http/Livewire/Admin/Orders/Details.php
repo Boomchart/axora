@@ -3,8 +3,9 @@
 namespace App\Http\Livewire\Admin\Orders;
 
 use Livewire\Component;
-use App\Models\Webhook;
+use App\Models\{Webhook, Balance};
 use Spatie\WebhookServer\WebhookCall;
+use Illuminate\Support\Facades\DB;
 
 class Details extends Component
 {
@@ -28,6 +29,44 @@ class Details extends Component
             }
         }
         return $this->emit('alert', __('Resending Webhook Failed'));
+    }
+
+    public function retryOrder()
+    {
+        if ($this->val->status == 'pending' && $this->val->failed_order == 1 && $this->val->mode == 'live') {
+            try {
+                DB::transaction(function () {
+                    $this->val->update([
+                        'failed_order' => 0
+                    ]);
+                }, 3);
+            } catch (\Exception $e) {
+                return $this->emit('alert', __('An error occurred, try again later'));
+            }
+            return $this->emit('success', __('Order retried'));
+        } else {
+            return $this->emit('alert', __('Order can\'t be retried'));
+        }
+    }
+
+    public function markAsFailed()
+    {
+        if ($this->val->status == 'pending' && $this->val->failed_order == 1 && $this->val->mode == 'live') {
+            try {
+                DB::transaction(function () {
+                    $this->val->update([
+                        'status' => 'failed'
+                    ]);
+                    $balance = Balance::whereId($this->val->transaction->wallet_id)->first();
+                    $balance->increment('amount', (($this->val->rev_share + $this->val->profit + $this->val->vendor_share) + ($this->val->amount * $this->val->rate)));
+                }, 3);
+            } catch (\Exception $e) {
+                return $this->emit('alert', __('An error occurred, try again later'));
+            }
+            return $this->emit('success', __('Order retried'));
+        } else {
+            return $this->emit('alert', __('Only pending & live can be marked as failed'));
+        }
     }
 
     public function render()

@@ -45,16 +45,46 @@
                         </div>
                         <div class="separator separator-dashed"></div>
                         <div class="fs-7 d-flex justify-content-between my-4">
+                            <div class="">{{__('External Reference')}}</div>
+                            <div class="d-flex fw-bold">
+                                {{substr($val?->external_reference, 0, 15)}}...
+                                <i class="bi bi-clipboard-check text-dark castro-copy fs-5" data-clipboard-text="{{$val->external_reference}}" title="{{__('Copy')}}"></i>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed"></div>
+                        <div class="fs-7 d-flex justify-content-between my-4">
+                            <div class="">{{__('Name')}}</div>
+                            <div class="d-flex fw-bold">
+                                @if($val->type == 'giftcard')
+                                {{$val->card_name}} ({{$val->card_country}})
+                                @elseif($val->type == 'airtime')
+                                {{$val->operator_name}} ({{$val->operator_country}})
+                                @elseif($val->type == 'data')
+                                {{$val->operator_name}} ({{$val->operator_country}})
+                                @endif
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed"></div>
+                        <div class="fs-7 d-flex justify-content-between my-4">
                             <div class="">{{__('Order Status')}}</div>
                             @include('partials.transactions.status', ['val' => $val])
                         </div>
                         <div class="separator separator-dashed"></div>
                         {!!trxDetails(__('Amount'), number_format($val->amount, 2).' '.$val->currency)!!}
 
-                        {!!trxDetails(__('Gift Card Name'), ucwords($val->card_name).' - '.$val->transaction->card_country)!!}
+                        {!!trxDetails(__('Type'), ucwords($val->type))!!}
+
+                        @if($val->type == 'giftcard')
+                        {!!trxDetails(__('Gift Card Name'), ucwords($val->card_name).' - '.$val->card_country)!!}
                         {!!trxDetails(__('Customer Name'), $val->name)!!}
                         {!!trxDetails(__('Customer Email'), $val->email)!!}
                         {!!trxDetails(__('Customer Phone'), $val->phone)!!}
+                        @endif
+
+                        @if($val->type == 'airtime')
+                        {!!trxDetails(__('Operator Name'), ucwords($val->operator_name).' - '.$val->operator_country)!!}
+                        {!!trxDetails(__('Customer Phone'), $val->phone)!!}
+                        @endif
                         {!!trxDetails(__('Exchange Rate'), $val->rate.' '.$val->transaction->currency)!!}
 
 

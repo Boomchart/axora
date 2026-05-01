@@ -38,6 +38,8 @@
                             <option value="">{{__('Select status')}}</option>
                             <option value="success">{{__('Completed')}}</option>
                             <option value="pending">{{__('Pending')}}</option>
+                            <option value="processing">{{__('Processing')}}</option>
+                            <option value="failed">{{__('Failed')}}</option>
                         </select>
                     </div>
                     <div class="fv-row mb-6">
@@ -109,6 +111,7 @@
                                                 <th></th>
                                                 <th class="min-w-250px">{{__('Name')}}</th>
                                                 <th class="min-w-150px">{{__('Amount')}}</th>
+                                                <th class="min-w-50px">{{__('Type')}}</th>
                                                 <th class="min-w-50px">{{__('Status')}}</th>
                                                 <th class="min-w-250px">{{__('Reference ID')}}</th>
                                                 <th class="min-w-250px">{{__('Created')}}</th>
@@ -123,10 +126,17 @@
                                                            class="btn btn-secondary btn-sm rounded-pill"
                                                            target="_blank">{{__('Manage')}}</a>
                                                     </td>
-                                                    <td class="fw-bold">{{$val->transaction->card_name}}
-                                                        ({{$val->transaction->card_country}})
+                                                    <td class="fw-bold">
+                                                        @if($val->type == 'giftcard')
+                                                        {{$val->card_name}} ({{$val->card_country}})
+                                                        @elseif($val->type == 'airtime')
+                                                        {{$val->operator_name}} ({{$val->operator_country}})                                                        
+                                                        @elseif($val->type == 'data')
+                                                        {{$val->operator_name}} ({{$val->operator_country}})
+                                                        @endif
                                                     </td>
                                                     <td class="fw-bold">{{currencyFormat(number_format($val->amount, 2)).' '.$val->currency}}</td>
+                                                    <td class="fw-bold">{{ucwords($val->type)}}</td>
                                                     <td>
                                                         @include('partials.transactions.status', ['val' => $val])
                                                     </td>

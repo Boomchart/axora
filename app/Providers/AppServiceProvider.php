@@ -6,8 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\URL;
-use App\Observers\CardIssuedObserver;
-use App\Models\CardIssued;
+use App\Observers\{OrderObserver};
+use App\Models\{Orders, Transactions};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        CardIssued::observe(CardIssuedObserver::class);
+        Orders::observe(OrderObserver::class);
         Password::defaults(function () {
             return Password::min(8)
                 ->mixedCase()

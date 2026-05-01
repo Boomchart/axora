@@ -58,7 +58,23 @@ class Transactions extends Model
         'card_amount',
         'card_currency',
         'card_country',
-        'rate'
+        'rate',
+        'balance_before',
+        'balance_after',
+        'wallet_id',
+        'operator_name',
+        'operator_id',
+        'operator_amount',
+        'operator_country',
+        'operator_currency',
+        'provider',
+        'vendor_id',
+        'rev_share',
+        'vendor_share',
+        'profit',
+        'paid_agents',
+        'paid_profit',
+        'external_reference'
     ];
 
     public function user()
@@ -83,7 +99,7 @@ class Transactions extends Model
 
     public function issue()
     {
-        return $this->belongsTo(CardIssued::class, 'issue_id')->withTrashed();
+        return $this->belongsTo(Orders::class, 'issue_id')->withTrashed();
     }
 
     public function gateway()
@@ -94,5 +110,74 @@ class Transactions extends Model
     public function withdrawMethod()
     {
         return $this->belongsTo(Category::class, 'withdraw_id')->withTrashed();
+    }
+
+    public function giftcardOrdersByExternalReference()
+    {
+        return Orders::whereTrxId($this->id)
+            ->get()
+            ->groupBy('external_reference')
+            ->map(function ($group, $reference) {
+                $first = $group->first();
+                return [
+                    'external_reference' => $reference !== '' ? $reference : null,
+                    'card' => [
+                        'id' => $first->card_id,
+                        'name' => $first->card_name,
+                        'quantity' => $group->count(),
+                        'amount' => (float) $first->amount,
+                        'currency' => $first->currency,
+                        'value' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                    ],
+                    'payment' => [
+                        'currency' => $this->currency,
+                        'rate' => $first->rate,
+                        'amount' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                        'charge' => (float) number_format($first->rev_share + $first->profit + $first->vendor_share, 2, '.', ''),
+                        'total' => (float) number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', '')
+                    ],
+                    'customer' => [
+                        'name' => $first->name,
+                        'email' => $first->email,
+                        'phone' => $first->phone,
+                        'phone_code' => $first->phone_code,
+                    ],
+                ];
+            })
+            ->values()
+            ->all();
+    }    
+    
+    public function airtimeOrdersByExternalReference()
+    {
+        return Orders::whereTrxId($this->id)
+            ->get()
+            ->groupBy('external_reference')
+            ->map(function ($group, $reference) {
+                $first = $group->first();
+                return [
+                    'external_reference' => $reference !== '' ? $reference : null,
+                    'operator' => [
+                        'id' => $first->operator_id,
+                        'name' => $first->operator_name,
+                        'amount' => (float) $first->amount,
+                        'currency' => $first->currency,
+                        'value' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                    ],
+                    'payment' => [
+                        'currency' => $this->currency,
+                        'rate' => $first->rate,
+                        'amount' => (float) number_format($first->amount * $first->rate, 2, '.', ''),
+                        'charge' => (float) number_format($first->rev_share + $first->profit + $first->vendor_share, 2, '.', ''),
+                        'total' => (float) number_format(($first->rev_share + $first->profit + $first->vendor_share) + ($first->amount * $first->rate), 2, '.', '')
+                    ],
+                    'customer' => [
+                        'phone' => $first->phone,
+                        'phone_code' => $first->phone_code,
+                    ],
+                ];
+            })
+            ->values()
+            ->all();
     }
 }

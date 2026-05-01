@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             $table->double('card_amount')->default(0)->nullable();
             $table->string('card_currency')->nullable();
             $table->string('email')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('card_issueds', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }

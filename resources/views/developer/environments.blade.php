@@ -27,7 +27,7 @@
         <li>No charges to your account</li>
         <li>Webhooks are delivered to your test endpoints</li>
         <li>Full access to all brands and denominations</li>
-        <li>Rate limit: 50 requests per minute</li>
+        <li>Rate limit: 60 requests per minute</li>
     </ul>
 
     <div class="info-box note">
@@ -162,8 +162,8 @@ $apiKey = 'sk_live_your_production_key';</code></pre>
         </tr>
         <tr>
             <td>Rate Limit</td>
-            <td>50/min</td>
-            <td>100/min</td>
+            <td>60/min</td>
+            <td>60/min</td>
         </tr>
         <tr>
             <td>Support</td>

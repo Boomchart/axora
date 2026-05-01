@@ -82,6 +82,16 @@ function decryptRSA($encryptedData)
     return $decryptedData;
 }
 
+function generateRandomCode()
+{
+    $segments = [];
+    for ($i = 0; $i < 4; $i++) {
+        $segments[] = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 4);
+    }
+    $code = implode('-', $segments);
+    return $code;
+}
+
 function formatTag($data)
 {
     $array = json_decode($data);
@@ -398,6 +408,35 @@ function calculateFee($num, $type, $fiat = 0, $percent = 0)
         $result = '0.00';
     }
     return $result;
+}
+
+function tierPricing(float $amount, array $tier_levels): array
+{
+    foreach ($tier_levels as $tier) {
+        $min = (float) $tier['min'];
+        $max = ($tier['max'] !== '' && $tier['max'] !== null)
+            ? (float) $tier['max']
+            : null;
+
+        $inRange = $amount >= $min && ($max === null || $amount <= $max);
+
+        if ($inRange) {
+            $percent = (float) $tier['percent'];
+            $fiat    = (float) $tier['flat'];
+
+            return [
+                'flat'    => $fiat,
+                'percent' => $percent,
+                'fee'     => round(($amount * $percent / 100) + $fiat, 2),
+            ];
+        }
+    }
+
+    return [
+        'fiat'    => 0,
+        'percent' => 0,
+        'fee'     => 0,
+    ];
 }
 
 function removeCommas($numberString)

@@ -99,12 +99,22 @@ class Admin extends Authenticatable
 
     public function pendingOrders()
     {
-        return CardIssued::whereStatus('pending')->whereMode('live')->count();
+        return Orders::whereStatus('pending')->whereFailedOrder(0)->whereMode('live')->count();
+    }
+
+    public function needsAttentionCard()
+    {
+        return Orders::whereStatus('pending')->whereFailedOrder(1)->whereMode('live')->count();
     }
 
     public function completedOrders()
     {
-        return CardIssued::whereStatus('success')->whereMode('live')->count();
+        return Orders::whereStatus('success')->whereFailedOrder(0)->whereMode('live')->count();
+    }
+
+    public function failedOrders()
+    {
+        return Orders::whereStatus('failed')->whereFailedOrder(0)->whereMode('live')->count();
     }
 
     public function pendingTransactions()

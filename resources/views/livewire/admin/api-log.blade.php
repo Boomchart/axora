@@ -110,6 +110,7 @@
                                                 <th class="min-w-50px">{{__('Method')}}</th>
                                                 <th class="min-w-100px">{{__('Message')}}</th>
                                                 <th class="min-w-50px">{{__('Environment')}}</th>
+                                                <th class="min-w-200px">{{__('Idempotency Key')}}</th>
                                                 <th class="min-w-200px">{{__('Url')}}</th>
                                                 <th class="min-w-200px">{{__('IP Address')}}</th>
                                                 <th class="min-w-300px">{{__('Created')}}</th>
@@ -134,6 +135,7 @@
                                                 <td>{{$val->method}}</td>
                                                 <td>{{$val->message ? __('True') : __('False')}}</td>
                                                 <td>{{$val->mode}}</td>
+                                                <td>{{$val->idempotency_key}}</td>
                                                 <td>{{$val->url}}</td>
                                                 <td>{{$val->ip_address}}</td>
                                                 <td>{{\Carbon\Carbon::create($val->created_at)->setTimezone($admin->timezone)->toDayDateTimeString()}}</td>
@@ -158,8 +160,8 @@
                                                     <div class="card-body text-wrap">
                                                         <div class="text-center mb-3">
                                                             <div class="symbol symbol-100px symbol-circle okay mb-5">
-                                                                <span class="symbol-label bg-secondary text-dark fw-bold fs-1">
-                                                                    <i class="bi bi-code-square text-dark" style="font-size:56px;"></i>
+                                                                <span class="symbol-label axora-dashboard-icon fw-bold fs-1">
+                                                                    <i class="bi bi-code-square" style="font-size:56px;"></i>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -167,15 +169,15 @@
                                                         <div class="pb-5 mt-10 position-relative zindex-1">
                                                             <div class="row mb-5">
                                                                 <div class="col-12" wire:ignore>
+                                                                    @if($val->payload)
+                                                                    <p class="mb-1 fs-7">{{__('Payload')}}</p>
+<pre class="rounded-4 mb-5"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) !!}</code></pre>
+                                                                    @endif
                                                                     <p class="mb-1 fs-7">{{__('Message')}}</p>
-                                                                    @if(is_array($val->message) == false)
+                                                                    @if(is_array(json_decode($val->message, true)) == false)
                                                                     <p class="mb-1 fs-7">{{$val->message}}</p>
                                                                     @else
-                                                                    <pre class="rounded-4">
-                                                                        <code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">   
-                                                                        {!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}
-                                                                        </code>
-                                                                    </pre>
+<pre class="rounded-4"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}</code></pre>
                                                                     @endif
                                                                 </div>
                                                             </div>

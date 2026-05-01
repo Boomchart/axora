@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\SentEmail;
 use App\Models\Ticket;
 use App\Models\Transactions;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use App\Jobs\SendEmail;
 use App\Jobs\DashNotify;
 
@@ -50,8 +50,8 @@ class Header extends Component
         return view('livewire.admin.users.header', [
             'tickets' => Ticket::whereUserId($this->client->id)->whereStatus(0)->count(),
             'sentMessage' => SentEmail::whereContactId($this->client->contact_id)->count(),
-            'transactions' => Transactions::whereUserId($this->client->id)->count(),
-            'orders' => CardIssued::whereUserId($this->client->id)->count(),
+            'transactions' => Transactions::whereUserId($this->client->id)->whereMode('live')->count(),
+            'orders' => Orders::whereUserId($this->client->id)->whereMode('live')->count(),
         ]);
     }
 }

@@ -6,10 +6,8 @@ use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdminOrderExport;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
-use App\Models\CardIssued;
+use App\Models\Orders;
 use Livewire\WithPagination;
 
 class All extends Component
@@ -26,6 +24,8 @@ class All extends Component
     public $sortBy = "created_at";
     public $orderBy = "desc";
     public $admin;
+    public $card;
+    public $failed = 0;
 
     protected $listeners = ['saved' => '$refresh'];
 
@@ -72,7 +72,7 @@ class All extends Component
 
     protected function pages()
     {
-        return CardIssued::with(['user', 'business', 'transaction'])
+        return Orders::with(['user', 'business', 'transaction'])
             ->when($this->search, function ($query) {
                 $query->where(function ($query) {
                     $query->where('amount', 'like', '%' . $this->search . '%')
@@ -97,6 +97,15 @@ class All extends Component
             })
             ->when(($this->mode != null), function ($query) {
                 return $query->whereMode($this->mode);
+            })            
+            ->when(($this->card != null), function ($query) {
+                return $query->whereCardId($this->card);
+            })           
+            ->when(($this->failed == 0), function ($query) {
+                return $query->whereFailedOrder(0);
+            })
+            ->when(($this->failed == 1), function ($query) {
+                return $query->whereFailedOrder(1);
             })
             ->orderby($this->sortBy, $this->orderBy);
     }

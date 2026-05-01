@@ -64,9 +64,11 @@
     "amount": 25,
     "currency": "GBP",
     "status": "success",
-    "card_code": "RJNI-0PLB-VQL3-1ZW6",
-    "card_url": null,
-    "expires": "2026-07-06T17:14:58.000000Z"
+    "redeem_code": {
+        "url": null,
+        "card_code": RJNI-0PLB-VQL3-1ZW6,
+        "pin": null
+    }
   }
 }</code></pre>
     </div>

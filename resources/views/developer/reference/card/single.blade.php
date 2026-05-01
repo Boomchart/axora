@@ -87,30 +87,43 @@ const cards = await response.json();</code></pre>
             <button class="code-copy-button">Copy</button>
         </div>
         <pre><code class="language-json">{
-   "message": "Card details",
+    "message": "Card details",
     "status": "success",
     "data": {
-        "id": "e6d64c61-7459-4f1b-8d8d-4d06346c429f",
-        "name": "AmazonFoods",
-        "country": "GB",
-        "currency": "GBP",
-        "min": 5,
-        "max": 200,
+        "id": "84b70dc9-47fb-45a9-89b9-87399febbc1d",
+        "name": "PlayStation US",
+        "country": "US",
+        "currency": "USD",
+        "min": 10,
+        "max": 100,
+        "denomination_type": "FIXED", //FIXED or RANGE
         "denominations": [
-            5,
             10,
-            25
+            25,
+            50,
+            75,
+            100
         ],
-        "exchange_rate": 1.359077764815,
-        "delivery_method": null,
-        "logo": "https://res.cloudinary.com/dariaqwmj/image/upload/v1748347991/images/qinepa0t055skszt4p3e.jpg",
-        "card_art": "https://res.cloudinary.com/dariaqwmj/image/upload/v1748242371/images/fxkln6yhcutv6xb7qv6o.jpg",
-        "description": "AmazonFoods have served Great Britain for over 60 years. From a butcher shop in Aberdeen we have grown to more than 300 stores.",
-        "redemption_instructions": null,
+        "exchange_rate": 0,
+        "card_art": "https://res.cloudinary.com/dariaqwmj/image/upload/v1777132615/jj0t8nxewbfmdfsbz5ue.jpg",
+        "description": "PlayStation US",
+        "redemption_instructions": "This card may be redeemed through PlayStation Store on a PS4, PS3, and PS Vita system, or a personal computer. . Open a Sony Entertainment Network account or use an existing account. . From your PS4, PS3, or PS Vita system, or a personal computer, access PlayStation Store. . Click the Redeem Codes icon. . Enter the code at the bottom of this card. Please note that the code is case sensitive and must be entered exactly as displayed. . For additional redemption instructions, please visit https://www.playstation.com/en-us/explore/playstationnetwork/redemption Your use of this PlayStation Plus code constitutes your acceptance of these terms and any additional terms available at http://us.playstation.com/redemption. PSN SM and PlayStation Plus offerings may change without notice.",
         "terms": null,
         "categories": [
-            "Supermarket"
-        ]
+            "Gaming",
+            "Lifestyle"
+        ],
+        "status": true,
+        "issuing_fee": {
+            "type": "single",
+            "charge_phase": "after_conversion",
+            "fee": {
+                "currency": "USD",
+                "flat": 1,
+                "percent": 10,
+                "description": "Charged after card currency is converted to USD"
+            }
+        }
     }
 }</code></pre>
     </div>
