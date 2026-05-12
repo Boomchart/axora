@@ -1,6 +1,6 @@
 @extends('front.pages')
 
-@section('meta_description', "Contact our team for business inquiries, API support, onboarding, and gift card integration questions.")
+@section('meta_description', "Contact our team for business inquiries, API support, onboarding, and digital asset integration questions.")
 
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
@@ -232,9 +232,9 @@
                         {{ __('Contact Us') }}
                     </span>
 
-                    <h1 class="axora-contact-title">{{ __('Let’s Talk About Your Gift Card Integration') }}</h1>
+                    <h1 class="axora-contact-title">{{ __('Let’s Talk About Your API Integration') }}</h1>
 
-                    <p class="axora-contact-subtitle">{{ __('Have questions about API access, business onboarding, pricing, or platform support? Send us a message and our team will get back to you.') }}</p>
+                    <p class="axora-contact-subtitle">{{ __('Have questions about our Unified API for airtime, crypto, and gift cards, business onboarding, pricing, or platform support? Send us a message and our team will get back to you.') }}</p>
                 </div>
             </div>
         </div>
@@ -273,7 +273,7 @@
 
                         <div class="axora-contact-note">
                             <h5>{{ __('Built for Business Support') }}</h5>
-                            <p>{{ __('We work with business platforms. For faster support, include your company name, expected use case, and any relevant integration details in your message.') }}</p>
+                            <p>{{ __('We work with business platforms. For faster support, include your company name, expected use case (e.g., airtime top-ups, crypto wallets, global rewards), and any relevant integration details in your message.') }}</p>
                         </div>
 
                     </div>
@@ -291,7 +291,7 @@
         <div class="container">
             <div class="axora-help-strip-card">
                 <h2>{{ __('Looking for quick answers?') }}</h2>
-                <p>{{ __('Visit our Help Center to browse common questions about API access, business onboarding, account support, and platform usage.') }}</p>
+                <p>{{ __('Visit our Help Center to browse common questions about API access, business onboarding, account support, and multi-asset platform usage.') }}</p>
                 <a href="{{ route('help.center') }}" class="btn btn-light">{{ __('Visit Help Center') }}</a>
             </div>
         </div>

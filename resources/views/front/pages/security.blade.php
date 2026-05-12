@@ -19,7 +19,7 @@
                     </h1>
 
                     <p class="hero-subtitle mx-auto">
-                        {{ __('We use modern security practices to help protect your account, API access, transaction data, and platform activity when you use our gift card API services.') }}
+                        {{ __('We use modern security practices to help protect your account, API access, transaction data, and platform activity when you use our unified API for digital assets, airtime, crypto, and global rewards.') }}
                     </p>
                 </div>
             </div>
@@ -66,9 +66,9 @@
                             <div class="security-icon">
                                 <i class="bi bi-person-check"></i>
                             </div>
-                            <h4>{{ __('Account Protection') }}</h4>
+                            <h4>{{ __('Account & Wallet Protection') }}</h4>
                             <p>
-                                {{ __('We apply access controls and account-level safeguards to help reduce unauthorized use of customer accounts, dashboards, and sensitive platform actions.') }}
+                                {{ __('We apply strict access controls and account-level safeguards to help reduce unauthorized use of customer accounts, generated crypto wallets, dashboards, and sensitive platform actions.') }}
                             </p>
                         </div>
 
@@ -76,9 +76,9 @@
                             <div class="security-icon">
                                 <i class="bi bi-activity"></i>
                             </div>
-                            <h4>{{ __('Transaction Monitoring') }}</h4>
+                            <h4>{{ __('Multi-Asset Transaction Monitoring') }}</h4>
                             <p>
-                                {{ __('We may monitor platform activity and transaction patterns to help detect suspicious behavior, prevent abuse, and maintain a safer environment for businesses and developers.') }}
+                                {{ __('We monitor platform activity and transaction patterns across fiat, digital rewards, and crypto assets to help detect suspicious behavior, prevent fraud, and maintain a safer environment for businesses and developers.') }}
                             </p>
                         </div>
 

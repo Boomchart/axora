@@ -11,7 +11,7 @@
                 </span>
                     <h1 class="hero-title mb-3">{{ __('How We Protect Your Privacy') }}</h1>
                     <p class="hero-subtitle mx-auto">
-                        {{ __('Your privacy matters to us. Learn how we collect, use, and protect your data when you use our gift card API platform..') }}
+                        {{ __('Your privacy matters to us. Learn how we collect, use, and protect your data when you use our unified API platform for digital assets, global rewards, and crypto services.') }}
                     </p>
                 </div>
             </div>
