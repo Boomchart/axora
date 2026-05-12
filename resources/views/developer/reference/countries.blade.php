@@ -13,7 +13,7 @@
 
     <h2 id="overview">Overview</h2>
     <p>
-        The Countries endpoint returns information about gift card availability across different countries. Use this endpoint to:
+        The Countries endpoint returns information about gift card availability, airtime and data operators across different countries. Use this endpoint to:
     </p>
 
     <ul>
@@ -75,28 +75,17 @@ const countries = await response.json();</code></pre>
         <pre><code class="language-json">{
     "data": [
         {
-            "name": "Canada",
-            "iso2": "CA",
-            "iso3": "CAN",
-            "currency": "CAD",
-            "currency_symbol": "$",
-            "phone_code": "1"
-        },
-        {
-            "name": "Nigeria",
-            "iso2": "NG",
-            "iso3": "NGA",
-            "currency": "NGN",
-            "currency_symbol": "₦",
-            "phone_code": "234"
-        },
-        {
             "name": "United Kingdom",
             "iso2": "GB",
             "iso3": "GBR",
             "currency": "GBP",
             "currency_symbol": "£",
-            "phone_code": "44"
+            "phone_code": "44",
+            "services": {
+                "giftcards": 1,
+                "airtime_operators": 0,
+                "data_operators": null
+            }
         },
         {
             "name": "United States",
@@ -104,7 +93,12 @@ const countries = await response.json();</code></pre>
             "iso3": "USA",
             "currency": "USD",
             "currency_symbol": "$",
-            "phone_code": "1"
+            "phone_code": "1",
+            "services": {
+                "giftcards": 2,
+                "airtime_operators": 0,
+                "data_operators": null
+            }
         }
     ],
     "links": {
@@ -188,7 +182,7 @@ foreach ($countries as $country) {
             Related Endpoints
         </div>
         <ul>
-            <li><a href="{{url('/api/gift-cards/create')}}">Get gift cards</a> - gift cards</li>
+            <li><a href="{{url('/api-reference/gift-cards/all')}}">Get gift cards</a> - gift cards</li>
             <li><a href="{{url('/docs/introduction')}}">Introduction</a> - Getting started guide</li>
         </ul>
     </div>

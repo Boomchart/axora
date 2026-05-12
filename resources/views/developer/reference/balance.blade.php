@@ -87,7 +87,7 @@ const balance = await response.json();</code></pre>
             Related Endpoints
         </div>
         <ul>
-            <li><a href="{{route('developer.order')}}">Orders</a> - Create Gift Card Order</li>
+            <li><a href="{{route('developer.card.order')}}">Orders</a> - Create Gift Card Order</li>
             <li><a href="{{route('developer.index')}}">Introduction</a> - Getting started guide</li>
         </ul>
     </div>

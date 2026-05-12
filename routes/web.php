@@ -14,6 +14,21 @@ use App\Models\User;
 use App\Models\Language;
 
 
+Route::get('hasa-hmac', function () {
+    /* HMAC TESTING */
+    $body = [
+        'chain' => 'ethereum',
+        'network' => 'sepolia',
+        'label' => 'SepWal'
+    ];
+
+    $apiKey = 'zOTOAI2C90QeNkzGD68oahBsg2Smu1reVRUd2Dc1ymo=';
+    $secretKey = 'mRDhw_KujIw9e-R2uay3_sUD080vBNcEi6-yluvNIik=';
+
+    $result = generateHasaHMACAuth($body,$apiKey,$secretKey);
+    dd($result);
+});
+
 Route::get('change-lang/{locale}', [SettingController::class, 'locale'])->name('lang');
 
 Route::controller(SettingController::class)->group(function () {
@@ -33,19 +48,39 @@ Route::prefix('docs')->group(function () {
 });
 
 Route::prefix('api-reference')->group(function () {
-    Route::prefix('transactions')->group(function () {
-        Route::view('single', 'developer.reference.transaction.single', ['title' => __('Single Transaction')])->name('developer.transaction.single');
-        Route::view('all', 'developer.reference.transaction.all', ['title' => __('All Transaction')])->name('developer.transaction.all');
-    });
     Route::prefix('gift-cards')->group(function () {
         Route::view('single', 'developer.reference.card.single', ['title' => __('Single Card')])->name('developer.card.single');
         Route::view('all', 'developer.reference.card.all', ['title' => __('All Card')])->name('developer.card.all');
+        Route::view('order', 'developer.reference.card.order', ['title' => __('Order Gift Card')])->name('developer.card.order');
+        Route::view('quote', 'developer.reference.card.quote', ['title' => __('Gift Card Quote')])->name('developer.card.quote');
+        Route::view('transactions', 'developer.reference.card.transactions', ['title' => __('Gift Card Transactions')])->name('developer.card.transactions');
+        Route::view('transaction', 'developer.reference.card.transaction', ['title' => __('Gift Card Transaction')])->name('developer.card.transaction');
+    });
+
+    Route::prefix('airtime')->group(function () {
+        Route::view('lookup', 'developer.reference.airtime.airtime-lookup', ['title' => __('Airtime Lookup')])->name('developer.airtime.lookup');
+        Route::view('operators', 'developer.reference.airtime.operators', ['title' => __('List Airtime Operators')])->name('developer.airtime.operators');
+        Route::view('operator', 'developer.reference.airtime.operator', ['title' => __('Get Airtime Operator')])->name('developer.airtime.operator');
+        Route::view('quote', 'developer.reference.airtime.quote', ['title' => __('Airtime Quote')])->name('developer.airtime.quote');
+        Route::view('order', 'developer.reference.airtime.order', ['title' => __('Airtime Order')])->name('developer.airtime.order');
+        Route::view('transactions', 'developer.reference.airtime.transactions', ['title' => __('List Airtime Transactions')])->name('developer.airtime.transactions');
+        Route::view('transaction', 'developer.reference.airtime.transaction', ['title' => __('Get Airtime Transaction')])->name('developer.airtime.transaction');
+    });
+
+    Route::prefix('data')->group(function () {
+        Route::view('lookup', 'developer.reference.data.data-lookup', ['title' => __('Data Lookup')])->name('developer.data.lookup');
+        Route::view('operators', 'developer.reference.data.operators', ['title' => __('List Data Operators')])->name('developer.data.operators');
+        Route::view('operator', 'developer.reference.data.operator', ['title' => __('Get Data Operator')])->name('developer.data.operator');
+        Route::view('quote', 'developer.reference.data.quote', ['title' => __('Data Quote')])->name('developer.data.quote');
+        Route::view('order', 'developer.reference.data.order', ['title' => __('Data Order')])->name('developer.data.order');
+        Route::view('transactions', 'developer.reference.data.transactions', ['title' => __('List Data Transactions')])->name('developer.data.transactions');
+        Route::view('transaction', 'developer.reference.data.transaction', ['title' => __('Get Data Transaction')])->name('developer.data.transaction');
     });
 
     Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');
-    Route::view('order', 'developer.reference.order', ['title' => __('Order Gift Card')])->name('developer.order');
+
     Route::view('balance', 'developer.reference.balance', ['title' => __('Account Balance')])->name('developer.balance');
-    Route::view('quote', 'developer.reference.quote', ['title' => __('Gift Card Quote')])->name('developer.quote');
+
 });
 
 Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
