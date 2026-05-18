@@ -604,3 +604,27 @@ function getPublicImage($url)
         return url('/') . '/storage/app/' . $url;
     }
 }
+
+
+function generateHasaHMACAuth($body, $apiKey, $secretKey): array
+{
+    $timestamp = (string)time();
+    $requestId = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0x0fff) | 0x4000,
+        mt_rand(0, 0x3fff) | 0x8000,
+        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+    );
+    $bodyString = $body ? json_encode($body) : '';
+
+    $payload = "{$timestamp}:{$requestId}:{$bodyString}";
+    $signature = hash_hmac('sha256', $payload, $secretKey);
+
+    return [
+        'X-API-Key' => $apiKey,
+        'X-Timestamp' => $timestamp,
+        'X-Request-ID' => $requestId,
+        'X-Signature' => $signature
+    ];
+}

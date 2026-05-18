@@ -111,60 +111,57 @@
                         <button type="button" class="axora-doc-mobile-submenu-toggle {{ Request::is('api-reference/gift-cards*') ? 'active' : '' }}">
                             <span class="axora-dev-menu-font">
                                 <i class="bi bi-gift"></i>
-                                <span class="axora-doc-mobile-link-text">{{ __('Gift Card Brands') }}</span>
+                                <span class="axora-doc-mobile-link-text">{{ __('Gift Card') }}</span>
                             </span>
                             <i class="bi bi-chevron-down axora-doc-mobile-submenu-arrow"></i>
                         </button>
 
                         <ul class="axora-doc-mobile-submenu">
-                            <li>
-                                <a class="{{ Request::is('api-reference/gift-cards/all') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/all') }}">
-                                    {{ __('All Gift Cards') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="{{ Request::is('api-reference/gift-cards/single') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/single') }}">
-                                    {{ __('Show a Gift Card') }}
-                                </a>
-                            </li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/all') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/all') }}">{{ __('List Gift Cards') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/single') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/single') }}">{{ __('Get Gift Card') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/quote') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/quote') }}">{{ __('Create Gift Card Quote') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/order') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/order') }}">{{ __('Order Gift Card') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/transactions') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/transactions') }}">{{ __('List Gift Card Transactions') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/gift-cards/transaction') ? 'active' : '' }}" href="{{ url('/api-reference/gift-cards/transaction') }}">{{ __('Get Gift Card Transaction') }}</a></li>
                         </ul>
                     </li>
 
-                    <li class="axora-doc-mobile-submenu-item {{ Request::is('api-reference/transactions*') ? 'is-open' : '' }}">
-                        <button type="button" class="axora-doc-mobile-submenu-toggle {{ Request::is('api-reference/transactions*') ? 'active' : '' }}">
+                    <li class="axora-doc-mobile-submenu-item {{ Request::is('api-reference/airtime*') ? 'is-open' : '' }}">
+                        <button type="button" class="axora-doc-mobile-submenu-toggle {{ Request::is('api-reference/airtime*') ? 'active' : '' }}">
                             <span class="axora-dev-menu-font">
-                                <i class="bi bi-arrow-left-right"></i>
-                                <span class="axora-doc-mobile-link-text">{{ __('Order History') }}</span>
+                                <i class="bi bi-phone"></i>
+                                <span class="axora-doc-mobile-link-text">{{ __('Airtime') }}</span>
                             </span>
                             <i class="bi bi-chevron-down axora-doc-mobile-submenu-arrow"></i>
                         </button>
 
                         <ul class="axora-doc-mobile-submenu">
-                            <li>
-                                <a class="{{ Request::is('api-reference/transactions/all') ? 'active' : '' }}" href="{{ url('/api-reference/transactions/all') }}">
-                                    {{ __('All Transactions') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="{{ Request::is('api-reference/transactions/single') ? 'active' : '' }}" href="{{ url('/api-reference/transactions/single') }}">
-                                    {{ __('Single Transaction') }}
-                                </a>
-                            </li>
+                            <li><a class="{{ Request::is('api-reference/airtime/operators') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/operators') }}">{{ __('List Airtime Operators') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/airtime/operator') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/operator') }}">{{ __('Get airtime operator') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/airtime/quote') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/quote') }}">{{ __('Create Airtime Quote') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/airtime/order') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/order') }}">{{ __('Order Airtime') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/airtime/transactions') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/transactions') }}">{{ __('List Airtime Transactions') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/airtime/lookup') ? 'active' : '' }}" href="{{ url('/api-reference/airtime/lookup') }}">{{ __('Airtime Lookup') }}</a></li>
                         </ul>
                     </li>
 
-                    <li>
-                        <a class="{{ Request::is('api-reference/quote') ? 'active' : '' }}" href="{{ url('/api-reference/quote') }}">
-                            <i class="bi bi-receipt-cutoff"></i>
-                            <span class="axora-doc-mobile-link-text">{{ __('Gift Card Quote') }}</span>
-                        </a>
-                    </li>
+                    <li class="axora-doc-mobile-submenu-item {{ Request::is('api-reference/data*') ? 'is-open' : '' }}">
+                        <button type="button" class="axora-doc-mobile-submenu-toggle {{ Request::is('api-reference/data*') ? 'active' : '' }}">
+                            <span class="axora-dev-menu-font">
+                                <i class="bi bi-phone"></i>
+                                <span class="axora-doc-mobile-link-text">{{ __('Data Top-Up') }}</span>
+                            </span>
+                            <i class="bi bi-chevron-down axora-doc-mobile-submenu-arrow"></i>
+                        </button>
 
-                    <li>
-                        <a class="{{ Request::is('api-reference/order') ? 'active' : '' }}" href="{{ url('/api-reference/order') }}">
-                            <i class="bi bi-box-seam"></i>
-                            <span class="axora-doc-mobile-link-text">{{ __('Order Gift Card') }}</span>
-                        </a>
+                        <ul class="axora-doc-mobile-submenu">
+                            <li><a class="{{ Request::is('api-reference/data/operators') ? 'active' : '' }}" href="{{ url('/api-reference/data/operators') }}">{{ __('List data operators') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/data/operator') ? 'active' : '' }}" href="{{ url('/api-reference/data/operator') }}">{{ __('Get data operator') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/data/quote') ? 'active' : '' }}" href="{{ url('/api-reference/data/quote') }}">{{ __('Create data top-up Quote') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/data/order') ? 'active' : '' }}" href="{{ url('/api-reference/data/order') }}">{{ __('Order data top-up') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/data/transactions') ? 'active' : '' }}" href="{{ url('/api-reference/data/transactions') }}">{{ __('List data top-up Transactions') }}</a></li>
+                            <li><a class="{{ Request::is('api-reference/data/lookup') ? 'active' : '' }}" href="{{ url('/api-reference/data/lookup') }}">{{ __('Data top-up Lookup') }}</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -199,51 +196,57 @@
                         <li class="sidebar-item has-submenu {{ Request::is('api-reference/gift-cards*') ? 'active open' : '' }}">
                             <button type="button" class="submenu-toggle">
                                 <span class="axora-doc-mobile-link-text">
-                                    <i class="bi bi-gift"></i>
-                                    {{ __('Gift Card Brands') }}
+                                    <i class="bi bi-gift"></i>{{ __('Gift Card') }}
                                 </span>
                                 <i class="bi bi-chevron-down submenu-arrow"></i>
                             </button>
 
                             <ul class="sidebar-submenu {{ Request::is('api-reference/gift-cards*') ? 'show' : '' }}">
-                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/all') ? 'active' : '' }}">
-                                    <a href="{{ url('/api-reference/gift-cards/all') }}">{{ __('All Gift Cards') }}</a>
-                                </li>
-                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/single') ? 'active' : '' }}">
-                                    <a href="{{ url('/api-reference/gift-cards/single') }}">{{ __('Show a Gift Card') }}</a>
-                                </li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/all') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/all') }}">{{ __('All Gift Cards') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/single') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/single') }}">{{ __('Show a Gift Card') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/quote') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/quote') }}">{{ __('Gift Card Quote') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/order') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/order') }}">{{ __('Order Gift Card') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/transactions') }}">{{ __('List Gift Card Transactions') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/gift-cards/transaction') ? 'active' : '' }}"><a href="{{ url('/api-reference/gift-cards/transaction') }}">{{ __('Get Gift Card Transaction') }}</a></li>
                             </ul>
                         </li>
 
-                        <li class="sidebar-item has-submenu {{ Request::is('api-reference/transactions*') ? 'active open' : '' }}">
+                        <li class="sidebar-item has-submenu {{ Request::is('api-reference/airtime*') ? 'active open' : '' }}">
                             <button type="button" class="submenu-toggle">
                                 <span class="axora-doc-mobile-link-text">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                    {{ __('Order History') }}
+                                    <i class="bi bi-phone"></i>
+                                    {{ __('Airtime') }}
                                 </span>
                                 <i class="bi bi-chevron-down submenu-arrow"></i>
                             </button>
 
-                            <ul class="sidebar-submenu {{ Request::is('api-reference/transactions*') ? 'show' : '' }}">
-                                <li class="sidebar-item {{ Request::is('api-reference/transactions/all') ? 'active' : '' }}">
-                                    <a href="{{ url('/api-reference/transactions/all') }}">{{ __('All Transactions') }}</a>
-                                </li>
-                                <li class="sidebar-item {{ Request::is('api-reference/transactions/single') ? 'active' : '' }}">
-                                    <a href="{{ url('/api-reference/transactions/single') }}">{{ __('Single Transaction') }}</a>
-                                </li>
+                            <ul class="sidebar-submenu {{ Request::is('api-reference/airtime*') ? 'show' : '' }}">
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/operators') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/operators') }}">{{ __('List Airtime Operators') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/operator') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/operator') }}">{{ __('Get airtime operator') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/quote') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/quote') }}">{{ __('Create Airtime Quote') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/order') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/order') }}">{{ __('Order Airtime') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/transactions') }}">{{ __('List Airtime Transactions') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/airtime/lookup') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/lookup') }}">{{ __('Airtime Lookup') }}</a></li>
                             </ul>
                         </li>
 
-                        <li class="sidebar-item {{ Request::is('api-reference/quote') ? 'active' : '' }}">
-                            <a href="{{ url('/api-reference/quote') }}">
-                                <i class="bi bi-receipt-cutoff"></i> {{ __('Gift Card Quote') }}
-                            </a>
-                        </li>
+                        <li class="sidebar-item has-submenu {{ Request::is('api-reference/data*') ? 'active open' : '' }}">
+                            <button type="button" class="submenu-toggle">
+                                <span class="axora-doc-mobile-link-text">
+                                    <i class="bi bi-wifi"></i>
+                                    {{ __('Data Top-Up') }}
+                                </span>
+                                <i class="bi bi-chevron-down submenu-arrow"></i>
+                            </button>
 
-                        <li class="sidebar-item {{ Request::is('api-reference/order') ? 'active' : '' }}">
-                            <a href="{{ url('/api-reference/order') }}">
-                                <i class="bi bi-box-seam"></i> {{ __('Order Gift Card') }}
-                            </a>
+                            <ul class="sidebar-submenu {{ Request::is('api-reference/data*') ? 'show' : '' }}">
+                                <li class="sidebar-item {{ Request::is('api-reference/data/operators') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/operators') }}">{{ __('List data top-up operators') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/data/operator') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/operator') }}">{{ __('Get data top-up operator') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/data/quote') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/quote') }}">{{ __('Create data top-up quote') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/data/order') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/order') }}">{{ __('Order data top-up') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/data/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/transactions') }}">{{ __('List data top-up transactions') }}</a></li>
+                                <li class="sidebar-item {{ Request::is('api-reference/data/lookup') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/lookup') }}">{{ __('Data top-up Lookup') }}</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

@@ -9,10 +9,10 @@
                         {{ __('About Us') }}
                     </span>
 
-                    <h1 class="hero-title mb-3">{{ __('Powering Gift Card Solutions for Modern Businesses') }}</h1>
+                    <h1 class="hero-title mb-3">{{ __('Powering Global Rewards & Digital Assets for Modern Businesses') }}</h1>
 
                     <p class="hero-subtitle mx-auto">
-                        {{ __('Our platform is built to help businesses connect gift card services to their products, reward systems, customer experiences, and internal operations with confidence.') }}
+                        {{ __('Our platform is built to help businesses connect airtime, data bundles, crypto wallets, and gift card services to their products, reward systems, customer experiences, and internal operations with confidence.') }}
                     </p>
                 </div>
             </div>

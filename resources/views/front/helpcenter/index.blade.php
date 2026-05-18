@@ -1,5 +1,5 @@
 @extends('front.pages')
-<meta name="description" content="{{ $set->site_name }} Help Center" />
+<meta name="description" content="{{ $set->site_name }} Help Center - Unified API Support" />
 
 @section('css')
     <link href="{{asset('css/help.css')}}" rel="stylesheet">
@@ -15,7 +15,7 @@
                     <div class="axora-section-header">
                         <p class="axora-section-kicker">{{ __('Popular Articles') }}</p>
                         <h2 class="axora-section-title">{{ __('Quick answers to common questions') }}</h2>
-                        <p class="axora-section-description">{{ __('Explore the articles businesses and developers commonly read when getting started with our platform.') }}</p>
+                        <p class="axora-section-description">{{ __('Explore the articles businesses and developers commonly read when getting started with our unified API for airtime, data bundles, crypto wallets, and gift cards.') }}</p>
                     </div>
 
                     <div class="axora-popular-wrap">
@@ -37,7 +37,7 @@
                     <div class="axora-section-header">
                         <p class="axora-section-kicker">{{ __('Browse by Topic') }}</p>
                         <h2 class="axora-section-title">{{ __('Find help by category') }}</h2>
-                        <p class="axora-section-description">{{ __('Choose a topic below to browse guides, support articles, and useful information related to your account, API access, transactions, and platform usage.') }}</p>
+                        <p class="axora-section-description">{{ __('Choose a topic below to browse guides, support articles, and useful information related to your account, API access, global payouts, and multi-asset transactions.') }}</p>
                     </div>
                 </div>
             </div>

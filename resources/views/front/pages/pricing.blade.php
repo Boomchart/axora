@@ -12,8 +12,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-9">
                     <span class="axora-pricing-badge"><i class="bi bi-credit-card"></i>{{ __('Pricing') }}</span>
-                    <h1 class="axora-pricing-title">{{ __('Simple Pricing for Business Gift Card Infrastructure') }}</h1>
-                    <p class="axora-pricing-subtitle">{{ __('Pricing is built around your gift card activity, including purchase volume, transaction value, provider costs, supported regions, currencies, and the specific needs of your business.') }}</p>
+                    <h1 class="axora-pricing-title">{{ __('Simple Pricing for Digital Asset Infrastructure') }}</h1>
+                    <p class="axora-pricing-subtitle">{{ __('Pricing is built around your transaction activity, including purchase volume, asset type, provider costs, supported regions, currencies, and the specific needs of your business.') }}</p>
                 </div>
             </div>
         </div>
@@ -31,8 +31,8 @@
 
                         <div>
                             <span class="axora-pricing-kicker">{{ __('Usage-Based Pricing') }}</span>
-                            <h2>{{ __('Pricing that follows your gift card activity') }}</h2>
-                            <p>{{ __('Your pricing is calculated around how your business uses gift cards. This may include the number and value of gift cards purchased, applicable provider costs, transaction fees, supported countries, available currencies, and your approved business use case.') }}</p>
+                            <h2>{{ __('Pricing that scales with your transaction volume') }}</h2>
+                            <p>{{ __('Your pricing is calculated around how your business uses our Unified API. This may include the volume and value of gift cards, airtime, data bundles, and crypto transactions, applicable provider or network costs, transaction fees, supported countries, available currencies, and your approved business use case.') }}</p>
                         </div>
                     </div>
 
@@ -44,20 +44,20 @@
                         </span>
 
                             <h2 class="axora-pricing-title h1">{{ __('How pricing is calculated') }}</h2>
-                            <p class="axora-pricing-subtitle">{{ __('We create a fee structure around your expected gift card volume, transaction activity, supported services, and business requirements.') }}</p>
+                            <p class="axora-pricing-subtitle">{{ __('We create a fee structure around your expected transaction volume, supported digital assets, and business requirements.') }}</p>
                         </div>
 
                         <div class="axora-pricing-flow">
                             <div class="axora-pricing-step">
                                 <div class="axora-pricing-step-number">1</div>
-                                <h3>{{ __('Gift Card Value') }}</h3>
-                                <p>{{ __('The face value of the gift cards your business purchases is the base amount used for each transaction.') }}</p>
+                                <h3>{{ __('Asset Value') }}</h3>
+                                <p>{{ __('The face value of the gift card, airtime top-up, data bundle, or crypto requested is the base amount used for each transaction.') }}</p>
                             </div>
 
                             <div class="axora-pricing-step">
                                 <div class="axora-pricing-step-number">2</div>
-                                <h3>{{ __('Provider & Brand Fees') }}</h3>
-                                <p>{{ __('Different gift card brands, providers, countries, and currencies may have different costs or availability.') }}</p>
+                                <h3>{{ __('Provider & Network Fees') }}</h3>
+                                <p>{{ __('Different retail brands, telecom operators, blockchain networks, and currencies may have different baseline costs or exchange rates.') }}</p>
                             </div>
 
                             <div class="axora-pricing-step">
@@ -69,7 +69,7 @@
                             <div class="axora-pricing-step">
                                 <div class="axora-pricing-step-number">4</div>
                                 <h3>{{ __('Volume & Custom Terms') }}</h3>
-                                <p>{{ __('Businesses with higher purchase volume may qualify for custom commercial terms based on expected usage and approval.') }}</p>
+                                <p>{{ __('Businesses with higher transaction volumes may qualify for custom commercial terms based on expected usage and approval.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -78,10 +78,10 @@
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <div class="axora-fee-factor">
-                                    <i class="bi bi-gift"></i>
+                                    <i class="bi bi-activity"></i>
                                     <div>
-                                        <h4>{{ __('Number of gift cards purchased') }}</h4>
-                                        <p>{{ __('Pricing may vary based on how many gift cards your business purchases over time.') }}</p>
+                                        <h4>{{ __('Number of transactions') }}</h4>
+                                        <p>{{ __('Pricing may vary based on how many gift cards, airtime top-ups, or crypto wallets your business processes over time.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                     <i class="bi bi-cash-stack"></i>
                                     <div>
                                         <h4>{{ __('Total purchase value') }}</h4>
-                                        <p>{{ __('The total value of gift cards purchased can affect your fee setup and commercial terms.') }}</p>
+                                        <p>{{ __('The total value of digital assets and rewards purchased can affect your fee setup and commercial terms.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -100,8 +100,8 @@
                                 <div class="axora-fee-factor">
                                     <i class="bi bi-globe2"></i>
                                     <div>
-                                        <h4>{{ __('Supported regions and currencies') }}</h4>
-                                        <p>{{ __('Gift card availability and cost may differ by country, region, currency, and provider.') }}</p>
+                                        <h4>{{ __('Supported regions and networks') }}</h4>
+                                        <p>{{ __('Asset availability and cost may differ by country, telecom region, currency, and blockchain network.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                     <i class="bi bi-diagram-3"></i>
                                     <div>
                                         <h4>{{ __('Integration and operational needs') }}</h4>
-                                        <p>{{ __('Custom workflows, limits, settlement requirements, or advanced business needs may affect pricing.') }}</p>
+                                        <p>{{ __('Custom workflows, scaling limits, settlement requirements, or advanced business needs may affect pricing.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -121,17 +121,17 @@
                     <div class="axora-pricing-example mt-5">
                         <div class="row align-items-center g-4">
                             <div class="col-lg-5">
-                            <span class="axora-pricing-kicker">{{ __('Example Fee Logic') }}</span>
-                                <h2>{{ __('Your final cost is built around each purchase') }}</h2>
-                                <p>{{ __('For each gift card purchase, your cost may include the gift card value, applicable provider or brand costs, transaction fees, and any agreed commercial margin or service fee.') }}</p>
+                                <span class="axora-pricing-kicker">{{ __('Example Fee Logic') }}</span>
+                                <h2>{{ __('Your final cost is built around each transaction') }}</h2>
+                                <p>{{ __('For each API request, your cost may include the asset face value, applicable provider or network costs, transaction fees, and any agreed commercial margin or service fee.') }}</p>
                             </div>
 
                             <div class="col-lg-7">
                                 <div class="axora-cost-formula">
-                                    <div class="axora-cost-item"><span>{{ __('Gift Card Value') }}</span></div>
+                                    <div class="axora-cost-item"><span>{{ __('Asset Face Value') }}</span></div>
                                     <i class="bi bi-plus-lg"></i>
 
-                                    <div class="axora-cost-item"><span>{{ __('Provider / Brand Fees') }}</span></div>
+                                    <div class="axora-cost-item"><span>{{ __('Provider / Network Fees') }}</span></div>
                                     <i class="bi bi-plus-lg"></i>
 
                                     <div class="axora-cost-item"><span>{{ __('Transaction Fee') }}</span></div>
@@ -145,7 +145,7 @@
 
                     <div class="axora-pricing-cta">
                         <h3>{{ __('Request pricing for your business') }}</h3>
-                        <p>{{ __('Tell us your expected gift card volume, preferred brands, currencies, countries, and integration needs. We will provide a fee setup based on your approved business use case.') }}</p>
+                        <p>{{ __('Tell us your expected volume, preferred assets (airtime, crypto, gift cards), currencies, countries, and integration needs. We will provide a fee setup based on your approved business use case.') }}</p>
                         <a href="{{ route('contact') }}" class="btn btn-light">{{ __('Request Pricing') }}</a>
                     </div>
 
@@ -172,14 +172,14 @@
                 <div class="col-12 col-md-6">
                     <div class="axora-faq-card">
                         <h4>{{ __('Is there a fixed monthly plan?') }}</h4>
-                        <p>{{ __('Our fees are structured around actual gift card usage, including purchase activity, transaction volume, provider fees, supported services, and your approved business use case.') }}</p>
+                        <p>{{ __('Our fees are structured around actual API usage, including purchase activity, transaction volume, provider fees, supported services, and your approved business use case.') }}</p>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <div class="axora-faq-card">
                         <h4>{{ __('What determines the final pricing?') }}</h4>
-                        <p>{{ __('Final pricing may depend on the number and value of gift cards purchased, supported brands, currencies, regions, transaction fees, provider costs, and your expected business volume.') }}</p>
+                        <p>{{ __('Final pricing may depend on the number and value of assets purchased, supported networks, telcos, brands, currencies, transaction fees, and your expected business volume.') }}</p>
                     </div>
                 </div>
 
@@ -193,7 +193,7 @@
                 <div class="col-12 col-md-6">
                     <div class="axora-faq-card">
                         <h4>{{ __('Will fees be explained before we go live?') }}</h4>
-                        <p>{{ __('Yes. During onboarding, we provide the applicable fee setup for your approved use case so your business understands the pricing before live usage begins.') }}</p>
+                        <p>{{ __('Yes. During onboarding, we provide the applicable fee setup for your approved use case so your business understands the pricing across all asset classes before live usage begins.') }}</p>
                     </div>
                 </div>
             </div>

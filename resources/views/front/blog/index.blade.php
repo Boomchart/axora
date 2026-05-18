@@ -14,9 +14,9 @@
                         <i class="bi bi-journal-text"></i>{{ __('Blog') }}
                     </span>
 
-                    <h1 class="axora-blog-title">{{ __('Insights for Gift Card APIs, Rewards, and Business Integrations') }}</h1>
+                    <h1 class="axora-blog-title">{{ __('Insights on Digital Assets, API Integrations, and Global Rewards') }}</h1>
                     <p class="axora-blog-subtitle">
-                        {{ __('Explore practical articles, product updates, integration tips, and business insights for teams building gift card, reward, incentive, and digital value experiences.') }}
+                        {{ __('Explore practical articles, product updates, integration tips, and business insights for teams building multi-asset, crypto, airtime, and gift card experiences.') }}
                     </p>
                 </div>
             </div>
@@ -79,7 +79,7 @@
 
                             <h3>{{ __('No articles yet') }}</h3>
 
-                            <p>{{ __('We are preparing helpful articles about gift card APIs, business rewards, platform integrations, and digital value infrastructure. Please check back soon.') }}</p>
+                            <p>{{ __('We are preparing helpful articles about unified APIs, crypto wallets, global airtime, and digital rewards infrastructure. Please check back soon.') }}</p>
                         </div>
                     </div>
                 </div>
