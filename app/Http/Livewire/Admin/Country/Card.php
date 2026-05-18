@@ -114,6 +114,7 @@ class Card extends Component
                         'rate' => $data['recipientCurrencyToSenderCurrencyExchangeRate'],
                     ];
                 })->sortBy('title')->values();
+                // \Log::info($this->products);
             } else {
                 return $this->emit('alert', __('Error fetching cards'));
             }

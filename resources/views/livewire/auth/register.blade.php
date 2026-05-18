@@ -3,7 +3,7 @@
         <div class="auth-onboarding-sidebar-inner">
             <div class="auth-onboarding-brand">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('asset/images/' . getUi()->dashboard_logo . '.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="auth-onboarding-logo" @style(getUi()->light_css)>
+                    <img src="{{asset('asset/images/dark_logo.png')}}" alt="{{ $set->site_name }}" loading="lazy" class="auth-onboarding-logo" @style(getUi()->light_css)>
                 </a>
                 <p>{{ __('The modern standard for gift card infrastructure.') }}</p>
             </div>
@@ -11,7 +11,7 @@
             <div class="auth-onboarding-steps">
                 <div class="auth-onboarding-step {{ $stage == 'onboarding' ? 'active' : '' }}">
                     <div class="auth-onboarding-step-icon">
-                        <i class="bi bi-bank"></i>
+                        <i class="bi bi-bank fs-4"></i>
                     </div>
                     <div class="auth-onboarding-step-content">
                         <h6>{{ __('Business Setup') }}</h6>
@@ -22,7 +22,7 @@
 
                 <div class="auth-onboarding-step {{ $stage == 'control_person' ? 'active' : '' }}">
                     <div class="auth-onboarding-step-icon">
-                        <i class="bi bi-person"></i>
+                        <i class="bi bi-person fs-4"></i>
                     </div>
                     <div class="auth-onboarding-step-content">
                         <h6>{{ __('Account Owner') }}</h6>
@@ -33,7 +33,7 @@
 
                 <div class="auth-onboarding-step {{ $stage == 'email_verify' ? 'active' : '' }}">
                     <div class="auth-onboarding-step-icon">
-                        <i class="bi bi-envelope"></i>
+                        <i class="bi bi-envelope fs-4"></i>
                     </div>
                     <div class="auth-onboarding-step-content">
                         <h6>{{ __('Verification') }}</h6>
@@ -44,7 +44,7 @@
 
                 <div class="auth-onboarding-step {{ $stage == 'multi_factor' ? 'active' : '' }}">
                     <div class="auth-onboarding-step-icon">
-                        <i class="bi bi-shield-lock"></i>
+                        <i class="bi bi-shield-lock fs-4"></i>
                     </div>
                     <div class="auth-onboarding-step-content">
                         <h6>{{ __('Security') }}</h6>

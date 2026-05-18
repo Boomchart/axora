@@ -19,9 +19,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
   <link rel="preload" href="{{asset('front/css/cookie.css')}}" type="text/css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="stylesheet" href="{{asset('front/css/toast.css')}}" type="text/css">
   <link rel="stylesheet" href="{{asset('front/css/custom.css')}}">
-  <link href="{{asset('asset/fonts/fontawesome/css/all.css')}}" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
   @yield('css')
   <link rel="stylesheet" href="{{asset('css/auth.css')}}">
@@ -49,7 +47,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.6/lottie_svg.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.9/dist/cookieconsent.js"></script>
 <script src="{{asset('front/js/cookie.js')}}"></script>
-<script src="{{asset('front/js/toast.js')}}"></script>
 </body>
 </html>
 
@@ -57,24 +54,6 @@
 @stack('scripts')
 <script src="{{asset('dashboard/js/alpine.js')}}"></script>
 @yield('script')
-
-@if (session('success'))
-  <script>
-    "use strict";
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.closeButton = true;
-    toastr.success("{!! session('success') !!}");
-  </script>
-@endif
-
-@if (session('alert'))
-  <script>
-    "use strict";
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.closeButton = true;
-    toastr.warning("{!! session('alert') !!}");
-  </script>
-@endif
 
 @if($set->recaptcha==1)
   {!! RecaptchaV3::initJs() !!}

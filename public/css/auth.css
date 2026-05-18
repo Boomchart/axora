@@ -904,7 +904,7 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
 
 .auth-onboarding-step-content h6 {
     color: #ffffff;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 0.2rem;
 }
 
