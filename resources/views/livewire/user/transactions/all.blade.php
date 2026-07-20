@@ -62,6 +62,8 @@
                             @if($user->business->agent)
                             <option value="agent_payment">{{__('Agent Payment')}}</option>
                             @endif
+                            <option value="crypto_deposit">{{__('Crypto Deposit')}}</option>
+                            <option value="crypto_payout">{{__('Crypto Payout')}}</option>
                             <option value="payout">{{__('Payout')}}</option>
                             <option value="deposit">{{__('Deposit')}}</option>
                             <option value="giftcard_purchase">{{__('Giftcard Purchase')}}</option>

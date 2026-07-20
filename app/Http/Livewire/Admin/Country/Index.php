@@ -75,13 +75,14 @@ class Index extends Component
 
     public function render()
     {
-        $this->countries = CountryReg::with(['real'])->withCount(['giftcards', 'airtimeProviders', 'dataProviders'])->when($this->search, function ($query) {
-            $this->emit('drawer');
-            return $query->Where('name', 'like', '%' . $this->search . '%');
-        })
+        $this->countries = CountryReg::with(['real'])->withCount(['giftcards', 'airtimeProviders', 'dataProviders'])
+            ->when($this->search, function ($query) {
+                $this->emit('drawer');
+                return $query->Where('name', 'like', '%' . $this->search . '%');
+            })
             ->when($this->search == null, function ($query) {
                 $this->emit('searchdrawer');
-            }) 
+            })
             ->orderby($this->orderBy, $this->sortBy)
             ->paginate($this->perPage);
         $this->allCountries = $this->getAll();

@@ -24,7 +24,7 @@ class GiftcardController extends Controller
         $this->settings = Settings::find(1);
     }
 
-    public function cards(Request $request, $card)
+    public function cards(Request $request, string $card)
     {
         $this->verifyToken($request);
         if ($this->access == true) {
@@ -48,7 +48,7 @@ class GiftcardController extends Controller
         }
     }
 
-    public function cardByCountry(Request $request, $country)
+    public function cardByCountry(Request $request, string $country)
     {
         $limit = $request->limit;
         $this->verifyToken($request);
@@ -85,7 +85,7 @@ class GiftcardController extends Controller
                         return $query->paginate(20);
                     });
                 });
-            $apiresponse = CardResource::collection($resource)->map(fn($resource) => new CardResource($resource, $this->client));
+            $apiresponse = ['message' => __('Cards'), 'status' => 'success', 'data' => CardResource::collection($resource)->map(fn($resource) => new CardResource($resource, $this->client))];
             $this->logError(200, (array) $apiresponse);
             return $apiresponse;
         } else {
@@ -195,8 +195,8 @@ class GiftcardController extends Controller
                 $vendorPercent = $tier['percent'];
             }
 
-            $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0) * $rateMultiplier;
-            $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0) * $rateMultiplier;
+            $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee) * $rateMultiplier;
+            $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent) * $rateMultiplier;
 
             $item = [
                 'id' => $card->id,
@@ -217,7 +217,7 @@ class GiftcardController extends Controller
         }
     }
 
-    public function updateError($type, $message, $status)
+    public function updateError(string $type, array $message, string $status)
     {
         if (!isset($this->bulkErrors[$type])) {
             $this->bulkErrors[$type] = [];
@@ -308,7 +308,7 @@ class GiftcardController extends Controller
                     'amount' => ['required', 'numeric'],
                     'quantity' => ['required', 'integer', 'min:1', 'max:20'],
                     'email' => ['required', 'email:dns,rfc', 'max:255'],
-                    'phone_code' => ['required', 'string', 'max:2'],
+                    'phone_code' => ['required_with:phone', 'nullable', 'string', 'max:2'],
                     'phone' => ['required_with:phone_code', 'nullable', 'phone:' . strtoupper($value['phone_code'] ?? '')],
                 ], [
                     'phone.phone' => __('Invalid Phone number'),
@@ -343,7 +343,6 @@ class GiftcardController extends Controller
                     continue;
                 }
 
-                $phone_code = strtoupper($value['phone_code']);
                 try {
                     $value['phone'] = PhoneNumber::make($value['phone'], strtoupper($value['phone_code']));
                 } catch (\Exception $e) {
@@ -403,9 +402,9 @@ class GiftcardController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0) * $card->rate;
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0) * $card->rate;
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0) * $card->rate;
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee) * $card->rate;
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee) * $card->rate;
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent) * $card->rate;
                 } else {
                     $base = removeCommas($convertedAmount);
                     if ($card->tier_pricing == 0) {
@@ -416,9 +415,9 @@ class GiftcardController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0);
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0);
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0);
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee);
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee);
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent);
                 }
 
                 $itemTotal = ($convertedAmount + $vendorCharge + $ourCharge) * $value['quantity'];
@@ -546,9 +545,13 @@ class GiftcardController extends Controller
                         return response()->json($apiresponse, 404);
                     }
                 } else {
-                    $apiresponse = TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('giftcard_purchase')->latest()
-                        ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
-                        ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)));
+                    $apiresponse = [
+                        'message' => __('Transactions'),
+                        'status' => 'success',
+                        'data' => TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('giftcard_purchase')->latest()
+                            ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
+                            ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)))
+                    ];
                     $this->logError(200, (array)$apiresponse);
                     return $apiresponse;
                 }

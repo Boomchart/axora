@@ -34,168 +34,198 @@
                         </div>
                     </div>
                     @endif
-                    <div class="card bg-transparent h-md-100">
-                        <div class="card-body p-0">
-                            <div class="px-9 pt-6 card-rounded w-100 axora-dashboard-bg">
-                                <div class="fw-bold fs-7 text-start pb-5 axora-text-color">
-                                    <div class="mb-5"
-                                        x-data="{
+                    <div class="col-md-12">
+                        <div class="card bg-transparent h-md-100">
+                            <div class="card-body p-0">
+                                <div class="px-9 pt-6 card-rounded w-100 axora-dashboard-bg">
+                                    <div class="fw-bold fs-7 text-start pb-5 axora-text-color">
+                                        <div class="mb-5"
+                                            x-data="{
                                             show: @js($user->business->reveal_balance),
                                             toggle() {
                                                 this.show = !this.show;
                                                 $wire.displayBalance(); // Call Livewire method
                                             }
                                         }">
-                                        <p class="axora-text-color">
-                                            <span class="me-2 fw-bolder">{{__('Available Balance')}}</span>
-                                            <span class="ml-3 fs-3 cursor-pointer axora-text-color" @click="toggle">
-                                                <i class="bi bi-eye-slash" x-show="show" x-transition></i>
-                                                <i class="bi bi-eye" x-show="!show" x-transition></i>
+                                            <p class="axora-text-color">
+                                                <span class="me-2 fw-bolder">{{__('Available Balance')}}</span>
+                                                <span class="ml-3 fs-3 cursor-pointer axora-text-color" @click="toggle">
+                                                    <i class="bi bi-eye-slash" x-show="show" x-transition></i>
+                                                    <i class="bi bi-eye" x-show="!show" x-transition></i>
+                                                </span>
+                                            </p>
+                                            <span class="fw-bold fs-7 text-start axora-text-color">
+                                                <span class="fw-bolder fs-2hx" x-cloak x-show="show" x-transition>
+                                                    {{$currency->currency_symbol.currencyFormat(number_format($user->getBalance($currency->id)->amount,2)).' '.$currency->currency}}
+                                                </span>
+                                                <span class="fw-bolder fs-2hx" x-cloak x-show="!show" x-transition>************</span>
                                             </span>
-                                        </p>
-                                        <span class="fw-bold fs-7 text-start axora-text-color">
-                                            <span class="fw-bolder fs-2hx" x-cloak x-show="show" x-transition>
-                                                {{$currency->currency_symbol.currencyFormat(number_format($user->getBalance($currency->id)->amount,2)).' '.$currency->currency}}
-                                            </span>
-                                            <span class="fw-bolder fs-2hx" x-cloak x-show="!show" x-transition>************</span>
-                                        </span>
 
-                                        @if($user->business->kyc_status == 'APPROVED')
-                                        @foreach(getGateways() as $gateway)
-                                        <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
-                                        @endforeach
-                                        <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
-                                        @if($user->business->flag_withdraw == 0)<button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>@endif
-                                        <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
-                                            <div class="card w-100">
-                                                <div class="card-header pe-5 border-0">
-                                                    <div class="card-title">
-                                                        <div class="d-flex justify-content-center flex-column mb-5">
-                                                            <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Top up')}}</div>
+                                            @if($user->business->kyc_status == 'APPROVED')
+                                            @foreach(getGateways() as $gateway)
+                                            <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
+                                            @endforeach
+                                            <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
+                                            @if($user->business->flag_withdraw == 0)<button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>@endif
+                                            <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
+                                                <div class="card w-100">
+                                                    <div class="card-header pe-5 border-0">
+                                                        <div class="card-title">
+                                                            <div class="d-flex justify-content-center flex-column mb-5">
+                                                                <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Top up')}}</div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="card-toolbar">
-                                                        <div class="btn btn-sm btn-icon btn-icon-dark btn-active-light-success" data-kt-drawer-dismiss="true" id="kt_deposit_money_close">
-                                                            <span class="svg-icon svg-icon-2">
-                                                                <i class="bi bi-x-lg fs-2"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body text-wrap">
-                                                    <div class="btn-wrapper text-center mb-3">
-                                                        <div class="symbol symbol-100px symbol-circle me-5 mb-10">
-                                                            <div class="symbol-label fs-1 axora-dashboard-icon">
-                                                                <i class="bi bi-bank fa-2x" style="font-size:46px;"></i>
+                                                        <div class="card-toolbar">
+                                                            <div class="btn btn-sm btn-icon btn-icon-dark btn-active-light-success" data-kt-drawer-dismiss="true" id="kt_deposit_money_close">
+                                                                <span class="svg-icon svg-icon-2">
+                                                                    <i class="bi bi-x-lg fs-2"></i>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="pb-5 mt-10 position-relative zindex-1">
-                                                        <!--begin::Item-->
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                @if($set->bk_status == 1)
-                                                                <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" id="kt_bank_deposit_button">
-                                                                    <p href="#" class="fs-7 text-dark fw-bold mb-0">{{__('ACH (Bank Transfer)')}}</p>
-                                                                    <p class="fs-7 text-gray-600 mb-0">@if($set->deposit_percent_pc!=null){{$set->deposit_percent_pc}}% @else 0% @endif+ @if($set->deposit_fiat_pc!=null){{$set->deposit_fiat_pc}} @else 0 @endif{{$currency->currency}}</p>
+                                                    <div class="card-body text-wrap">
+                                                        <div class="btn-wrapper text-center mb-3">
+                                                            <div class="symbol symbol-100px symbol-circle me-5 mb-10">
+                                                                <div class="symbol-label fs-1 axora-dashboard-icon">
+                                                                    <i class="bi bi-bank fa-2x" style="font-size:46px;"></i>
                                                                 </div>
-                                                                <div wire:ignore.self id="kt_bank_deposit" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_bank_deposit_button" data-kt-drawer-close="#kt_bank_deposit_close" data-kt-drawer-width="{'md': '500px'}">
-                                                                    <div class="card w-100">
-                                                                        <div class="card-header pe-5 border-0">
-                                                                            <div class="card-title">
-                                                                                <div class="d-flex justify-content-center flex-column mb-5">
-                                                                                    <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Bank Transfer')}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="pb-5 mt-10 position-relative zindex-1">
+                                                            <!--begin::Item-->
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    @if($set->bk_status == 1)
+                                                                    <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" id="kt_bank_deposit_button">
+                                                                        <p href="#" class="fs-7 text-dark fw-bold mb-0">{{__('ACH (Bank Transfer)')}}</p>
+                                                                        <p class="fs-7 text-gray-600 mb-0">@if($set->deposit_percent_pc!=null){{$set->deposit_percent_pc}}% @else 0% @endif+ @if($set->deposit_fiat_pc!=null){{$set->deposit_fiat_pc}} @else 0 @endif{{$currency->currency}}</p>
+                                                                    </div>
+                                                                    <div wire:ignore.self id="kt_bank_deposit" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_bank_deposit_button" data-kt-drawer-close="#kt_bank_deposit_close" data-kt-drawer-width="{'md': '500px'}">
+                                                                        <div class="card w-100">
+                                                                            <div class="card-header pe-5 border-0">
+                                                                                <div class="card-title">
+                                                                                    <div class="d-flex justify-content-center flex-column mb-5">
+                                                                                        <div class="fs-4 text-gray-900 text-hover-success me-1 lh-1">{{__('Bank Transfer')}}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-toolbar">
+                                                                                    <div class="btn btn-sm btn-icon btn-icon-dark btn-active-light-success" data-kt-drawer-dismiss="true" id="kt_bank_deposit_close">
+                                                                                        <span class="svg-icon svg-icon-2">
+                                                                                            <i class="bi bi-x-lg fs-2"></i>
+                                                                                        </span>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="card-toolbar">
-                                                                                <div class="btn btn-sm btn-icon btn-icon-dark btn-active-light-success" data-kt-drawer-dismiss="true" id="kt_bank_deposit_close">
-                                                                                    <span class="svg-icon svg-icon-2">
-                                                                                        <i class="bi bi-x-lg fs-2"></i>
-                                                                                    </span>
+                                                                            <div class="card-body text-wrap">
+                                                                                <div class="pb-5 position-relative zindex-1">
+                                                                                    <form wire:submit.prevent="bankDeposit">
+                                                                                        @csrf
+                                                                                        <div class="fv-row mb-6">
+                                                                                            <label class="form-label fs-7 text-dark">{{__('Amount')}} ({{$currency->currency}})</label>
+                                                                                            <input class="form-control form-control-solid" type="text" step="any" wire:model.debounce.500ms="bank_amount" autocomplete="transaction-amount" id="amount" min="1" required placeholder="{{__('0.00')}}" autofocus />
+                                                                                            @error('bank_amount')
+                                                                                            <span class="text-danger">{{$message}}</span>
+                                                                                            @enderror
+                                                                                        </div>
+                                                                                        <div class="fv-row mb-6">
+                                                                                            <label class="form-label text-dark fs-7" for="bank_reference">{{__('Bank Transaction Reference')}}</label>
+                                                                                            <input class="form-control form-control-solid" type="text" wire:model.defer="bank_reference" required id="bank_reference" placeholder="{{__('Transaction Reference')}}" />
+                                                                                            @error('bank_reference')
+                                                                                            <span class="text-danger">{{$message}}</span>
+                                                                                            @enderror
+                                                                                        </div>
+                                                                                        <div class="fv-row mb-6">
+                                                                                            <label class="form-label fs-7 text-dark">{{__('Transaction Receipt')}}</label>
+                                                                                            <input class="form-control form-control-solid" type="file" wire:model="image" required />
+                                                                                            @error('image')
+                                                                                            <span class="text-danger">{{$message}}</span>
+                                                                                            @enderror
+                                                                                            <div wire:loading wire:target="image">{{__('Uploading')}}...</div>
+                                                                                        </div>
+                                                                                        <div class="axora-dashboard-icon px-6 py-5 mb-10 rounded-4">
+                                                                                            <p class="fs-7 fw-bold">{{__('Account Details')}}</p>
+                                                                                            <li class="d-flex align-items-center py-1">
+                                                                                                <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Bank Name')}}: {{$set->dp_bank_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->dp_bank_name}}" title="{{__('Copy')}}"></i></span>
+                                                                                            </li>
+                                                                                            <li class="d-flex align-items-center py-1">
+                                                                                                <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Routing Type')}}: {{$set->bk_routing_type}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_routing_type}}" title="{{__('Copy')}}"></i></span>
+                                                                                            </li>
+                                                                                            <li class="d-flex align-items-center py-1">
+                                                                                                <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Routing Code')}}: {{$set->bk_routing_code}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_routing_code}}" title="{{__('Copy')}}"></i></span>
+                                                                                            </li>
+                                                                                            <li class="d-flex align-items-center py-1">
+                                                                                                <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Account Number')}}: {{$set->bk_acct_no}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_acct_no}}" title="{{__('Copy')}}"></i></span>
+                                                                                            </li>
+                                                                                            <li class="d-flex align-items-center py-1">
+                                                                                                <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Account Name')}}: {{$set->bk_acct_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_acct_name}}" title="{{__('Copy')}}"></i></span>
+                                                                                            </li>
+                                                                                        </div>
+                                                                                        <div class="bg-light-primary px-6 py-5 mb-10 rounded-4">
+                                                                                            <p class="text-dark fs-7 mb-0"><b>{{__('You will receive')}}</b>: {{$receive}}</span></p>
+                                                                                            <p class="text-dark fs-7 mb-0"><b>{{__('Fee')}}</b>: {{$fee}}</span></p>
+                                                                                        </div>
+                                                                                        <div class="text-center mt-10">
+                                                                                            <button class="btn btn-block btn-success" type="submit">
+                                                                                                <span wire:loading.remove wire:target="bankDeposit">{{__('I\'hv made payment')}}</span>
+                                                                                                <span wire:loading wire:target="bankDeposit">{{__('Submitting request...')}}</span>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="card-body text-wrap">
-                                                                            <div class="pb-5 position-relative zindex-1">
-                                                                                <form wire:submit.prevent="bankDeposit">
-                                                                                    @csrf
-                                                                                    <div class="fv-row mb-6">
-                                                                                        <label class="form-label fs-7 text-dark">{{__('Amount')}} ({{$currency->currency}})</label>
-                                                                                        <input class="form-control form-control-solid" type="text" step="any" wire:model.debounce.500ms="bank_amount" autocomplete="transaction-amount" id="amount" min="1" required placeholder="{{__('0.00')}}" autofocus />
-                                                                                        @error('bank_amount')
-                                                                                        <span class="text-danger">{{$message}}</span>
-                                                                                        @enderror
-                                                                                    </div>
-                                                                                    <div class="fv-row mb-6">
-                                                                                        <label class="form-label text-dark fs-7" for="bank_reference">{{__('Bank Transaction Reference')}}</label>
-                                                                                        <input class="form-control form-control-solid" type="text" wire:model.defer="bank_reference" required id="bank_reference" placeholder="{{__('Transaction Reference')}}" />
-                                                                                        @error('bank_reference')
-                                                                                        <span class="text-danger">{{$message}}</span>
-                                                                                        @enderror
-                                                                                    </div>
-                                                                                    <div class="fv-row mb-6">
-                                                                                        <label class="form-label fs-7 text-dark">{{__('Transaction Receipt')}}</label>
-                                                                                        <input class="form-control form-control-solid" type="file" wire:model="image" required />
-                                                                                        @error('image')
-                                                                                        <span class="text-danger">{{$message}}</span>
-                                                                                        @enderror
-                                                                                        <div wire:loading wire:target="image">{{__('Uploading')}}...</div>
-                                                                                    </div>
-                                                                                    <div class="axora-dashboard-icon px-6 py-5 mb-10 rounded-4">
-                                                                                        <p class="fs-7 fw-bold">{{__('Account Details')}}</p>
-                                                                                        <li class="d-flex align-items-center py-1">
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Bank Name')}}: {{$set->dp_bank_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->dp_bank_name}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                        <li class="d-flex align-items-center py-1">
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Routing Type')}}: {{$set->bk_routing_type}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_routing_type}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                        <li class="d-flex align-items-center py-1">
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Routing Code')}}: {{$set->bk_routing_code}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_routing_code}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                        <li class="d-flex align-items-center py-1">
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Account Number')}}: {{$set->bk_acct_no}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_acct_no}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                        <li class="d-flex align-items-center py-1">
-                                                                                            <span class="bullet me-5 bg-success bullet-vertical"></span> <span>{{__('Account Name')}}: {{$set->bk_acct_name}} <i class="bi bi-clipboard-check text-dark castro-copy fs-7" data-clipboard-text="{{$set->bk_acct_name}}" title="{{__('Copy')}}"></i></span>
-                                                                                        </li>
-                                                                                    </div>
-                                                                                    <div class="bg-light-primary px-6 py-5 mb-10 rounded-4">
-                                                                                        <p class="text-dark fs-7 mb-0"><b>{{__('You will receive')}}</b>: {{$receive}}</span></p>
-                                                                                        <p class="text-dark fs-7 mb-0"><b>{{__('Fee')}}</b>: {{$fee}}</span></p>
-                                                                                    </div>
-                                                                                    <div class="text-center mt-10">
-                                                                                        <button class="btn btn-block btn-success" type="submit">
-                                                                                            <span wire:loading.remove wire:target="bankDeposit">{{__('I\'hv made payment')}}</span>
-                                                                                            <span wire:loading wire:target="bankDeposit">{{__('Submitting request...')}}</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    @endif
                                                                 </div>
-                                                                @endif
-                                                            </div>
-                                                            @foreach(getGateways() as $gateway)
-                                                            <div class="col-md-12">
-                                                                <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" data-bs-toggle="modal" data-bs-target="#gateway_deposit{{$gateway->id}}">
-                                                                    <p class="fs-7 text-dark fw-bold mb-0">{{$gateway->name}}</p>
-                                                                    <p class="fs-7 text-gray-600 mb-0">@if($gateway->percent_charge!=null){{$gateway->percent_charge}}% @else 0% @endif+ @if($gateway->fiat_charge!=null){{$gateway->fiat_charge}} @else 0 @endif{{$currency->currency}}</p>
+                                                                @foreach(getGateways() as $gateway)
+                                                                <div class="col-md-12">
+                                                                    <div class="cursor-pointer border border-secondary rounded-4 p-5 mb-5" data-bs-toggle="modal" data-bs-target="#gateway_deposit{{$gateway->id}}">
+                                                                        <p class="fs-7 text-dark fw-bold mb-0">{{$gateway->name}}</p>
+                                                                        <p class="fs-7 text-gray-600 mb-0">@if($gateway->percent_charge!=null){{$gateway->percent_charge}}% @else 0% @endif+ @if($gateway->fiat_charge!=null){{$gateway->fiat_charge}} @else 0 @endif{{$currency->currency}}</p>
+                                                                    </div>
                                                                 </div>
+                                                                @endforeach
                                                             </div>
-                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @livewire('user.withdraw', ['user' => $user, 'settings' => $set, 'currency' => $currency])
+                                            @endif
                                         </div>
-                                        @livewire('user.withdraw', ['user' => $user, 'settings' => $set, 'currency' => $currency])
-                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    @if($user->business->cryptobalances->count() > 0)
+                    <div class="col-md-12">
+                        <div class="card rounded-5">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex align-items-center justify-content-between mb-5">
+                                    <h5 class="fw-bold text-dark mb-0">{{__('Crypto Portfolio')}}</h5>
+                                    <a href="{{route('crypto.payout')}}" target="_blank" class="btn btn-dark">{{__('Withdraw Crypto')}}</a>
+                                </div>
+                                <div class="d-flex flex-column gap-4">
+                                    @foreach($user->business->cryptobalances()->orderBy('amount', 'desc')->orderBy('token', 'asc')->take(4)->get() as $crypto)
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-40px symbol-circle me-3">
+                                            <span class="symbol-label flag-shadow" style="background-image:url({{getPublicImage($crypto->getCurrency->image)}});"></span>
+                                        </div>
+                                        <div class="flex-grow-1 text-truncate">
+                                            <span class="fs-7 fw-bold text-dark d-block lh-1">{{$crypto->getCurrency->name}}</span>
+                                            <span class="fs-8 text-gray-700">{{$crypto->network}}</span>
+                                        </div>
+                                        <span class="fs-7 fw-bold text-dark ms-2 text-nowrap">{{$crypto->amount}} {{$crypto->token}}</span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                     <a href="{{route('developer.index')}}" target="_blank">
                         <div class="d-flex flex-stack cursor-pointer bg-white rounded-4 p-3">
                             <div class="d-flex align-items-center">

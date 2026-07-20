@@ -135,4 +135,9 @@ class Business extends Model
     {
         return $this->hasMany(Directors::class, 'business_id', 'reference');
     }
+
+    public function cryptoBalances()
+    {
+        return $this->hasMany(CryptoBalance::class, 'business_id', 'reference')->with(['getCurrency']);
+    }
 }

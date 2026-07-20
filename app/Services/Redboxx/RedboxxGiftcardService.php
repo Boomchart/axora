@@ -87,7 +87,7 @@ class RedboxxGiftcardService
                 'success' => false,
                 'status' => $response->status(),
                 'data' => [],
-                'error' => $body['message'] ?? $response->body() ?: 'Redboxx request failed',
+                'error' => $body['message'] ?? $response->body() ?: 'Request failed',
             ];
         }
 
@@ -108,7 +108,7 @@ class RedboxxGiftcardService
             'success' => false,
             'status' => is_int($status) && $status > 0 ? $status : 0,
             'data' => [],
-            'error' => $e->getMessage() ?: 'Reloadly request failed',
+            'error' => $e->getMessage() ?: 'Request failed',
         ];
     }
 }

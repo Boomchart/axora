@@ -24,7 +24,7 @@ class AirtimeController extends Controller
         $this->settings = Settings::find(1);
     }
 
-    public function operators(Request $request, $operator)
+    public function operators(Request $request, string $operator)
     {
         $this->verifyToken($request);
         if ($this->access == true) {
@@ -47,7 +47,7 @@ class AirtimeController extends Controller
         }
     }
 
-    public function operatorsByCountry(Request $request, $country)
+    public function operatorsByCountry(Request $request, string $country)
     {
         $limit = $request->limit;
         $this->verifyToken($request);
@@ -83,7 +83,11 @@ class AirtimeController extends Controller
                         return $query->paginate(20);
                     });
                 });
-            $apiresponse = AirtimeResource::collection($resource)->map(fn($resource) => new AirtimeResource($resource, $this->client));
+            $apiresponse = [
+                'message' => __('Operators'),
+                'status' => 'success',
+                'data' => AirtimeResource::collection($resource)->map(fn($resource) => new AirtimeResource($resource, $this->client))
+            ];
             $this->logError(200, (array) $apiresponse);
             return $apiresponse;
         } else {
@@ -167,22 +171,20 @@ class AirtimeController extends Controller
                 //our charge must always end up in usd
                 //vendor charge must always end up in usd
                 if ($airtime->charge_phase == 'before_conversion') {
-                    $our_charge = (float) calculateFee(removeCommas($amount / $airtime->rate), 'both', $our_flat_fee, $our_percent_fee, 0) * $airtime->rate;
+                    $our_charge = (float) calculateFee(removeCommas($amount / $airtime->rate), 'both', $our_flat_fee, $our_percent_fee) * $airtime->rate;
                     $vendor_charge = (float) calculateFee(
                         removeCommas($amount / $airtime->rate),
                         'both',
                         ($airtime->tier_pricing == 0) ? $airtime->issuing_fc : tierPricing($amount / $airtime->rate, $airtime->issuing_tiers)['flat'],
                         ($airtime->tier_pricing == 0) ? $airtime->issuing_pc : tierPricing($amount / $airtime->rate, $airtime->issuing_tiers)['percent'],
-                        0
                     ) * $airtime->rate;
                 } else {
-                    $our_charge = (float) calculateFee(removeCommas($amount), 'both', $our_flat_fee, $our_percent_fee, 0);
+                    $our_charge = (float) calculateFee(removeCommas($amount), 'both', $our_flat_fee, $our_percent_fee);
                     $vendor_charge = (float) calculateFee(
                         removeCommas($amount),
                         'both',
                         ($airtime->tier_pricing == 0) ? $airtime->issuing_fc : tierPricing($amount, $airtime->issuing_tiers)['flat'],
                         ($airtime->tier_pricing == 0) ? $airtime->issuing_pc : tierPricing($amount, $airtime->issuing_tiers)['percent'],
-                        0
                     );
                 }
 
@@ -288,7 +290,7 @@ class AirtimeController extends Controller
         }
     }
 
-    public function updateError($type, $message, $status)
+    public function updateError(string $type, array $message, string $status)
     {
         if (!isset($this->bulkErrors[$type])) {
             $this->bulkErrors[$type] = [];
@@ -477,9 +479,9 @@ class AirtimeController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0) * $operator->rate;
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0) * $operator->rate;
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0) * $operator->rate;
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee) * $operator->rate;
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee) * $operator->rate;
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent) * $operator->rate;
                 } else {
                     $base = removeCommas($convertedAmount);
                     if ($operator->tier_pricing == 0) {
@@ -490,9 +492,9 @@ class AirtimeController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0);
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0);
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0);
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee);
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee);
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent);
                 }
 
                 $itemTotal = ($convertedAmount + $vendorCharge + $ourCharge);
@@ -610,7 +612,7 @@ class AirtimeController extends Controller
                 }
                 if ($reference != null) {
                     if (Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('airtime_purchase')->exists()) {
-                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->first())];
+                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('airtime_purchase')->first())];
                         $this->logError(200, $apiresponse);
                         return response()->json($apiresponse, 200);
                     } else {
@@ -619,9 +621,13 @@ class AirtimeController extends Controller
                         return response()->json($apiresponse, 404);
                     }
                 } else {
-                    $apiresponse = TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('airtime_purchase')->latest()
-                        ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
-                        ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)));
+                    $apiresponse = [
+                        'message' => __('Transactions'),
+                        'status' => 'success',
+                        'data' => TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('airtime_purchase')->latest()
+                            ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
+                            ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)))
+                    ];
                     $this->logError(200, (array)$apiresponse);
                     return $apiresponse;
                 }

@@ -15,6 +15,7 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
+        $data = [];
         if ($this->type == 'giftcard_purchase') {
             $data = [
                 'id' => $this->ref_id,
@@ -117,6 +118,27 @@ class TransactionResource extends JsonResource
                     })
                     ->values()
                     ->all(),
+                'created_at' => $this->created_at,
+            ];
+        }
+
+        if (in_array($this->type, ['crypto_deposit', 'crypto_payout'])) {
+            $data = [
+                'id' => $this->ref_id,
+                'currency' => $this->currency,
+                'amount' => (float) number_format($this->amount, 2, '.', ''),
+                'charge' => (float) number_format($this->charge, 2, '.', ''),
+                'total' => (float) number_format(($this->charge + $this->amount), 2, '.', ''),
+                'status' => $this->status,
+                'mode' => $this->mode,
+                'wallet_address' => $this->wallet_address,
+                'asset_id' => $this->crypto_wallet_id,
+                'address_id' => $this->crypto_account_id,
+                'external_reference' => $this->external_reference ?? null,
+                'balance' => [
+                    'old_balance' => (float) $this->balance_before,
+                    'new_balance' => (float) $this->balance_after,
+                ],
                 'created_at' => $this->created_at,
             ];
         }

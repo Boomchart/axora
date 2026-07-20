@@ -177,7 +177,7 @@ class ReloadlyGiftcardService
                 'success' => false,
                 'status' => $response->status(),
                 'data' => [],
-                'error' => $body['message'] ?? $body['errorMessage'] ?? $response->body() ?: 'Reloadly request failed',
+                'error' => $body['message'] ?? $body['errorMessage'] ?? $response->body() ?: 'Request failed',
             ];
         }
 
@@ -198,7 +198,7 @@ class ReloadlyGiftcardService
             'success' => false,
             'status' => is_int($status) && $status > 0 ? $status : 0,
             'data' => [],
-            'error' => $e->getMessage() ?: 'Reloadly request failed',
+            'error' => $e->getMessage() ?: 'Request failed',
         ];
     }
 }

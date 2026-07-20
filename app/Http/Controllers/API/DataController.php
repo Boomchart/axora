@@ -24,7 +24,7 @@ class DataController extends Controller
         $this->settings = Settings::find(1);
     }
 
-    public function operators(Request $request, $operator)
+    public function operators(Request $request, string $operator)
     {
         $this->verifyToken($request);
         if ($this->access == true) {
@@ -47,7 +47,7 @@ class DataController extends Controller
         }
     }
 
-    public function operatorsByCountry(Request $request, $country)
+    public function operatorsByCountry(Request $request, string $country)
     {
         $limit = $request->limit;
         $this->verifyToken($request);
@@ -83,7 +83,7 @@ class DataController extends Controller
                         return $query->paginate(20);
                     });
                 });
-            $apiresponse = DataResource::collection($resource)->map(fn($resource) => new DataResource($resource, $this->client));
+            $apiresponse = ['message' => __('Operators'), 'status' => 'success', 'data' => DataResource::collection($resource)->map(fn($resource) => new DataResource($resource, $this->client))];
             $this->logError(200, (array) $apiresponse);
             return $apiresponse;
         } else {
@@ -273,7 +273,7 @@ class DataController extends Controller
         }
     }
 
-    public function updateError($type, $message, $status)
+    public function updateError(string $type, array $message, string $status)
     {
         if (!isset($this->bulkErrors[$type])) {
             $this->bulkErrors[$type] = [];
@@ -447,9 +447,9 @@ class DataController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0) * $operator->rate;
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0) * $operator->rate;
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0) * $operator->rate;
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee) * $operator->rate;
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee) * $operator->rate;
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent) * $operator->rate;
                 } else {
                     $base = removeCommas($convertedAmount);
                     if ($operator->tier_pricing == 0) {
@@ -460,9 +460,9 @@ class DataController extends Controller
                         $vendorFlat = $tier['flat'];
                         $vendorPercent = $tier['percent'];
                     }
-                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee, 0);
-                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee, 0);
-                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent, 0);
+                    $ourCharge = (float) calculateFee($base, 'both', $ourFlatFee, $ourPercentFee);
+                    $agentCharge = (float) calculateFee($base, 'both', $agentFlatFee, $agentPercentFee);
+                    $vendorCharge = (float) calculateFee($base, 'both', $vendorFlat, $vendorPercent);
                 }
 
                 $itemTotal = ($convertedAmount + $vendorCharge + $ourCharge);
@@ -580,7 +580,7 @@ class DataController extends Controller
                 }
                 if ($reference != null) {
                     if (Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->exists()) {
-                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->first())];
+                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->first())];
                         $this->logError(200, $apiresponse);
                         return response()->json($apiresponse, 200);
                     } else {
@@ -589,9 +589,13 @@ class DataController extends Controller
                         return response()->json($apiresponse, 404);
                     }
                 } else {
-                    $apiresponse = TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('data_purchase')->latest()
-                        ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
-                        ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)));
+                    $apiresponse = [
+                        'message' => __('Transactions'),
+                        'status' => 'success',
+                        'data' => TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('data_purchase')->latest()
+                            ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
+                            ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)))
+                    ];
                     $this->logError(200, (array)$apiresponse);
                     return $apiresponse;
                 }

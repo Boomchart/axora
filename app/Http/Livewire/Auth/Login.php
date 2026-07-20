@@ -48,6 +48,16 @@ class Login extends Component
                     'email_time' => Carbon::now(),
                 ]);
 
+                $user->business->update([
+                    'fa_expiring' => now()->subMinute(),
+                ]);
+
+                if ($user->email_verify == 0) {
+                    $user->update([
+                        'email_verify_resend_time' => Carbon::now(),
+                    ]);
+                }
+
                 Devices::updateOrCreate(
                     [
                         'user_id' => $user->id,
@@ -85,7 +95,6 @@ class Login extends Component
                 } else {
                     return redirect()->route('user.dashboard');
                 }
-                return redirect()->route('user.dashboard');
             } else {
                 $this->emit('wrongPassword');
                 return $this->addError('added', __('Oops! You have entered invalid credentials'));

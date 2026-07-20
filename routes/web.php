@@ -8,26 +8,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{UserController, WebhookController};
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Language;
-
-
-Route::get('hasa-hmac', function () {
-    /* HMAC TESTING */
-    $body = [
-        'chain' => 'ethereum',
-        'network' => 'sepolia',
-        'label' => 'SepWal'
-    ];
-
-    $apiKey = 'zOTOAI2C90QeNkzGD68oahBsg2Smu1reVRUd2Dc1ymo=';
-    $secretKey = 'mRDhw_KujIw9e-R2uay3_sUD080vBNcEi6-yluvNIik=';
-
-    $result = generateHasaHMACAuth($body,$apiKey,$secretKey);
-    dd($result);
-});
 
 Route::get('change-lang/{locale}', [SettingController::class, 'locale'])->name('lang');
 
@@ -36,7 +20,8 @@ Route::controller(SettingController::class)->group(function () {
     Route::get('migrate', 'migrate')->name('run.migration');
 });
 
-Route::post('redboxx_webhook', [UserController::class, 'redboxx'])->name('redboxx.webhook');
+Route::post('redboxx_webhook', [WebhookController::class, 'redboxx'])->name('redboxx.webhook');
+Route::post('hasapay_webhook', [WebhookController::class, 'hasapay'])->name('hasapay.webhook');
 
 Route::prefix('docs')->group(function () {
     Route::view('introduction', 'developer.index', ['title' => 'Introduction'])->name('developer.index');
@@ -80,7 +65,6 @@ Route::prefix('api-reference')->group(function () {
     Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');
 
     Route::view('balance', 'developer.reference.balance', ['title' => __('Account Balance')])->name('developer.balance');
-
 });
 
 Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
@@ -147,6 +131,8 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
                     Route::get('details/{order}', [UserController::class, 'detailsOrder'])->name('view.orders');
                 });
 
+                Route::get('crypto-payout', [UserController::class, 'cryptoPayout'])->name('crypto.payout'); //Process P2P transfer
+
                 Route::view('webhook-log', 'user.webhook', ['title' => __('Webhook Logs')])->name('webhook.logs');
                 Route::view('api-log', 'user.api-log', ['title' => __('API Logs')])->name('api.logs');
                 Route::view('dashboard', 'user.dashboard.index', ['title' => __('Dashboard')])->name('user.dashboard');
@@ -199,7 +185,7 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
                 Route::view('kyc', 'admin.user.index', ['title' => __('Pending KYC'), 'type' => 'kyc'])->name('admin.kyc');
                 Route::view('watchlist', 'admin.user.index', ['title' => __('Watch List'), 'type' => 'watchlist'])->name('admin.watchlist');
                 Route::get('manage-user/{client}/{type}', function (User $client, $type) {
-                    if (in_array($type, ['details', 'devices', 'bank', 'beneficiaries', 'compliance', 'audit', 'beneficiary', 'ticket', 'sent-emails', 'transactions', 'orders', 'api-log', 'webhook'])) {
+                    if (in_array($type, ['balance', 'details', 'devices', 'bank', 'beneficiaries', 'compliance', 'audit', 'beneficiary', 'ticket', 'sent-emails', 'transactions', 'orders', 'api-log', 'webhook'])) {
                         return view('admin.user.manage', ['title' => __('Manage User'), 'client' => $client, 'type' => $type]);
                     }
                     abort(403);
@@ -293,6 +279,16 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
                 Route::get('cards/{country}', [SettingController::class, 'countryCards'])->name('admin.giftcard.cards');
                 Route::get('orders-filter/{card}', [SettingController::class, 'orderTrxFilter'])->name('admin.giftcard.orders.filter');
                 Route::view('category', 'admin.giftcard.category', ['title' => __('Giftcard Category')])->name('admin.giftcard.category');
+            });
+
+            Route::group(['prefix' => 'crypto'], function () {
+                Route::get('edit/{currency}/{type}', function (\App\Models\CryptoCurrencies $currency, $type) {
+                    if (in_array($type, ['settings', 'balances', 'transactions'])) {
+                        return view('admin.crypto.edit', ['title' => ucwords($type) . ' - ' . $currency->name . ' ' . $currency->token, 'currency' => $currency, 'type' => $type]);
+                    }
+                    abort(403);
+                })->name('crypto.edit');
+                Route::view('crypto', 'admin.crypto.index', ['title' => __('Crypto')])->name('admin.crypto');
             });
         });
     });

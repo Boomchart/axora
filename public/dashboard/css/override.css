@@ -1204,3 +1204,15 @@ hr.bg-axora-secondary {
     color: var(--primary-dark) !important;
 }
 
+
+.mb-6 {
+    margin-bottom: 1.5rem !important
+}
+
+.mb-10 {
+    margin-bottom: 2.5rem !important
+}
+
+.cursor-pointer {
+    cursor: pointer
+}

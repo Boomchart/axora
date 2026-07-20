@@ -115,6 +115,16 @@
                         {!!trxDetails(__('Details'), $val->details)!!}
                         @endif
 
+                        @if(in_array($val->type, ['crypto_payout', 'crypto_deposit']))
+                        {!!trxDetails(__('Network Chain'), $val->cryptoBalance->network)!!}
+                        @if($val->wallet_address)
+                        {!!trxDetails(__('Wallet Address'), $val->wallet_address)!!}
+                        @endif
+                        @if($val->trx_hash)
+                        {!!trxDetails(__('TX Hash'), $val->trx_hash)!!}
+                        @endif
+                        @endif
+
                         @if($val->type == 'bank_transfer')
                         {!!trxDetails(__('Bank Reference'), $val->bank_reference)!!}
                         @endif
@@ -131,7 +141,7 @@
 
                         <a href="{{route('user.manage', ['client' => $val->user_id, 'type' => 'details'])}}" class="btn btn-whitelabel btn-block mt-5" target="_blank">{{__('Manage Account')}}</a>
 
-                        @if($val->type == 'deposit')
+                        @if($val->type == 'deposit' || $val->type == 'crypto_deposit')
                         <div>
                             @if($val->status == "pending")
                             <button class="btn btn-success btn-block mt-5" wire:click="approveDeposit"><i class="bi bi-check2-circle"></i>
@@ -187,7 +197,7 @@
                         </div>
                         @endif
 
-                        @if($val->type == 'payout')
+                        @if($val->type == 'payout' || $val->type == 'crypto_payout')
                         <div>
                             @if($val->status == "pending")
                             <button class="btn btn-success btn-block mt-5" wire:click="approvePayout"><i class="bi bi-check2-circle"></i>
@@ -258,7 +268,7 @@
                                             {{__('Gift Card')}}: {{$data['card']['amount'].' '.$data['card']['currency']}} {{ucwords($data['card']['name'])}} (x{{$data['card']['quantity']}})
                                         </p>
                                         <p class="text-gray-600 fs-8 mb-0">
-                                            {{__('External Reference')}}: {{$data['external_reference']}} 
+                                            {{__('External Reference')}}: {{$data['external_reference']}}
                                         </p>
                                     </div>
                                 </div>
@@ -312,7 +322,7 @@
                                             {{__('Operator')}}: {{ucwords($data['operator']['name'])}} - {{$data['operator']['amount'].' '.$data['operator']['currency']}}
                                         </p>
                                         <p class="text-gray-600 fs-8 mb-0">
-                                            {{__('External Reference')}}: {{$data['external_reference']}} 
+                                            {{__('External Reference')}}: {{$data['external_reference']}}
                                         </p>
                                     </div>
                                 </div>

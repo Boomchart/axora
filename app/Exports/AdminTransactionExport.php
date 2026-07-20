@@ -34,11 +34,13 @@ class AdminTransactionExport implements FromQuery, WithHeadings, WithMapping, Wi
     public function query()
     {
         $query = DB::table('transactions as t')
-            ->join('businesses as b', 't.business_id', '=', 'b.reference');
+            ->join('businesses as b', 't.business_id', '=', 'b.reference')
+            ->leftJoin('crypto_currencies as cc', 't.crypto_currency', '=', 'cc.id');
 
         $conditions = [
             'mode' => 't.mode',
-            'business_id' => 't.business_id'
+            'business_id' => 't.business_id',
+            'crypto_currency' => 't.crypto_currency',
         ];
 
         foreach ($conditions as $key => $column) {
@@ -58,6 +60,7 @@ class AdminTransactionExport implements FromQuery, WithHeadings, WithMapping, Wi
             't.charge',
             't.status',
             't.created_at',
+            'cc.token as crypto_currency'
         ])->orderBy('t.created_at');
     }
 
@@ -116,7 +119,7 @@ class AdminTransactionExport implements FromQuery, WithHeadings, WithMapping, Wi
 
     public function headings(): array
     {
-        return ['Business', 'Reference', 'Type', 'Description', 'Amount', 'Fees', 'Status', 'Date'];
+        return ['Business', 'Reference', 'Type', 'Description', 'Currency', 'Amount', 'Fees', 'Status', 'Date'];
     }
 
     public function map($transaction): array
@@ -126,6 +129,7 @@ class AdminTransactionExport implements FromQuery, WithHeadings, WithMapping, Wi
             $transaction->ref_id,
             ucwords($transaction->trx_type),
             ucwords($transaction->type),
+            $transaction->crypto_currency ?? 'USD',
             sprintf('%.2f', $transaction->amount),
             sprintf('%.2f', $transaction->charge),
             ucwords($transaction->status),
@@ -138,8 +142,8 @@ class AdminTransactionExport implements FromQuery, WithHeadings, WithMapping, Wi
     public function columnFormats(): array
     {
         return [
-            'E' => NumberFormat::FORMAT_NUMBER_00,
             'F' => NumberFormat::FORMAT_NUMBER_00,
+            'G' => NumberFormat::FORMAT_NUMBER_00,
         ];
     }
 }

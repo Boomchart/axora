@@ -24,6 +24,9 @@
                     <a wire:ignore.self class="nav-link text-dark @if(route('user.manage', ['client' => $client->id, 'type' => 'details'])==url()->current()) active @endif" id="tabs-icons-text-1-tab" href="{{route('user.manage', ['client' => $client->id, 'type' => 'details'])}}" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">{{__('Details')}}</a>
                 </li>
                 <li class="nav-item">
+                    <a wire:ignore.self class="nav-link text-dark @if(route('user.manage', ['client' => $client->id, 'type' => 'balance'])==url()->current()) active @endif" id="tabs-icons-text-1-tab" href="{{route('user.manage', ['client' => $client->id, 'type' => 'balance'])}}" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">{{__('Balance')}}</a>
+                </li>
+                <li class="nav-item">
                     <a wire:ignore.self class="nav-link text-dark @if(route('user.manage', ['client' => $client->id, 'type' => 'compliance'])==url()->current()) active @endif" id="tabs-icons-text-1-tab" href="{{route('user.manage', ['client' => $client->id, 'type' => 'compliance'])}}" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">{{__('Compliance')}}</a>
                 </li>
                 <li class="nav-item">
@@ -46,7 +49,7 @@
                 </li>
                 <li class="nav-item">
                     <a wire:ignore.self class="nav-link text-dark @if(route('user.manage', ['client' => $client->id, 'type' => 'webhook'])==url()->current()) active @endif" id="tabs-icons-text-2-tab" href="{{route('user.manage', ['client' => $client->id, 'type' => 'webhook'])}}" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">{{__('Webhook Logs')}}</a>
-                </li>                
+                </li>
                 <li class="nav-item">
                     <a wire:ignore.self class="nav-link text-dark @if(route('user.manage', ['client' => $client->id, 'type' => 'api-log'])==url()->current()) active @endif" id="tabs-icons-text-2-tab" href="{{route('user.manage', ['client' => $client->id, 'type' => 'api-log'])}}" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">{{__('API Logs')}}</a>
                 </li>

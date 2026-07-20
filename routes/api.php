@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\{GlobalController, GiftcardController, AirtimeController, DataController};
+use App\Http\Controllers\API\{GlobalController, GiftcardController, AirtimeController, DataController, CryptoController};
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +41,13 @@ Route::middleware(['throttle.api:60,1'])->group(function () {
         Route::post('data-order', [DataController::class, 'order']);
         Route::get('data-transactions/{reference?}', [DataController::class, 'transactions']);
         Route::post('data-number-lookup', [DataController::class, 'numberLookup']);
+
+        //Crypto
+        Route::get('assets/{asset?}', [CryptoController::class, 'assets']);
+        Route::get('address/{asset}/{address?}', [CryptoController::class, 'addresses']);
+        Route::post('create-address', [CryptoController::class, 'createAddress']);
+        Route::post('payout-quote', [CryptoController::class, 'payoutQuote']);
+        Route::post('payout', [CryptoController::class, 'payout']);
+        Route::get('crypto-transactions/{reference?}', [CryptoController::class, 'transactions']);
     });
 });

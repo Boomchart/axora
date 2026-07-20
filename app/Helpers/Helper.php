@@ -23,6 +23,318 @@ use App\Models\OTP;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
+function truncateToDecimals($number, $decimals = 2, $dot = null, $seperator = null)
+{
+    $multiplier = pow(10, $decimals);
+    return $number >= 0
+        ? floor($number * $multiplier) / $multiplier
+        : ceil($number * $multiplier) / $multiplier;
+}
+
+function generateBitcoinAddress()
+{
+    $types = ['legacy', 'segwit', 'bech32'];
+    $type = $types[array_rand($types)];
+
+    switch ($type) {
+        case 'legacy':
+            return '1' . randomString(33, '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+
+        case 'segwit':
+            return '3' . randomString(33, '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+
+        case 'bech32':
+            return 'bc1q' . randomString(38, '023456789acdefghjklmnpqrstuvwxyz');
+    }
+}
+
+function generateEthereumAddress()
+{
+    return '0x' . randomString(40, '0123456789abcdef');
+}
+
+function generateTronAddress()
+{
+    return 'T' . randomString(33, '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+}
+
+function generateStellarAddress()
+{
+    return 'G' . randomString(55, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567');
+}
+
+function generateSolanaAddress()
+{
+    return randomString(44, '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+}
+
+function randomString($length, $characters)
+{
+    return substr(str_shuffle(str_repeat($characters, ceil($length / strlen($characters)))), 0, $length);
+}
+
+function generateTestWalletAddress($network, $token = null)
+{
+    $network = strtoupper($network);
+    return match ($network) {
+        'BTC' => generateBitcoinAddress(),
+        'TBTC4' => generateBitcoinAddress(),
+        'TRX' => generateTronAddress(),
+        'TTRX' => generateTronAddress(),
+        'XLM' => generateStellarAddress(),
+        'SOL' => generateSolanaAddress(),
+        'TSOL' => generateSolanaAddress(),
+        'POLYGON' => generateEthereumAddress(),
+        'TPOLYGON' => generateEthereumAddress(),
+        default => generateEthereumAddress(),
+    };
+}
+
+function verifyWalletAddress(string $address, string $token, string $network): array
+{
+    $address = trim($address);
+    $token   = strtoupper(trim($token));
+    $network = strtolower(trim($network));
+
+    $networkAliases = [
+        'btc'      => 'bitcoin',
+        'eth'      => 'ethereum',
+        'bnb'      => 'bsc',
+        'sol'      => 'solana',
+        'xrp'      => 'ripple',
+        'trx'      => 'tron',
+        'doge'     => 'dogecoin',
+        'ltc'      => 'litecoin',
+        'ada'      => 'cardano',
+        'matic'    => 'polygon',
+        'pol'      => 'polygon',
+        'arb'      => 'arbitrum',
+        'op'       => 'optimism',
+    ];
+
+    $network = $networkAliases[$network] ?? $network;
+
+    // --- 1. Token → supported networks map ---
+    $tokenNetworks = [
+        'BTC'   => ['bitcoin'],
+        'ETH'   => ['ethereum', 'arbitrum', 'optimism', 'base'],
+        'BNB'   => ['bsc'],
+        'SOL'   => ['solana'],
+        'XRP'   => ['ripple'],
+        'TRX'   => ['tron'],
+        'DOGE'  => ['dogecoin'],
+        'LTC'   => ['litecoin'],
+        'ADA'   => ['cardano'],
+        // EVM tokens (share Ethereum address format across EVM chains)
+        'USDT'  => ['ethereum', 'bsc', 'tron', 'solana', 'arbitrum', 'optimism', 'polygon'],
+        'USDC'  => ['ethereum', 'bsc', 'solana', 'arbitrum', 'optimism', 'polygon', 'base'],
+        'DAI'   => ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism'],
+        'MATIC' => ['polygon', 'ethereum'],
+        'LINK'  => ['ethereum', 'bsc', 'polygon'],
+        'UNI'   => ['ethereum'],
+        'WETH'  => ['ethereum', 'arbitrum', 'optimism', 'polygon', 'base'],
+    ];
+
+    // --- 2. Check token is recognised ---
+    if (!isset($tokenNetworks[$token])) {
+        return ['valid' => false, 'reason' => "Unsupported token: {$token}"];
+    }
+
+    // --- 3. Check network supports this token ---
+    if (!in_array($network, $tokenNetworks[$token], true)) {
+        $supported = implode(', ', $tokenNetworks[$token]);
+        return [
+            'valid'  => false,
+            'reason' => "{$token} is not supported on {$network}. Supported networks: {$supported}",
+        ];
+    }
+
+    // --- 4. Validate address format for the network ---
+    return match (true) {
+
+        // EVM-compatible (Ethereum, BSC, Polygon, Arbitrum, Optimism, Base)
+        in_array($network, ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism', 'base'], true)
+        => validateEVMAddress($address),
+
+        $network === 'bitcoin'   => validateBitcoinAddress($address),
+        $network === 'solana'    => validateSolanaAddress($address),
+        $network === 'tron'      => validateTronAddress($address),
+        $network === 'ripple'    => validateRippleAddress($address),
+        $network === 'dogecoin'  => validateDogecoinAddress($address),
+        $network === 'litecoin'  => validateLitecoinAddress($address),
+        $network === 'cardano'   => validateCardanoAddress($address),
+
+        default => ['valid' => false, 'reason' => "No validator implemented for network: {$network}"],
+    };
+}
+
+// ---------------------------------------------------------------------------
+// Network-specific validators
+// ---------------------------------------------------------------------------
+
+function validateEVMAddress(string $address): array
+{
+    // Must start with 0x + exactly 40 hex characters
+    if (!preg_match('/^0x[0-9a-fA-F]{40}$/', $address)) {
+        return ['valid' => false, 'reason' => 'Invalid EVM address format (expected 0x + 40 hex chars)'];
+    }
+
+    // EIP-55 checksum validation (mixed-case addresses)
+    if ($address !== strtolower($address) && $address !== strtoupper("0x") . strtoupper(substr($address, 2))) {
+        if (!verifyEIP55Checksum($address)) {
+            return ['valid' => false, 'reason' => 'EIP-55 checksum mismatch'];
+        }
+    }
+
+    return ['valid' => true, 'reason' => 'Valid EVM address'];
+}
+
+function verifyEIP55Checksum(string $address): bool
+{
+    // If keccak256 is unavailable, skip checksum and trust regex alone.
+    // PHP does not ship keccak256 (sha3-256 is NOT equivalent — different padding),
+    // and hash() throws ValueError on unsupported algorithms in PHP 8.1+.
+    if (!in_array('keccak256', hash_algos(), true)) {
+        return true;
+    }
+
+    $address = substr($address, 2); // strip 0x
+    $hash    = hash('keccak256', strtolower($address));
+
+    for ($i = 0; $i < 40; $i++) {
+        $char     = $address[$i];
+        $hashChar = hexdec($hash[$i]);
+        if (ctype_alpha($char)) {
+            if (($hashChar >= 8 && strtoupper($char) !== $char) ||
+                ($hashChar < 8 && strtolower($char) !== $char)
+            ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function validateBitcoinAddress(string $address): array
+{
+    // Legacy P2PKH: starts with 1, 25-34 chars
+    if (preg_match('/^1[1-9A-HJ-NP-Za-km-z]{24,33}$/', $address)) {
+        return ['valid' => true, 'reason' => 'Valid Bitcoin Legacy (P2PKH) address'];
+    }
+
+    // P2SH: starts with 3, 25-34 chars
+    if (preg_match('/^3[1-9A-HJ-NP-Za-km-z]{24,33}$/', $address)) {
+        return ['valid' => true, 'reason' => 'Valid Bitcoin P2SH address'];
+    }
+
+    // Bech32 Native SegWit: starts with bc1q or bc1p (Taproot)
+    if (preg_match('/^bc1[0-9a-z]{6,87}$/', strtolower($address))) {
+        return ['valid' => true, 'reason' => 'Valid Bitcoin Bech32 (SegWit/Taproot) address'];
+    }
+
+    return ['valid' => false, 'reason' => 'Invalid Bitcoin address format'];
+}
+
+function validateSolanaAddress(string $address): array
+{
+    // Base58, 32–44 characters (no 0, O, I, l)
+    if (!preg_match('/^[1-9A-HJ-NP-Za-km-z]{32,44}$/', $address)) {
+        return ['valid' => false, 'reason' => 'Invalid Solana address (expected Base58, 32-44 chars)'];
+    }
+    return ['valid' => true, 'reason' => 'Valid Solana address'];
+}
+
+function validateTronAddress(string $address): array
+{
+    // Base58Check, starts with T, exactly 34 chars
+    if (!preg_match('/^T[1-9A-HJ-NP-Za-km-z]{33}$/', $address)) {
+        return ['valid' => false, 'reason' => 'Invalid TRON address (must start with T, 34 chars)'];
+    }
+    return ['valid' => true, 'reason' => 'Valid TRON address'];
+}
+
+function validateRippleAddress(string $address): array
+{
+    // Base58, starts with r, 25-35 chars
+    if (!preg_match('/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/', $address)) {
+        return ['valid' => false, 'reason' => 'Invalid XRP address (must start with r, 25-35 chars)'];
+    }
+    return ['valid' => true, 'reason' => 'Valid XRP Ledger address'];
+}
+
+function validateDogecoinAddress(string $address): array
+{
+    // Starts with D, 26-34 chars
+    if (!preg_match('/^D[1-9A-HJ-NP-Za-km-z]{25,33}$/', $address)) {
+        return ['valid' => false, 'reason' => 'Invalid Dogecoin address'];
+    }
+    return ['valid' => true, 'reason' => 'Valid Dogecoin address'];
+}
+
+function validateLitecoinAddress(string $address): array
+{
+    // Legacy: starts with L, P2SH: starts with M, Bech32: starts with ltc1
+    if (preg_match('/^[LM][1-9A-HJ-NP-Za-km-z]{25,33}$/', $address)) {
+        return ['valid' => true, 'reason' => 'Valid Litecoin address'];
+    }
+    if (preg_match('/^ltc1[0-9a-z]{6,87}$/', strtolower($address))) {
+        return ['valid' => true, 'reason' => 'Valid Litecoin Bech32 address'];
+    }
+    return ['valid' => false, 'reason' => 'Invalid Litecoin address format'];
+}
+
+function validateCardanoAddress(string $address): array
+{
+    // Shelley: starts with addr1, Bech32, 58-103 chars
+    if (preg_match('/^addr1[0-9a-z]{50,100}$/', strtolower($address))) {
+        return ['valid' => true, 'reason' => 'Valid Cardano Shelley address'];
+    }
+    // Byron Legacy: starts with Ae2 or DdzFF
+    if (preg_match('/^(Ae2|DdzFF)[1-9A-HJ-NP-Za-km-z]{50,}$/', $address)) {
+        return ['valid' => true, 'reason' => 'Valid Cardano Byron (Legacy) address'];
+    }
+    return ['valid' => false, 'reason' => 'Invalid Cardano address format'];
+}
+
+function balanceCapture($balance, $trx = null, $crypto, $type, $order)
+{
+    if ($balance) {
+        \App\Models\BalanceCapture::create([
+            'balance_id' => $balance->id,
+            'amount' => $balance->amount,
+            'hold' => ($crypto == true) ? 0 : $balance->hold,
+            'user_id' => $balance->user_id,
+            'business_id' => $balance->business_id,
+            'currency' => $balance->country_id,
+            'trx_id' => $trx,
+        ]);
+    }
+}
+
+function logBalance($balance, $amount, $trx_type, $trx = null, $type, $crypto = false, $locked = 0)
+{
+    //Before Update
+    balanceCapture((($crypto == true) ? \App\Models\CryptoBalance::whereId($balance)->first() : \App\Models\Balance::whereId($balance)->first()), $trx, $crypto, $type, 0);
+
+    \App\Models\BalanceLog::create([
+        'balance_id' => $balance,
+        'amount' => $amount,
+        'trx_type' => $trx_type,
+        'trx_id' => $trx,
+        'type' => $type,
+        'crypto' => $crypto,
+        'currency_id' => ($crypto == true) ? \App\Models\CryptoBalance::whereId($balance)->first()?->country_id : \App\Models\Balance::whereId($balance)->first()?->country_id,
+    ]);
+
+    //After Balance Update
+    balanceCapture((($crypto == true) ? \App\Models\CryptoBalance::whereId($balance)->first() : \App\Models\Balance::whereId($balance)->first()), $trx, $crypto, $type, 1);
+}
+
+function getAllCryptoCurrencies()
+{
+    return \App\Models\CryptoCurrencies::orderby('country_id', 'asc')->get();
+}
+
 function regCountries()
 {
     return CountryReg::whereStatus(1)->with(['real'])->orderBy('name', 'asc')->get();
@@ -392,7 +704,7 @@ function notifyUser($subject, $text, $link = null, $button = null, $type = null)
     return $notification;
 }
 
-function calculateFee($num, $type, $fiat = 0, $percent = 0)
+function calculateFee(float $num, string $type, $fiat = 0, $percent = 0)
 {
     if ($type == 'both') {
         $result = ($num * $percent / 100) + $fiat;
@@ -439,7 +751,7 @@ function tierPricing(float $amount, array $tier_levels): array
     ];
 }
 
-function removeCommas($numberString)
+function removeCommas(string $numberString)
 {
     $numberString = str_replace(",", "", $numberString); // remove commas
     $numberFloat = floatval($numberString); // convert to float
@@ -603,28 +915,4 @@ function getPublicImage($url)
     } else {
         return url('/') . '/storage/app/' . $url;
     }
-}
-
-
-function generateHasaHMACAuth($body, $apiKey, $secretKey): array
-{
-    $timestamp = (string)time();
-    $requestId = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-        mt_rand(0, 0xffff),
-        mt_rand(0, 0x0fff) | 0x4000,
-        mt_rand(0, 0x3fff) | 0x8000,
-        mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-    );
-    $bodyString = $body ? json_encode($body) : '';
-
-    $payload = "{$timestamp}:{$requestId}:{$bodyString}";
-    $signature = hash_hmac('sha256', $payload, $secretKey);
-
-    return [
-        'X-API-Key' => $apiKey,
-        'X-Timestamp' => $timestamp,
-        'X-Request-ID' => $requestId,
-        'X-Signature' => $signature
-    ];
 }

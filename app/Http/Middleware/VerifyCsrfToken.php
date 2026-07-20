@@ -13,5 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'webhook',
+        'redboxx_webhook',
+        'hasapay_webhook',
     ];
 }

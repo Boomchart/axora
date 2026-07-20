@@ -73,7 +73,7 @@ class UpdateTransactions extends Command
 
     public function handle()
     {
-        // //Reloadly
+        //Reloadly
         foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereType('giftcard')->whereMode('live')->whereFailedOrder(0)->take(5)->whereNull('order_id')->get() as $val) {
             $reloadly = new ReloadlyGiftcardService();
             $order = $reloadly->order([

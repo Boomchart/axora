@@ -129,6 +129,14 @@
                         </a>
                     </div>
                     <div class="menu-item"><!--begin:Menu link-->
+                        <a wire:ignore.self class="menu-link @if(strpos(url()->current(), 'admin/crypto') !== false) active @endif" href="{{route('admin.crypto')}}">
+                            <span class="menu-icon">
+                                <i class="bi bi-coin fs-3 text-whitelabel-menu"></i>
+                            </span>
+                            <span class="menu-title">{{__('Crypto Currency')}}</span>
+                        </a>
+                    </div>
+                    <div class="menu-item"><!--begin:Menu link-->
                         <a wire:ignore.self class="menu-link @if(route('admin.giftcard.category')==url()->current()) active @endif" href="{{route('admin.giftcard.category')}}">
                             <span class="menu-icon">
                                 <i class="bi bi-back fs-3 text-whitelabel-menu"></i>

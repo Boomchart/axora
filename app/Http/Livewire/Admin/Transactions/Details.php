@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Transactions;
 
 use Livewire\Component;
 use App\Jobs\CustomEmail;
+use App\Services\Hasapay\HasapayService;
 
 class Details extends Component
 {
@@ -56,10 +57,25 @@ class Details extends Component
     public function approvePayout()
     {
         if ($this->val->status != 'success') {
-            $this->val->update([
-                'status' => 'success',
-                'staff_id' => $this->admin->id
-            ]);
+            if ($this->val->type == 'crypto_payout') {
+                $hasapay = new HasapayService($this->val->mode);
+                $wallet = $hasapay->fetchWalletId($this->val?->cryptoBalance->token, $this->val?->cryptoBalance->network);
+                $payout = $hasapay->payout($wallet['wallet_id'], $wallet['asset_id'], $this->val->wallet_address, $this->val->amount, $this->val->ref_id);
+                if ($payout['success'] == true) {
+                    $this->val->update([
+                        'hasa_id' => $payout['data']['id'],
+                        'status' => 'success',
+                        'staff_id' => $this->admin->id
+                    ]);
+                } else {
+                    return $this->emit('alert', __('An error occured, try again later'));
+                }
+            } else {
+                $this->val->update([
+                    'status' => 'success',
+                    'staff_id' => $this->admin->id
+                ]);
+            }
 
             dispatch(new CustomEmail('withdraw_request_approve', $this->val->id));
             createAudit('Payout request approved ' . $this->val->id, $this->val->user);

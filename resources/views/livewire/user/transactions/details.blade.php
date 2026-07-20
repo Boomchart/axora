@@ -70,6 +70,16 @@
                         {!!trxDetails(__('Details'), $val->details)!!}
                         @endif
 
+                        @if(in_array($val->type, ['crypto_payout', 'crypto_deposit']))
+                        {!!trxDetails(__('Network Chain'), $val->cryptoBalance->network)!!}
+                        @if($val->wallet_address)
+                        {!!trxDetails(__('Wallet Address'), $val->wallet_address)!!}
+                        @endif                   
+                        @if($val->trx_hash)
+                        {!!trxDetails(__('TX Hash'), $val->trx_hash)!!}
+                        @endif
+                        @endif
+
                         @if($val->type == 'bank_transfer')
                         {!!trxDetails(__('Bank Reference'), $val->bank_reference)!!}
                         @endif

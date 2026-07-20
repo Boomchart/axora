@@ -74,7 +74,15 @@ class Transactions extends Model
         'profit',
         'paid_agents',
         'paid_profit',
-        'external_reference'
+        'external_reference',
+        'network',
+        'crypto_wallet_id',
+        'crypto_account_id',
+        'wallet_address',
+        'trx_hash',
+        'hasa_id',
+        'agents',
+        'rev_share_id'
     ];
 
     public function user()
@@ -85,6 +93,21 @@ class Transactions extends Model
     public function business()
     {
         return $this->belongsTo(Business::class, 'business_id', 'reference')->withTrashed();
+    }
+
+    public function cryptoBalance()
+    {
+        return $this->belongsTo(CryptoBalance::class, 'crypto_wallet_id')->withTrashed();
+    }
+
+    public function cryptoAccount()
+    {
+        return $this->belongsTo(CryptoAccount::class, 'crypto_account_id')->withTrashed();
+    }
+
+    public function getCryptoCurrency()
+    {
+        return $this->belongsTo(CryptoCurrencies::class, 'crypto_currency')->withTrashed();
     }
 
     public function staff()
@@ -146,8 +169,8 @@ class Transactions extends Model
             })
             ->values()
             ->all();
-    }    
-    
+    }
+
     public function airtimeOrdersByExternalReference()
     {
         return Orders::whereTrxId($this->id)

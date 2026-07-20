@@ -47,6 +47,7 @@
                         <span wire:loading.remove wire:target="profile">{{__('Update Account')}}</span>
                         <span wire:loading wire:target="profile">{{__('Processing Request...')}}</span>
                     </button>
+                    <a href="{{route('user.logout')}}" class="btn btn-danger me-3 my-2"><i class="bi bi-box-arrow-right"></i> {{__('Logout')}}</a>
                 </div>
             </form>
         </div>

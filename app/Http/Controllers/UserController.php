@@ -29,56 +29,13 @@ class UserController extends Controller
         });
     }
 
-    public function redboxx(Request $request)
+    public function cryptoPayout()
     {
-        $secret = config('settings.redboxx_webhook_hash');
-        $signature = $request->header('webhook-secret');
-
-        // Get the raw body instead of parsed data
-        $payload = $request->getContent();
-        $sign_secret = hash_hmac('sha256', $payload, $secret);
-
-        // Use hash_equals for timing-safe comparison
-        if (!$signature || !hash_equals($sign_secret, $signature)) {
-            abort(401);
+        if ($this->user->business->kyc_status != 'APPROVED') {
+            return redirect()->route('user.dashboard')->with('alert', __('Approved compliance is required'));
         }
 
-        $payload = (array) $request->all();
-
-        if ($payload['event'] == 'issued') {
-            $issue = \App\Models\Orders::whereOrderId($payload['data']['id'])->first();
-            if ($issue) {
-                if ($issue->status == 'pending') {
-                    $issue->update([
-                        'status' => $payload['data']['status'],
-                        'card_code' => encryptRSA($payload['data']['card_code']),
-                        'card_url' => encryptRSA($payload['data']['card_url']),
-                        'data' => json_encode($payload['data']),
-                    ]);
-
-                    if ($payload['data']['status'] == 'success') {
-                        if ($issue->business_id) {
-                            if ($issue->business->webhook_url) {
-                                dispatch(new \App\Jobs\Webhook\Issue($issue));
-                            }
-                        }
-                    }
-                }
-            }
-        } elseif ($payload['event'] == 'redemption') {
-            $issue = \App\Models\Orders::whereOrderId($payload['data']['id'])->first();
-            if ($issue) {
-                $issue->update([
-                    'card_code' => encryptRSA($payload['data']['card_code']),
-                    'card_url' => encryptRSA($payload['data']['card_url']),
-                ]);
-                if ($issue->business_id) {
-                    if ($issue->business->webhook_url) {
-                        dispatch(new \App\Jobs\Webhook\Redemption($payload['data'], $issue));
-                    }
-                }
-            }
-        }
+        return view('user.transactions.crypto-payout', ['title' => __('Crypto Payout')]);
     }
 
     public function detailsTransaction(Transactions $transaction)

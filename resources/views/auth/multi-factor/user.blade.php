@@ -13,24 +13,6 @@
       <p class="auth-subtitle">{{ __('Enter the verification code from your authenticator app to continue securely.') }}</p>
     </div>
 
-    <div class="auth-user-card">
-      <div class="auth-user-avatar">
-        {{ strtoupper(substr($user->first_name, 0, 1)) }}
-      </div>
-
-      <div class="auth-user-info">
-        <h6>
-          {{ $user->first_name }} {{ $user->last_name }}
-        </h6>
-
-        @if(!empty($user->business))
-          <p>
-            {{ $user->business->name }}
-          </p>
-        @endif
-      </div>
-    </div>
-
     @livewire('auth.security', ['set' => $set, 'user' => $user])
 
     <div class="auth-footer auth-security-footer">

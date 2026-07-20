@@ -52,10 +52,17 @@ return [
         'audience' => env('RELOADLY_GIFTCARDS_AUDIENCE', 'https://giftcards.reloadly.com'),
         'timeout' => (int) env('RELOADLY_TIMEOUT', 30),
     ],
-    
+
     'redboxx' => [
         'base_url' => env('REDBOXX_URL'),
         'api_key' => env('REDBOXX_API_KEY'),
         'webhook_hash' => env('REDBOXX_WEBHOOK_HASH'),
+    ],
+
+    'hasapay' => [
+        'base_url' => env('HASAPAY_URL'),
+        'api_key' => env('HASAPAY_API_KEY'),
+        'secret_key' => env('HASAPAY_SECRET_KEY'),
+        'webhook_hash' => env('HASAPAY_WEBHOOK_HASH'),
     ]
 ];
