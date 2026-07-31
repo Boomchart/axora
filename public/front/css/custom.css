@@ -1974,6 +1974,18 @@ body.axora-menu-open .axora-mobile-drawer {
 }
 
 @media (max-width: 768px) {
+    .hero-section {
+        padding: 3.5rem 0 3rem;
+    }
+
+    .code-section,
+    .features-section,
+    .how-it-works-section,
+    .brand-catalog-section,
+    .use-cases-section {
+        padding: 3.5rem 0;
+    }
+
     .navbar-logo {
         height: 48px;
         max-height: 48px;
@@ -1991,12 +2003,24 @@ body.axora-menu-open .axora-mobile-drawer {
         font-size: 2rem;
     }
 
+    .section-subtitle {
+        margin-bottom: 2.5rem;
+    }
+
     .cta-title {
         font-size: 2rem;
     }
 
     .brand-catalog-section .section-title {
         text-align: center !important;
+    }
+
+    .brand-catalog-section .content-text {
+        text-align: center;
+    }
+
+    .brand-catalog-section .row {
+        --bs-gutter-y: 2rem;
     }
 
     .gift-cards-stack {
@@ -2026,6 +2050,30 @@ body.axora-menu-open .axora-mobile-drawer {
 
     .step-connector {
         display: none;
+    }
+
+    .how-it-works-section .row {
+        --bs-gutter-y: 1.5rem;
+    }
+
+    .step-card {
+        padding: 0.5rem 1rem;
+    }
+
+    .step-number {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .step-title {
+        margin-bottom: 0.75rem;
+        font-size: 1.25rem;
+    }
+
+    .step-description {
+        margin-bottom: 0;
     }
 }
 

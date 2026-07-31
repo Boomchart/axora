@@ -26,8 +26,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <img src="{{asset('front/img/dash.png')}}" alt="API Dashboard" class="img-fluid rounded-5 shadow-lg">
+                <div class="col-lg-6 d-none d-md-block">
+                    <img src="{{asset('front/img/dash.webp')}}" alt="API Dashboard" class="img-fluid rounded-5 shadow-lg">
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
 
     <section class="code-section">
         <div class="container">
-            <div class="row align-items-center g-5">
+            <div class="row align-items-center g-4 g-lg-5">
                 <div class="col-lg-6">
                     <h2 class="section-title text-start">{{__('Getting Started with ')}} {{config('app.name')}} {{__(' Unified API')}}</h2>
                     <p class="content-text">{{__('Integrate our API in minutes with your preferred programming language. Our developer-friendly endpoints make it easy to start sending gift cards, topping up airtime, or generating crypto wallets.')}}</p>
@@ -213,11 +213,11 @@ const response = await axios.post(
         </div>
     </section>
 
-    <section id="platform" class="how-it-works-section">
+    <section id="how-it-works" class="how-it-works-section">
         <div class="container">
             <h2 class="section-title">{{__('How Our Unified API Works')}}</h2>
             <p class="section-subtitle">{{__('Get up and running in three simple steps')}}</p>
-            <div class="row g-5">
+            <div class="row g-4 g-md-5">
                 <div class="col-md-4">
                     <div class="step-card">
                         <div class="step-number">1</div>
@@ -247,7 +247,7 @@ const response = await axios.post(
 
     <section class="brand-catalog-section">
         <div class="container">
-            <div class="row align-items-center g-5">
+            <div class="row align-items-center g-4 g-lg-5">
                 <div class="col-lg-6">
                     <h2 class="section-title text-start">{{__('Endless options: Gift Cards, Airtime & Crypto')}}</h2>
                     <p class="content-text mb-4">

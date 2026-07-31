@@ -23,7 +23,7 @@ class BalanceCapture extends Model
 
     public function balance()
     {
-        return $this->belongsTo(balance::class, 'balance_id')->withTrashed();
+        return $this->belongsTo(Balance::class, 'balance_id')->withTrashed();
     }
 
     public function user()

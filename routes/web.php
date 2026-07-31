@@ -62,6 +62,18 @@ Route::prefix('api-reference')->group(function () {
         Route::view('transaction', 'developer.reference.data.transaction', ['title' => __('Get Data Transaction')])->name('developer.data.transaction');
     });
 
+    Route::prefix('crypto')->group(function () {
+        Route::view('addresses', 'developer.reference.crypto.addresses', ['title' => __('Crypto Addresses')])->name('developer.crypto.addresses');
+        Route::view('address', 'developer.reference.crypto.address', ['title' => __('Crypto Address')])->name('developer.crypto.address');
+        Route::view('assets', 'developer.reference.crypto.assets', ['title' => __('Crypto Assets')])->name('developer.crypto.assets');
+        Route::view('asset', 'developer.reference.crypto.asset', ['title' => __('Crypto Asset')])->name('developer.crypto.asset');
+        Route::view('payout', 'developer.reference.crypto.payout', ['title' => __('Create Crypto Payout')])->name('developer.crypto.payout');
+        Route::view('payout-quote', 'developer.reference.crypto.payout-quote', ['title' => __('Create Crypto Payout Quote')])->name('developer.crypto.payout-quote');
+        Route::view('create-address', 'developer.reference.crypto.create-address', ['title' => __('Create Crypto Address')])->name('developer.crypto.create-address');
+        Route::view('transactions', 'developer.reference.crypto.transactions', ['title' => __('List Crypto Transactions')])->name('developer.crypto.transactions');
+        Route::view('transaction', 'developer.reference.crypto.transaction', ['title' => __('Get Crypto Transaction')])->name('developer.crypto.transaction');
+    });
+
     Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');
 
     Route::view('balance', 'developer.reference.balance', ['title' => __('Account Balance')])->name('developer.balance');
