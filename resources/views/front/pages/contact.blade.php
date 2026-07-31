@@ -298,36 +298,4 @@
     </section>
 @stop
 
-@section('script')
-    <script src="{{ asset('front/vendor/jquery/dist/jquery.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
-    {!! RecaptchaV3::initJs() !!}
-
-    <script>
-        const phoneInputField = document.querySelector("#phone");
-
-        if (phoneInputField && window.intlTelInput) {
-            const phoneInput = window.intlTelInput(phoneInputField, {
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            });
-
-            const oldCountry = "{{ old('code') }}";
-            const codeInput = document.querySelector('#code');
-
-            if (oldCountry.trim() !== '') {
-                phoneInput.setCountry(oldCountry);
-            }
-
-            if (codeInput) {
-                codeInput.value = phoneInput.getSelectedCountryData().iso2;
-            }
-
-            phoneInputField.addEventListener("countrychange", function () {
-                if (codeInput) {
-                    codeInput.value = phoneInput.getSelectedCountryData().iso2;
-                }
-            });
-        }
-    </script>
-@endsection
+@include('partials._contact_page_script')
