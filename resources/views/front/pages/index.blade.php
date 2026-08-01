@@ -1,4 +1,6 @@
-@extends('front.menu', ['title' => $set->site_desc])
+@extends('front.menu', ['title' => __('Gift Cards, Airtime, Data & Crypto API')])
+
+@section('meta_description', __('Azora is the unified API for delivering gift cards, airtime, data, and crypto rewards to 3,000+ global brands and worldwide mobile operators. Plug in and go live in minutes.'))
 
 @section('content')
     <section class="hero-section">

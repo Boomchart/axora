@@ -1,5 +1,7 @@
 @extends('front.pages')
 
+@section('meta_description', __('Learn about Azora — the unified rewards platform powering gift cards, airtime, data, and crypto payouts for businesses across 3,000+ global brands and worldwide operators.'))
+
 @section('content')
     <section class="hero-section text-center py-5 mb-5">
         <div class="container">

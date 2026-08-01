@@ -1,5 +1,7 @@
 @extends('front.pages')
 
+@section('meta_description', __('How Azora keeps your data and funds safe — encryption, HMAC-signed API requests, compliance controls, and infrastructure built for secure global rewards delivery.'))
+
 @section('css')
 
 @stop

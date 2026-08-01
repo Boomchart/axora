@@ -1,6 +1,6 @@
 @extends('front.pages')
 
-<meta name="description" content="Solutions" />
+@section('meta_description', __('Explore Azora solutions for rewards, incentives, payouts, and disbursements — a single API delivering gift cards, airtime, data, and crypto to customers worldwide.'))
 
 @section('content')
     <section class="hero-section text-center py-5 mb-5">

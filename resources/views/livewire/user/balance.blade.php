@@ -28,7 +28,7 @@
                             <div class="d-flex align-items-center flex-wrap w-100">
                                 <div class="mb-1 pe-3 flex-grow-1">
                                     <div class="fs-7 text-dark text-hover-success fw-bold">{{__('Verify Business')}}</div>
-                                    <div class="text-gray-800 fw-semibold">{{__('Kindly update your account information to enable gift card issuance for your customers through our API.')}}</div>
+                                    <div class="text-gray-800 fw-semibold">{{__('Kindly update your account information to enable live api access.')}}</div>
                                 </div>
                             </div>
                         </div>

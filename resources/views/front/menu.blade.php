@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{{ $title }} - {{$set->site_name}}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="robots" content="index, follow">
+    @include('partials._seo')
     <meta name="apple-mobile-web-app-title" content="{{$set->site_name}}" />
     <meta name="application-name" content="{{$set->site_name}}" />
     <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="description" content="@yield('meta_description', $set->site_desc)" />
     <link rel="shortcut icon" href="{{asset('asset/images/favicon.png')}}" />
     <!-- Google Fonts - Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

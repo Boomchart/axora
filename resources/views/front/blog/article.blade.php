@@ -1,15 +1,43 @@
-@extends('front.menu')
+@extends('front.menu', ['title' => $article->title])
 
-<meta name="description" content="{{ Str::words(strip_tags($article->details), 25) }}" />
-<meta property="og:type" content="article">
-<meta property="og:title" content="{{ $article->title }}">
-<meta property="og:description" content="{{ Str::words(strip_tags($article->details), 30) }}">
+@php
+    $seoArticleUrl = route('blog.article', ['blog' => $article->slug]);
+    $seoArticleImage = (!empty($article->image) && file_exists(storage_path('app/' . $article->image)))
+        ? url('/') . '/storage/app/' . $article->image
+        : null;
+    // Decode twice to unwind any double-encoded entities in stored content, then collapse whitespace.
+    $seoArticlePlain = trim(preg_replace('/\s+/', ' ',
+        html_entity_decode(html_entity_decode(strip_tags($article->details), ENT_QUOTES | ENT_HTML5), ENT_QUOTES | ENT_HTML5)));
+    $seoArticleDesc = Str::words($seoArticlePlain, 30, '');
+@endphp
 
-@if(!empty($article->image) && file_exists(storage_path('app/' . $article->image)))
-    <meta property="og:image" content="{{ url('/') . '/storage/app/' . $article->image }}" />
+@section('meta_description', Str::words($seoArticlePlain, 25, ''))
+@section('seo_type', 'article')
+@section('seo_canonical', $seoArticleUrl)
+@if($seoArticleImage)
+    @section('seo_image', $seoArticleImage)
 @endif
 
-<meta property="og:url" content="{{ route('blog.article', ['blog' => $article->slug]) }}">
+@push('ld')
+<script type="application/ld+json">
+{!! json_encode(array_filter([
+    '@context'         => 'https://schema.org',
+    '@type'            => 'Article',
+    'headline'         => $article->title,
+    'description'      => $seoArticleDesc,
+    'image'            => $seoArticleImage,
+    'datePublished'    => optional($article->created_at)->toIso8601String(),
+    'dateModified'     => optional($article->updated_at ?? $article->created_at)->toIso8601String(),
+    'mainEntityOfPage' => $seoArticleUrl,
+    'author'           => ['@type' => 'Organization', 'name' => $set->site_name],
+    'publisher'        => [
+        '@type' => 'Organization',
+        'name'  => $set->site_name,
+        'logo'  => ['@type' => 'ImageObject', 'url' => asset('asset/images/favicon.png')],
+    ],
+]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
 
 @section('css')
  <link href="{{asset('css/posts.css')}}" rel="stylesheet">

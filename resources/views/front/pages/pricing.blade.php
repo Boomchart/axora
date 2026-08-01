@@ -1,6 +1,6 @@
 @extends('front.pages')
 
-<meta name="description" content="Pricing" />
+@section('meta_description', __('Transparent, pay-as-you-go pricing for the Azora rewards API — gift cards, airtime, data, and crypto payouts with no hidden fees. Scale from your first payout to millions.'))
 
 @section('css')
 

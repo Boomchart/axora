@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SeoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\{UserController, WebhookController};
@@ -14,6 +15,10 @@ use App\Models\User;
 use App\Models\Language;
 
 Route::get('change-lang/{locale}', [SettingController::class, 'locale'])->name('lang');
+
+// SEO
+Route::get('robots.txt', [SeoController::class, 'robots'])->name('robots');
+Route::get('sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 
 Route::controller(SettingController::class)->group(function () {
     Route::get('optimize', 'optimize')->name('optimize.system');
@@ -88,7 +93,6 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
     Route::view('security', 'front.pages.security', ['title' => __('Security')])->name('security');
     Route::view('solutions', 'front.pages.solutions', ['title' => __('Solutions')])->name('solutions');
     Route::view('contact', 'front.pages.contact', ['title' => __('Contact Us')])->name('contact');
-    Route::view('about-us', 'front.pages.about', ['title' => __('About Us')])->name('about');
     Route::get('card/{slug}', [FrontendController::class, 'card'])->name('card.category');
     Route::post('contact', [FrontendController::class, 'contactSubmit'])->name('contact-submit');
     Route::prefix('help-center')->group(function () {
