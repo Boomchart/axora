@@ -18,18 +18,12 @@
                 </ul>
             </div>
             <div class="col-lg-2 col-6 col-md-6 mb-4">
-                <h4 class="footer-title">{{__('Company')}}</h4>
-                <ul>
-                    <li><a href="{{route('about')}}">{{__('About Us')}}</a></li>
-                    <li><a href="{{route('contact')}}">{{__('Contact')}}</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-2 col-6 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Resources')}}</h4>
                 <ul>
                     <li><a href="{{route('solutions')}}">{{__('Solutions')}}</a></li>
                     <li><a href="{{route('help.center')}}">{{__('Help Center')}}</a></li>
                     <li><a href="{{route('blog.index')}}">{{__('Blog')}}</a></li>
+                    <li><a href="{{route('contact')}}">{{__('Contact Us')}}</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-6 col-md-6 mb-4">
