@@ -5,7 +5,7 @@
                 <a href="{{ route('home') }}">
                     <img src="{{asset('asset/images/dark_logo.png')}}" alt="{{ $set->site_name }}" loading="lazy" class="auth-onboarding-logo" @style(getUi()->light_css)>
                 </a>
-                <p>{{ __('The modern standard for gift card infrastructure.') }}</p>
+                <p>{{ __('The modern standard for gift card, crypto, airtime & data. ') }}</p>
             </div>
 
             <div class="auth-onboarding-steps">

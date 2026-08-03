@@ -6,8 +6,8 @@
                 <a href="{{route('home')}}" class="footer-brand d-inline-block mb-3">
                     <img src="{{ asset('asset/images/dark_logo.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="footer-logo">
                 </a>
-                <h3 class="footer-title">{{config('app.name')}} {{__('Gift Card API')}}</h3>
-                <p>{{__('The ultimate gift card API for delivering rewards and incentives instantly, globally, and securely.')}}</p>
+                <h3 class="footer-title">{{config('app.name')}} {{__('Unified API')}}</h3>
+                <p>{{__('The unified API that connects you to 3,000+ global brands, worldwide mobile operators, and Web3 infrastructure.')}}</p>
             </div>
             <div class="col-lg-2 col-6 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Product')}}</h4>
