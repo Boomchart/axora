@@ -34,7 +34,7 @@ class CryptoPayout implements ShouldQueue
     public function handle()
     {
         $data = [
-            'event' => 'crypto_deposit',
+            'event' => 'crypto_payout',
             'data' => [
                 'id' => $this->data->id,
                 'currency' => $this->data->currency,
