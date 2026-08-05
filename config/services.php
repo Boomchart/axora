@@ -64,5 +64,10 @@ return [
         'api_key' => env('HASAPAY_API_KEY'),
         'secret_key' => env('HASAPAY_SECRET_KEY'),
         'webhook_hash' => env('HASAPAY_WEBHOOK_HASH'),
-    ]
+    ],
+
+    'rsa' => [
+        'path' => env('RSA_KEY_PATH', '/home/azorgpfu/secure/rsa'),
+        'passphrase' => env('RSA_PASSPHRASE'),
+    ],
 ];
