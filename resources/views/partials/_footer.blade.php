@@ -22,7 +22,6 @@
                 <ul>
                     <li><a href="{{route('solutions')}}">{{__('Solutions')}}</a></li>
                     <li><a href="{{route('help.center')}}">{{__('Help Center')}}</a></li>
-                    <li><a href="{{route('blog.index')}}">{{__('Blog')}}</a></li>
                     <li><a href="{{route('contact')}}">{{__('Contact Us')}}</a></li>
                 </ul>
             </div>
