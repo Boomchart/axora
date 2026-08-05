@@ -113,7 +113,7 @@ class UpdateTransactions extends Command
         }
 
         //Reloadly Airtime/Data
-        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereIn('type', ['airtime', 'data'])->whereMode('live')->whereFailedOrder(0)->take(1)->whereNull('order_id')->get() as $val) {
+        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereIn('type', ['airtime', 'data'])->whereMode('live')->whereFailedOrder(0)->take(5)->whereNull('order_id')->get() as $val) {
             $reloadly = new ReloadlyAirtimeService();
             $order = $reloadly->order([
                 'customIdentifier' => $val->id,
