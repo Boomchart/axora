@@ -20,7 +20,6 @@ class SeoController extends Controller
         'pricing'     => ['monthly', '0.8'],
         'solutions'   => ['monthly', '0.7'],
         'security'    => ['monthly', '0.6'],
-        'help.center' => ['weekly', '0.6'],
         'terms'       => ['yearly', '0.3'],
         'privacy'     => ['yearly', '0.3'],
         'contact'     => ['yearly', '0.5'],

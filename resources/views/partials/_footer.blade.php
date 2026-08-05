@@ -21,7 +21,6 @@
                 <h4 class="footer-title">{{__('Resources')}}</h4>
                 <ul>
                     <li><a href="{{route('solutions')}}">{{__('Solutions')}}</a></li>
-                    <li><a href="{{route('help.center')}}">{{__('Help Center')}}</a></li>
                     <li><a href="{{route('contact')}}">{{__('Contact Us')}}</a></li>
                 </ul>
             </div>

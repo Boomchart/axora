@@ -259,18 +259,6 @@
                             </div>
                         </div>
 
-                        <div class="axora-contact-info-card">
-                            <div class="axora-contact-icon">
-                                <i class="bi bi-telephone"></i>
-                            </div>
-
-                            <div>
-                                <h5>{{ __('Phone') }}</h5>
-                                <p>{{ __('Speak with us about your business needs, integration questions, or account support.') }}</p>
-                                <a href="tel:{{ $set->mobile }}">{{ $set->mobile }}</a>
-                            </div>
-                        </div>
-
                         <div class="axora-contact-note">
                             <h5>{{ __('Built for Business Support') }}</h5>
                             <p>{{ __('We work with business platforms. For faster support, include your company name, expected use case (e.g., airtime top-ups, crypto wallets, global rewards), and any relevant integration details in your message.') }}</p>
