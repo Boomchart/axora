@@ -8,6 +8,7 @@ public/.DS_Store
 .env
 /bootstrap/cache/
 /bootstrap/app.php
+/Helpers/Helper.php
 .env.example
 .env.old
 .env.backup
