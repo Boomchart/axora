@@ -41,7 +41,6 @@ class Index extends Component
                 'description' =>  $this->description,
                 'slug' => Str::slug($this->name),
                 'type' => 'giftcard_buy',
-                'icon' => $this->icon,
             ]);
             $this->emit('saved');
             $this->reset(['name', 'description']);
