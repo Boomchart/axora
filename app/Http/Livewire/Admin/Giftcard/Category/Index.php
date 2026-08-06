@@ -11,7 +11,7 @@ class Index extends Component
     private $category;
     public $name;
     public $description;
-    public $perPage = 10;
+    public $perPage = 100;
     public $orderBy = "name";
     public $count = 0;
     public $sortBy = "asc";

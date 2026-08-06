@@ -137,7 +137,7 @@
                 <livewire:admin.giftcard.category.edit :val=$val :admin=$admin :wire:key="'kt_category_'. $val->id"></livewire:admin.giftcard.category.edit>
                 @endforeach
                 @if($category->total() > 0 && ($category->total() > $category->count()))
-                <button wire:click="loadMore" wire:loading.remove class="btn btn-secondary btn-block">{{__('See more')}}</button>
+                <button wire:click="loadMore" wire:loading.remove class="btn btn-secondary btn-block my-5">{{__('See more')}}</button>
                 @endif
             </div>
             @else
