@@ -14,7 +14,6 @@ class Edit extends Component
     {
         $rules = [
             'val.name' => ['required', 'string', 'max:50'],
-            'val.description' => ['required', 'string'],
         ];
 
         return $rules;
@@ -34,7 +33,6 @@ class Edit extends Component
         $this->val->update([
             'name' => $this->val->name,
             'slug' => Str::slug($this->val->name),
-            'description' =>  $this->val->description,
         ]);
         $this->emit('saved');
         $this->emit('success', __('Category updated'));

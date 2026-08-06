@@ -30,7 +30,6 @@ class Index extends Component
     {
         $this->validate([
             'name' => ['required', 'string', 'max:50'],
-            'description' => ['required', 'string'],
         ]);
 
         if (Topic::whereType('giftcard_buy')->whereName($this->name)->count() > 0) {
@@ -38,7 +37,6 @@ class Index extends Component
         } else {
             Topic::create([
                 'name' =>  $this->name,
-                'description' =>  $this->description,
                 'slug' => Str::slug($this->name),
                 'type' => 'giftcard_buy',
             ]);

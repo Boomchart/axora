@@ -85,13 +85,6 @@
                                     <span class="form-text text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-                                <div class="fv-row mb-6">
-                                    <label class="form-label text-dark fs-7">{{__('Description')}}</label>
-                                    <textarea class="form-control form-control-solid" rows="8" type="text" wire:model.defer="description" required placeholder="{{__('Description')}}"></textarea>
-                                    @error('description')
-                                    <span class="form-text text-danger">{{$message}}</span>
-                                    @enderror
-                                </div>
                                 <div class="text-center mt-10">
                                     <button type="submit" class="btn btn-success btn-block me-3 my-2" wire:loading.attr="disabled" wire:target="addCategory">
                                         <span wire:loading.remove wire:target="addCategory">{{__('Create Category')}}</span>
