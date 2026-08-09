@@ -2,7 +2,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-                <h1 class="text-dark fw-bolder my-1 fs-2"> {{$country->name}} {{__('Airtime Operators')}} ({{number_format_short($cards->total())}})</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2"> {{$country->name}} {{__('Mobile Data Operators')}} ({{number_format_short($cards->total())}})</h1>
                 <ul class="breadcrumb fw-semibold fs-base my-1 mb-5">
                     <li class="breadcrumb-item text-muted">
                         <a href="{{route('admin.dashboard')}}" class="text-muted text-hover-danger">{{__('Dashboard')}}</a>

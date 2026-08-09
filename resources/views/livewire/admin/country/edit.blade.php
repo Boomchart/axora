@@ -59,7 +59,7 @@
                                 </span>
                             </div>
                             <div class="ps-2">
-                                <p class="fs-7 text-dark text-hover-danger mb-0">{{__('Mobile Operators')}} ({{number_format_short($this->dataProvidersCount)}})</p>
+                                <p class="fs-7 text-dark text-hover-danger mb-0">{{__('Mobile Data Operators')}} ({{number_format_short($this->dataProvidersCount)}})</p>
                             </div>
                         </div>
                     </a>

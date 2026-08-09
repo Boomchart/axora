@@ -78,23 +78,23 @@ class DataProvider extends Component
             $products = $reloadly->productsByCountry($this->country->iso2);
 
             if ($products['success'] == true) {
-                $this->products = collect($products['data'])->where('bundle', false)->where('data', true)->where('status', 'ACTIVE')->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $this->country->currency)->map(function ($data) {
-                    return [
-                        'id' => $data['id'],
-                        'title' => $data['name'],
-                        'discount' => $data['internationalDiscount'],
-                        'only_denominations' => $data['denominationType'] == 'RANGE' ? false : true,
-                        'min' =>  round(min($data['localFixedAmounts'])),
-                        'max' =>  round(max($data['localFixedAmounts'])),
-                        'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : $data['localFixedAmounts'],
-                        'issuing_pc' => $data['fees']['internationalPercentage'],
-                        'issuing_fc' => $data['fees']['international'],
-                        'charge_phase' => 'after_conversion',
-                        'tier_pricing' => 0,
-                        'issuing_tiers' => [],
-                        'rate' => 1 / $data['fx']['rate'],
-                        'description' => $data['localFixedAmountsDescriptions']
-                    ];
+                $this->products = collect($products['data'])->where('bundle', false)->where('data', true)->filter(fn ($data) => !empty($data['localFixedAmounts']))->where('status', 'ACTIVE')->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $this->country->currency)->map(function ($data) {
+                        return [
+                            'id' => $data['id'],
+                            'title' => $data['name'],
+                            'discount' => $data['internationalDiscount'],
+                            'only_denominations' => $data['denominationType'] == 'RANGE' ? false : true,
+                            'min' =>  round(min($data['localFixedAmounts'])),
+                            'max' =>  round(max($data['localFixedAmounts'])),
+                            'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : $data['localFixedAmounts'],
+                            'issuing_pc' => $data['fees']['internationalPercentage'],
+                            'issuing_fc' => $data['fees']['international'],
+                            'charge_phase' => 'after_conversion',
+                            'tier_pricing' => 0,
+                            'issuing_tiers' => [],
+                            'rate' => 1 / $data['fx']['rate'],
+                            'description' => $data['localFixedAmountsDescriptions']
+                        ];
                 })->sortBy('title')->values();
             } else {
                 return $this->emit('alert', __('Error fetching operators'));
