@@ -234,7 +234,7 @@
                 <livewire:admin.country.edit-data-provider :val=$val :admin=$admin :wire:key="$val->id"></livewire:admin.country.edit-data-provider>
                 @endforeach
                 @if($cards->total() > 0 && ($cards->total() > $cards->count()))
-                <button wire:click="loadMore" wire:loading.remove class="btn btn-secondary btn-block">{{__('See more')}}</button>
+                <button wire:click="loadMore" wire:loading.remove class="btn btn-secondary btn-block my-5">{{__('See more')}}</button>
                 @endif
             </div>
             @else
