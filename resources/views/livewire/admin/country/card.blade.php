@@ -277,6 +277,8 @@
                             @endif
                             <span class="dot"></span>
                             <span class="badge badge-pill badge-secondary text-dark">{{ucwords($val->provider)}}</span>
+                            <span class="dot"></span>
+                            <span class="badge badge-pill badge-secondary text-dark">{{$val->image}}</span>
                         </p>
                     </div>
                 </div>
