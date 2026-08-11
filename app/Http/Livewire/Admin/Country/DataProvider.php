@@ -78,7 +78,7 @@ class DataProvider extends Component
             $products = $reloadly->productsByCountry($this->country->iso2);
 
             if ($products['success'] == true) {
-                $this->products = collect($products['data'])->where('bundle', false)->where('data', true)->filter(fn($data) => !empty($data['localFixedAmounts']))->where('status', 'ACTIVE')->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $this->country->currency)->map(function ($data) {
+                $this->products = collect($products['data'])->where('bundle', false)->where('data', true)->filter(fn($data) => (!empty($data['localFixedAmounts']) && !empty($data['localFixedAmountsDescriptions'])))->where('status', 'ACTIVE')->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $this->country->currency)->map(function ($data) {
                     return [
                         'id' => $data['id'],
                         'title' => $data['name'],
@@ -190,11 +190,11 @@ class DataProvider extends Component
 
         if ($this->provider == 'reloadly') {
             if (TRX::whereReloadlyId($this->vendor_id)->exists()) {
-                return $this->emit('alert', __('Reloadly Giftcard Already Added'));
+                return $this->emit('alert', __('Reloadly Item Already Added'));
             }
         } elseif ($this->provider == 'redboxx') {
             if (TRX::whereRedboxxId($this->vendor_id)->exists()) {
-                return $this->emit('alert', __('Redboxx Giftcard Already Added'));
+                return $this->emit('alert', __('Redboxx Item Already Added'));
             }
         }
 

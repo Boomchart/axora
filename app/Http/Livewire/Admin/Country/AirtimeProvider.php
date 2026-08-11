@@ -199,11 +199,11 @@ class AirtimeProvider extends Component
 
         if ($this->provider == 'reloadly') {
             if (TRX::whereReloadlyId($this->vendor_id)->exists()) {
-                return $this->emit('alert', __('Reloadly Giftcard Already Added'));
+                return $this->emit('alert', __('Reloadly Item Already Added'));
             }
         } elseif ($this->provider == 'redboxx') {
             if (TRX::whereRedboxxId($this->vendor_id)->exists()) {
-                return $this->emit('alert', __('Redboxx Giftcard Already Added'));
+                return $this->emit('alert', __('Redboxx item Already Added'));
             }
         }
 
