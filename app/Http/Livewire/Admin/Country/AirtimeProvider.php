@@ -195,7 +195,9 @@ class AirtimeProvider extends Component
             }
         }
         sort($denominations);
+
         $this->denominations = array_unique($denominations);
+
 
         if ($this->provider == 'reloadly') {
             if (TRX::whereReloadlyId($this->vendor_id)->exists()) {

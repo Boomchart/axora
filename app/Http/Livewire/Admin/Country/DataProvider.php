@@ -185,8 +185,8 @@ class DataProvider extends Component
                 $denominations[] = $item;
             }
         }
-        sort($denominations);
-        $this->denominations = array_unique($denominations);
+
+        $this->denominations = array_values(array_unique($denominations, SORT_REGULAR));
 
         if ($this->provider == 'reloadly') {
             if (TRX::whereReloadlyId($this->vendor_id)->exists()) {
