@@ -78,6 +78,7 @@ class AirtimeProvider extends Component
             $products = $reloadly->productsByCountry($this->country->iso2);
 
             if ($products['success'] == true) {
+
                 $this->products = collect($products['data'])->where('bundle', false)->where('data', false)->where('status', 'ACTIVE')->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $this->country->currency)->map(function ($data) {
                     return [
                         'id' => $data['id'],
@@ -93,13 +94,13 @@ class AirtimeProvider extends Component
                         'charge_phase' => 'after_conversion',
                         'tier_pricing' => 0,
                         'issuing_tiers' => [],
-                        'rate' => 1/$data['fx']['rate'],
+                        'rate' => 1 / $data['fx']['rate'],
                     ];
                 })->sortBy('title')->values();
             } else {
                 return $this->emit('alert', __('Error fetching operators'));
             }
-        } 
+        }
     }
 
     public function updatedProduct()
@@ -257,12 +258,14 @@ class AirtimeProvider extends Component
         $this->card = TRX::whereCountryId($this->country->id)->with(['createdBy', 'editedBy'])->withCount('sales')
             ->when($this->search, function ($query) {
                 $this->emit('drawer');
-                $term = trim($this->search);
-                if (empty($term)) return $query;
-                // Get matching IDs from Meilisearch
-                $ids = TRX::search($term)->keys(); // returns [1, 4, 23, ...]
-                // Apply to your existing Eloquent query (preserves your other filters)
-                return $query->whereIn('id', $ids);
+                $query->Where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('slug', 'like', '%' . $this->search . '%');
+                // $term = trim($this->search);
+                // if (empty($term)) return $query;
+                // // Get matching IDs from Meilisearch
+                // $ids = TRX::search($term)->keys(); // returns [1, 4, 23, ...]
+                // // Apply to your existing Eloquent query (preserves your other filters)
+                // return $query->whereIn('id', $ids);
             })
             ->when($this->search == null, function ($query) {
                 $this->emit('searchdrawer');

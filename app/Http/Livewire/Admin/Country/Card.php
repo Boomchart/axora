@@ -344,12 +344,14 @@ class Card extends Component
         $this->card = BuyCard::whereCountryId($this->country->id)->with(['createdBy', 'editedBy'])->withCount('sales', 'redemptions')
             ->when($this->search, function ($query) {
                 $this->emit('drawer');
-                $term = trim($this->search);
-                if (empty($term)) return $query;
-                // Get matching IDs from Meilisearch
-                $ids = BuyCard::search($term)->keys(); // returns [1, 4, 23, ...]
-                // Apply to your existing Eloquent query (preserves your other filters)
-                return $query->whereIn('id', $ids);
+                $query->Where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('slug', 'like', '%' . $this->search . '%');
+                // $term = trim($this->search);
+                // if (empty($term)) return $query;
+                // // Get matching IDs from Meilisearch
+                // $ids = BuyCard::search($term)->keys(); // returns [1, 4, 23, ...]
+                // // Apply to your existing Eloquent query (preserves your other filters)
+                // return $query->whereIn('id', $ids);
             })
             ->when($this->search == null, function ($query) {
                 $this->emit('searchdrawer');
