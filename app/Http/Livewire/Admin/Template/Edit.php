@@ -20,9 +20,9 @@ class Edit extends Component
             'body' => ['required', 'string'],
         ])->validate();
 
-        foreach($filtered as $tag){
-            if(!in_array(trim($tag), explode(',', str_replace(' ', '', $this->val->tags)))){
-                return $this->emit('alert', trim($tag).__(' is not an allowed tag'));
+        foreach ($filtered as $tag) {
+            if (!in_array(trim($tag), array_values(array_filter(array_map('trim', explode(',', $this->val->tags)))))) {
+                return $this->emit('alert', trim($tag) . __(' is not an allowed tag'));
             }
         }
 
