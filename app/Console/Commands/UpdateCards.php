@@ -147,7 +147,7 @@ class UpdateCards extends Command
                             'charge_phase' => $data['charge_phase'],
                             'tier_pricing' => $data['tier_pricing'],
                             'issuing_tiers' => json_encode($data['issuing_tiers']),
-                            'denominations' => json_encode($data['only_denominations'] ? array_map(fn($v) => ['amount' => $v], $data['denominations']) : []),
+                            'denominations' => json_encode($data['only_denominations'] ? $data['denominations'] : []),
                         ])
                         ->values()
                         ->all();
