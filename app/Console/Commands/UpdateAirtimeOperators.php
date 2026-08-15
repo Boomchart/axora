@@ -84,7 +84,7 @@ class UpdateAirtimeOperators extends Command
                 $reloadly = new ReloadlyAirtimeService();
                 $products = $reloadly->productsByCountry($country->iso2);
                 if ($products['success'] == true) {
-                    $reloadly_data = collect($products['data'])->where('bundle', false)->where('data', false)->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $country->currency)->map(function ($data) {
+                    $reloadly_data = collect($products['data'])->where('bundle', false)->where('data', false)->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $country->currency)->map(function ($data) use($country) {
 
                         return [
                             'id' => $data['id'],
@@ -92,9 +92,9 @@ class UpdateAirtimeOperators extends Command
                             'description' => $data['name'],
                             'discount' => $data['internationalDiscount'],
                             'only_denominations' => $data['denominationType'] == 'RANGE' ? false : true,
-                            'min' =>  $data['localMinAmount'],
-                            'max' =>  $data['localMaxAmount'],
-                            'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : $data['suggestedAmounts'],
+                            'min' => (($country->currency == 'INR') ? min($data['geographicalRechargePlans'][0]['localAmounts']) : $data['localMinAmount']) ?? $data['minAmount'] ?? null,
+                            'max' => (($country->currency == 'INR') ? max($data['geographicalRechargePlans'][0]['localAmounts']) : $data['localMaxAmount']) ?? $data['maxAmount'] ?? null,
+                            'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : (($country->currency == 'INR') ? $data['geographicalRechargePlans'][0]['localAmounts'] : $data['fixedAmounts']),
                             'issuing_pc' => $data['fees']['internationalPercentage'],
                             'issuing_fc' => $data['fees']['international'],
                             'charge_phase' => 'after_conversion',

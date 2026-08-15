@@ -86,9 +86,9 @@ class AirtimeProvider extends Component
                         'description' => $data['name'],
                         'discount' => $data['internationalDiscount'],
                         'only_denominations' => $data['denominationType'] == 'RANGE' ? false : true,
-                        'min' =>  $data['localMinAmount'] ?? $data['minAmount'],
-                        'max' =>  $data['localMaxAmount'] ?? $data['maxAmount'],
-                        'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : $data['fixedAmounts'],
+                        'min' => (($this->country->currency == 'INR') ? min($data['geographicalRechargePlans'][0]['localAmounts']) : $data['localMinAmount']) ?? $data['minAmount'] ?? null,
+                        'max' => (($this->country->currency == 'INR') ? max($data['geographicalRechargePlans'][0]['localAmounts']) : $data['localMaxAmount']) ?? $data['maxAmount'] ?? null,
+                        'denominations' =>  $data['denominationType'] == 'RANGE' ? [] : (($this->country->currency == 'INR') ? $data['geographicalRechargePlans'][0]['localAmounts'] : $data['fixedAmounts']),
                         'issuing_pc' => $data['fees']['internationalPercentage'],
                         'issuing_fc' => $data['fees']['international'],
                         'charge_phase' => 'after_conversion',
@@ -122,12 +122,8 @@ class AirtimeProvider extends Component
 
                 if ($data['only_denominations']) {
                     $this->items = array_map(fn($v) => ['amount' => $v], $data['denominations']);
-                    if ($data['min'] == null) {
-                        $this->min = min($data['denominations']);
-                    }
-                    if ($data['max'] == null) {
-                        $this->max = max($data['denominations']);
-                    }
+                    $this->min = min($data['denominations']);
+                    $this->max = max($data['denominations']);
                 } else {
                     $this->items = [['amount' => null]];
                     $this->min =  $data['min'];
