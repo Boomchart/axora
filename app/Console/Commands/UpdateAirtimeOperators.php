@@ -84,7 +84,7 @@ class UpdateAirtimeOperators extends Command
                 $reloadly = new ReloadlyAirtimeService();
                 $products = $reloadly->productsByCountry($country->iso2);
                 if ($products['success'] == true) {
-                    $reloadly_data = collect($products['data'])->where('bundle', false)->where('data', false)->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $country->currency)->map(function ($data) use($country) {
+                    $reloadly_data = collect($products['data'])->where('bundle', false)->where('data', false)->where('senderCurrencyCode', 'USD')->where('destinationCurrencyCode', $country->currency)->map(function ($data) use ($country) {
 
                         return [
                             'id' => $data['id'],
