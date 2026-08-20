@@ -103,7 +103,6 @@ class Register extends Component
 
     public function resendEmailVerify()
     {
-                        dispatch(new CustomEmail('verify_email', $this->user->id));
         if (Carbon::parse($this->user->email_time) > now()) {
             createAudit('Timeout limit for email verification');
             return $this->emit('alert', __('You can resend link after ') . gmdate('i:s', Carbon::parse($this->user->email_time)->diffInSeconds(now())) . __(' minutes'));
@@ -126,6 +125,7 @@ class Register extends Component
             $this->stage = ($this->stage == 'control_person') ? 'control_person' : 'onboarding';
         } else {
             if ($this->user->email_verify == 0) {
+                $this->emailCountdown();
                 $this->stage = 'email_verify';
             } elseif ($this->user->business->fa_status == 0) {
                 $this->stage = 'multi_factor';
