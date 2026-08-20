@@ -244,9 +244,29 @@
                                 <p class="auth-subtitle mx-0">{{ __('Scan the QR code with your authenticator app, then enter the 6-digit code.') }}</p>
                             </div>
 
-                            <div class="auth-qr-box text-center" wire:ignore.self>
-                                <img src="{{ $fa_image }}" alt="{{ __('Authenticator QR Code') }}" class="mb-5">
-                                <h5 class="m-0 text-dark fw-bold fs-3">{{$fa_secret}} <i class="bi bi-copy text-dark castro-copy fs-5" data-clipboard-text="{{$fa_secret}}" title="{{__('Copy')}}"></i></h5>
+                            <div class="auth-2fa-panel" wire:ignore.self>
+                                <div class="auth-qr-box">
+                                    <div class="auth-qr-frame">
+                                        <img src="{{ $fa_image }}" alt="{{ __('Authenticator QR Code') }}">
+                                    </div>
+                                    <p class="auth-qr-hint">
+                                        <i class="bi bi-phone"></i>
+                                        {{ __('Open Google Authenticator, Authy or a similar app and scan this code.') }}
+                                    </p>
+                                </div>
+
+                                <div class="auth-qr-divider"><span>{{ __("Can't scan it?") }}</span></div>
+
+                                <div class="auth-secret-box">
+                                    <span class="auth-secret-label">{{ __('Setup key') }}</span>
+                                    <div class="auth-secret-group">
+                                        <code class="auth-secret-value">{{ $fa_secret }}</code>
+                                        <button type="button" class="auth-secret-copy castro-copy" data-clipboard-text="{{ $fa_secret }}" title="{{ __('Copy') }}" aria-label="{{ __('Copy setup key') }}">
+                                            <i class="bi bi-copy"></i>
+                                        </button>
+                                    </div>
+                                    <span class="auth-secret-note">{{ __('Enter this key manually in your authenticator app.') }}</span>
+                                </div>
                             </div>
 
                             <div class="form-group">
