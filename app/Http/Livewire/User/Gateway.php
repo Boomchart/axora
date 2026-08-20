@@ -60,11 +60,7 @@ class Gateway extends Component
                 ]
             );
 
-            if ($this->image->getMimeType() === 'application/pdf') {
-                $path = $this->image->storePublicly('deposit');
-            } else {
-                $path = Cloudinary::upload($this->image->getRealPath())->getSecurePath();
-            }
+            $path = Cloudinary::upload($this->image->getRealPath())->getSecurePath();
 
             $charge = ($this->amount * $this->gateway->percent_charge / 100) + $this->gateway->fiat_charge;
             $trx = Transactions::create([
