@@ -218,7 +218,7 @@
                     <td>
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-40px">
-                                <span class="symbol-label" style="background-image:url({{url('/').'/storage/app/'.$val->image}});"></span>
+                                <span class="symbol-label" style="background-image:url({{getPublicImage($val->image)}});"></span>
                             </div>
                             <div class="ms-5">
                                 {{$val->name}}
