@@ -290,6 +290,19 @@ class Register extends Component
                     'short_code' => $this->settings->real->currency,
                 ]);
 
+                $currencies = getAllCryptoCurrencies();
+                foreach ($currencies as $currency) {
+                    \App\Models\CryptoBalance::create([
+                        'user_id'      => $business->user_id,
+                        'country_id'   => $currency->id,
+                        'business_id'  => $business->reference,
+                        'network'    => $currency->network,
+                        'token' => $currency->token,
+                        'ref_id'       => Str::uuid(),
+                        'mode' => 'live'
+                    ]);
+                }
+
                 try {
                     Devices::create(
                         [
