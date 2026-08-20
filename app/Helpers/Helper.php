@@ -127,7 +127,7 @@ function verifyWalletAddress(string $address, string $token, string $network): a
         'ADA'   => ['cardano'],
         // EVM tokens (share Ethereum address format across EVM chains)
         'USDT'  => ['ethereum', 'bsc', 'tron', 'solana', 'arbitrum', 'optimism', 'polygon'],
-        'USDC'  => ['ethereum', 'bsc', 'solana', 'arbitrum', 'optimism', 'polygon', 'base'],
+        'USDC'  => ['ethereum', 'bsc', 'solana', 'arbitrum', 'optimism', 'polygon', 'base', 'tron'],
         'DAI'   => ['ethereum', 'bsc', 'polygon', 'arbitrum', 'optimism'],
         'MATIC' => ['polygon', 'ethereum'],
         'LINK'  => ['ethereum', 'bsc', 'polygon'],
