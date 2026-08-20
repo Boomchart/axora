@@ -77,7 +77,7 @@ class CustomEmail implements ShouldQueue
                 $reply = Reply::whereId($id)->first();
                 $user = $reply->user;
                 $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{token}}", "{{staff}}", "{{reply}}");
-                $replace = array($reply->user->first_name, $reply->user->last_name, $set->site_name, $reply->ticket->ticket_id, $reply?->staff?->first_name . ' ' . $reply?->staff?->last_name, $reply->message);
+                $replace = array($reply->user->first_name, $reply->user->last_name, $set->site_name, $reply->ticket->ticket_id, $reply?->staff?->first_name . ' ' . $reply?->staff?->last_name, $reply->reply);
             } else if (in_array($check->type, ['compliance_resubmit'])) {
                 $user = User::whereId($id)->withTrashed()->first();
                 $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{reason}}");
