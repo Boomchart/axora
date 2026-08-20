@@ -54,40 +54,45 @@ class GiftcardController extends Controller
         $this->verifyToken($request);
         $country = strtoupper($country);
         if ($this->access == true) {
-            $this->ipCheck();
-            if ($this->security_check) {
-                return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
-            }
-            if ($country == null) {
-                $apiresponse = [
-                    'message' => __('country iso2 is required'),
-                    'errors' => ['country' => [__('country iso2 is required')]],
-                    'status' => 'failed',
-                    'data' => null,
-                ];
-                $this->logError(422, $apiresponse);
-                return response()->json($apiresponse, 422);
-            } else {
-                if (!CountryReg::whereStatus(1)->whereIso2($country)->exists()) {
-                    $apiresponse = ['message' => __('Country not found'), 'status' => 'failed', 'data' => null];
-                    $this->logError(404, $apiresponse);
-                    return response()->json($apiresponse, 404);
+            try {
+                $this->ipCheck();
+                if ($this->security_check) {
+                    return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
                 }
-            }
+                if ($country == null) {
+                    $apiresponse = [
+                        'message' => __('country iso2 is required'),
+                        'errors' => ['country' => [__('country iso2 is required')]],
+                        'status' => 'failed',
+                        'data' => null,
+                    ];
+                    $this->logError(422, $apiresponse);
+                    return response()->json($apiresponse, 422);
+                } else {
+                    if (!CountryReg::whereStatus(1)->whereIso2($country)->exists()) {
+                        $apiresponse = ['message' => __('Country not found'), 'status' => 'failed', 'data' => null];
+                        $this->logError(404, $apiresponse);
+                        return response()->json($apiresponse, 404);
+                    }
+                }
 
-            $resource = BuyCard::whereIso2($country)->orderBy('title', 'asc')
-                ->when($request->page == 'all', function ($query) {
-                    return $query->get();
-                }, function ($query) use ($limit) {
-                    return $query->when($limit !== null && is_int((int) $limit), function ($query) use ($limit) {
-                        return $query->paginate($limit);
-                    }, function ($query) {
-                        return $query->paginate(20);
+                $resource = BuyCard::whereIso2($country)->orderBy('title', 'asc')
+                    ->when($request->page == 'all', function ($query) {
+                        return $query->get();
+                    }, function ($query) use ($limit) {
+                        return $query->when($limit !== null && is_int((int) $limit), function ($query) use ($limit) {
+                            return $query->paginate($limit);
+                        }, function ($query) {
+                            return $query->paginate(20);
+                        });
                     });
-                });
-            $apiresponse = ['message' => __('Cards'), 'status' => 'success', 'data' => CardResource::collection($resource)->map(fn($resource) => new CardResource($resource, $this->client))];
-            $this->logError(200, (array) $apiresponse);
-            return $apiresponse;
+                $apiresponse = ['message' => __('Cards'), 'status' => 'success', 'data' => CardResource::collection($resource)->map(fn($resource) => new CardResource($resource, $this->client))];
+                $this->logError(200, (array) $apiresponse);
+                return $apiresponse;
+            } catch (\Exception $e) {
+                $this->logError(500, $e->getMessage());
+                return response()->json(['message' =>  __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
+            }
         } else {
             return response()->json(['message' => __('Invalid API Key'), 'status' => 'failed', 'data' => null], 401);
         }
