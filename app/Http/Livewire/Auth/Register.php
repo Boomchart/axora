@@ -110,7 +110,10 @@ class Register extends Component
             $code = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
             $this->user->update(['email_time' => now()->addMinutes(5), 'email_auth' => $code]);
             createAudit('Resent verification email');
-            dispatch(new CustomEmail('verify_email', $this->user->id));
+            try {
+                dispatch(new CustomEmail('verify_email', $this->user->id));
+            } catch (\Exception $e) {
+            }
             $this->emit('countDown', ($this->user->email_time->isPast()) ? '0:00 minute' : formatOtpTime($this->user->email_time));
             return $this->emit('success', __('Verification Code Sent'));
         }
@@ -266,8 +269,8 @@ class Register extends Component
                     'user_id' => $user->id,
                     'name' => $this->business_name,
                     'reference' => generateBusinessReference(),
-                    'api_key' => 'sk_live_'.Str::random(30),
-                    'test_api_key' => 'sk_test_'.Str::random(30),
+                    'api_key' => 'sk_live_' . Str::random(30),
+                    'test_api_key' => 'sk_test_' . Str::random(30),
                     'webhook_secret' => $this->generateWebhookSecret(),
                     'country' => $this->countryReg->id,
                     'mcc' => $this->mcc,
@@ -309,7 +312,11 @@ class Register extends Component
                     createAudit('Could not log Mac address', $business);
                 }
 
-                dispatch(new CustomEmail('verify_email', $user->id));
+                try {
+                    dispatch(new CustomEmail('verify_email', $user->id));
+                } catch (\Exception $e) {
+                }
+
                 if (Auth::guard('user')->attempt(['email' => $this->email, 'password' => $this->password])) {
                     $this->user = auth()->guard('user')->user();
                     $this->stage = 'email_verify';
