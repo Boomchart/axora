@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-block btn-success" type="submit">
+                        <button class="btn btn-block btn-success" type="submit" wire:loading.attr="disabled" wire:target="gateway,image">
                             <span wire:loading.remove wire:target="gateway">{{__('Fund account')}}</span>
                             <span wire:loading wire:target="gateway">{{__('Submitting request...')}}</span>
                         </button>
