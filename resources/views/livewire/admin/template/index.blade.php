@@ -13,7 +13,7 @@
                 <p href="#" class="fs-7 text-dark">{{__('Updated at')}}: {{$val->updated_at->setTimezone($admin->timezone)->format('Y/m/d h:i:A')}}</p>
             </div>
         </div>
-        <button class="btn btn-whitelabel rounded-pill btn-sm px-5"><i class="bi bi-pen"></i> {{__('Edit')}}</button>
+        <button class="btn btn-whitelabel rounded-pill btn-sm px-5">{{__('Edit')}}</button>
     </div>
     @if(!$loop->last)
     <hr class="bg-light-border">
