@@ -70,7 +70,8 @@
     </a>
     <div class="card mb-10">
         <div class="card-body">
-            <form wire:submit.prevent="webhookUpdate" method="post">
+            <form wire:submit.prevent="webhookUpdate">
+                @if($user->business->kyc_status == 'APPROVED')
                 <div class="fv-row mb-6">
                     <label class="form-label text-dark fs-7">{{__('Live Key')}} <span class="badge badge-success badge-pill ms-2 cursor-pointer castro-copy" data-clipboard-text="{{$api_key}}" title="{{__('Copy')}}">{{__('Copy')}}</span></label>
                     <div class="input-group">
@@ -87,6 +88,7 @@
                     <span class="form-text text-danger">{{$message}}</span>
                     @enderror
                 </div>
+                @endif
                 <div class="fv-row mb-6">
                     <label class="form-label text-dark fs-7">{{__('Test Key')}} <span class="badge badge-success badge-pill ms-2 cursor-pointer castro-copy" data-clipboard-text="{{$test_api_key}}" title="{{__('Copy')}}">{{__('Copy')}}</span></label>
                     <div class="input-group">
