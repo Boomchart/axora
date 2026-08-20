@@ -165,6 +165,7 @@ class Register extends Component
             return $this->emit('alert', __('Registration is currently unavailable, please try again later'));
         }
         if ($this->stage == 'onboarding') {
+                return $this->emit('alert', __('Phone number is already used by another account'));
             $this->validate([
                 'country' => ['required'],
                 'business_name' => ['required', 'string', 'max:255', 'not_regex:/^https?:\/\//i', 'not_regex:/^www\./i'],
