@@ -103,7 +103,7 @@ class Register extends Component
 
     public function resendEmailVerify()
     {
-                        dispatch(new CustomEmail('verify_email', $this->user->id));
+                        // dispatch(new CustomEmail('verify_email', $this->user->id));
         if (Carbon::parse($this->user->email_time) > now()) {
             createAudit('Timeout limit for email verification');
             return $this->emit('alert', __('You can resend link after ') . gmdate('i:s', Carbon::parse($this->user->email_time)->diffInSeconds(now())) . __(' minutes'));
