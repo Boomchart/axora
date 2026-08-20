@@ -25,7 +25,7 @@
     @else
     <div class="text-center mt-20 mb-10">
         <div class="symbol symbol-150px symbol-circle mb-5">
-            <div class="symbol-label fs-1 bg-danger">
+            <div class="symbol-label fs-1 bg-whitelabel">
                 <i class="bi bi-people text-white" style="font-size:66px;"></i>
             </div>
         </div>
