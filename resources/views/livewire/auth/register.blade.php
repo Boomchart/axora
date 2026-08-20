@@ -244,13 +244,14 @@
                                 <p class="auth-subtitle mx-0">{{ __('Scan the QR code with your authenticator app, then enter the 6-digit code.') }}</p>
                             </div>
 
-                            <div class="auth-qr-box" wire:ignore.self>
-                                <img src="{{ $fa_image }}" alt="{{ __('Authenticator QR Code') }}">
+                            <div class="auth-qr-box text-center" wire:ignore.self>
+                                <img src="{{ $fa_image }}" alt="{{ __('Authenticator QR Code') }}" class="mb-5">
+                                <h5 class="m-0 text-dark fw-bold fs-3">{{$fa_secret}} <i class="bi bi-copy text-dark castro-copy fs-5" data-clipboard-text="{{$fa_secret}}" title="{{__('Copy')}}"></i></h5>
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label text-center d-block">{{ __('Enter 6-digit Code') }}</label>
-                                <input wire:model.debounce.500ms="fa_code" type="tel" class="form-control auth-otp-input" placeholder="000000" maxlength="6">
+                                <label class="form-label text-start d-block">{{ __('Enter Code') }}</label>
+                                <input wire:model.debounce.500ms="fa_code" type="tel" class="form-control auth-otp-input" maxlength="6">
                                 @error('fa_code') <span class="text-danger small d-block text-center mt-2">{{ $message }}</span> @enderror
                             </div>
                         </div>
