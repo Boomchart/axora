@@ -79,7 +79,7 @@ class Register extends Component
             if ($this->link['multi_factor'] == true) {
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
                 $this->fa_secret = $g->generateSecret();
-                $this->fa_image = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate($this->user->business->name, $this->fa_secret, $this->settings->site_name, 150);
+                $this->fa_image = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate($this->user->business->name, $this->fa_secret, $this->settings->site_name, 300);
             }
 
             if ($this->user->email_verify && $this->user->business->fa_status) {
@@ -137,7 +137,7 @@ class Register extends Component
 
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
                 $this->fa_secret = $g->generateSecret();
-                $this->fa_image = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate($this->user->business->name, $this->fa_secret, $this->settings->site_name, 150);
+                $this->fa_image = \Sonata\GoogleAuthenticator\GoogleQrUrl::generate($this->user->business->name, $this->fa_secret, $this->settings->site_name, 300);
             }
             if ($this->user->email_verify && $this->user->business->fa_status) {
                 return redirect()->route('user.dashboard');
