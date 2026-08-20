@@ -48,7 +48,7 @@ class GiftcardController extends Controller
         }
     }
 
-    public function cardByCountry(Request $request, string $country)
+    public function cardsByCountry(Request $request, string $country)
     {
         $limit = $request->limit;
         $this->verifyToken($request);
