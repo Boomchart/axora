@@ -49,6 +49,7 @@ class EditCard extends Component
 
     public function getData()
     {
+        $data = [];
         if (!empty((json_decode($this->val->denominations)))) {
             foreach (json_decode($this->val->denominations) as $key => $item) {
                 $data[] = [

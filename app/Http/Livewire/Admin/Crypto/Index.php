@@ -77,13 +77,13 @@ class Index extends Component
         return [
             [
                 'network' => 'ETH',
-                'token' => 'ETH',
-                'name' => 'Ethereum'
+                'token' => 'USDC',
+                'name' => 'USD Coin'
             ],
             [
                 'network' => 'ETH',
-                'token' => 'USDC',
-                'name' => 'USD Coin'
+                'token' => 'USDT',
+                'name' => 'Tether USD'
             ],
             [
                 'network' => 'TRX',
@@ -92,8 +92,28 @@ class Index extends Component
             ],
             [
                 'network' => 'TRX',
-                'token' => 'TRX',
-                'name' => 'Tronix'
+                'token' => 'USDC',
+                'name' => 'USD Coin'
+            ],
+            [
+                'network' => 'SOL',
+                'token' => 'USDT',
+                'name' => 'Tether USD'
+            ],
+            [
+                'network' => 'SOL',
+                'token' => 'USDC',
+                'name' => 'USD Coin'
+            ],
+            [
+                'network' => 'MATIC',
+                'token' => 'USDT',
+                'name' => 'Tether USD'
+            ],
+            [
+                'network' => 'MATIC',
+                'token' => 'USDC',
+                'name' => 'USD Coin'
             ],
         ];
     }

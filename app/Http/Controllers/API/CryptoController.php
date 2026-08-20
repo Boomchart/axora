@@ -44,7 +44,6 @@ class CryptoController extends Controller
                 }
             } else {
                 $resource = CryptoBalance::whereBusinessId($this->client->reference)->with(['getCurrency'])->orderBy('token', 'asc')->get();
-                return $resource;
                 $apiresponse = ['message' => __('Assets'), 'status' => 'success', 'data' => CryptoBalanceResource::collection($resource)->map(fn($resource) => new CryptoBalanceResource($resource, $this->client))];
                 $this->logError(200, (array) $apiresponse);
                 return $apiresponse;
