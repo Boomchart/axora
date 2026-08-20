@@ -110,10 +110,10 @@ class Register extends Component
             $code = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
             $this->user->update(['email_time' => now()->addMinutes(5), 'email_auth' => $code]);
             createAudit('Resent verification email');
-            try {
+            // try {
                 dispatch(new CustomEmail('verify_email', $this->user->id));
-            } catch (\Exception $e) {
-            }
+            // } catch (\Exception $e) {
+            // }
             $this->emit('countDown', ($this->user->email_time->isPast()) ? '0:00 minute' : formatOtpTime($this->user->email_time));
             return $this->emit('success', __('Verification Code Sent'));
         }
