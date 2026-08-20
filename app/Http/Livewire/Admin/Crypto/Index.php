@@ -17,7 +17,7 @@ class Index extends Component
     public $admin;
     public $settings;
     public $active = 1;
-    public string $currency;
+    public $currency;
     public $vendor = 'hasapay';
     public string $name;
     public $image;
