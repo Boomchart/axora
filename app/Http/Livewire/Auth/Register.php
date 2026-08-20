@@ -103,6 +103,7 @@ class Register extends Component
 
     public function resendEmailVerify()
     {
+        dd('dddd');
                         // dispatch(new CustomEmail('verify_email', $this->user->id));
         if (Carbon::parse($this->user->email_time) > now()) {
             createAudit('Timeout limit for email verification');
