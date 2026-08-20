@@ -82,7 +82,7 @@ class Gateway extends Component
                     $admin->email,
                     $admin->username,
                     __('New Deposit request'),
-                    __('Hello admin, you have a new bank deposit request for ') . $trx->ref_id,
+                    __('Hello admin, you have a new deposit request for ') . $trx->ref_id,
                     null,
                     null,
                     0
