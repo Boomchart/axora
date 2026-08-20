@@ -70,15 +70,15 @@
         <div class="auth-onboarding-content">
             <div class="auth-onboarding-card">
                 @if($set->maintenance)
-                    <div class="auth-alert auth-alert-error">
-                        <div class="auth-alert-icon">
-                            <i class="bi bi-exclamation-triangle"></i>
-                        </div>
-                        <div>
-                            <strong>{{ __('Maintenance Mode') }}</strong>
-                            <p class="mb-0 mt-1">{{ __('We are currently under maintenance, please try again later.') }}</p>
-                        </div>
+                <div class="auth-alert auth-alert-error">
+                    <div class="auth-alert-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
                     </div>
+                    <div>
+                        <strong>{{ __('Maintenance Mode') }}</strong>
+                        <p class="mb-0 mt-1">{{ __('We are currently under maintenance, please try again later.') }}</p>
+                    </div>
+                </div>
                 @endif
 
                 <form class="auth-form w-100" wire:submit.prevent="next">
@@ -107,7 +107,7 @@
                                 <select class="form-select" wire:model="country">
                                     <option value="">{{ __('Select Country') }}</option>
                                     @foreach(regCountries() as $val)
-                                        <option value="{{ $val->iso2 }}">{{ $val?->name }}</option>
+                                    <option value="{{ $val->iso2 }}">{{ $val?->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('country') <span class="text-danger small mt-1 d-block">{{ $message }}</span> @enderror
@@ -120,7 +120,7 @@
                                         <select class="form-select" wire:model="mcc">
                                             <option value="">{{ __('Category') }}</option>
                                             @foreach(mcc() as $val)
-                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                            <option value="{{ $val->id }}">{{ $val->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('mcc') <span class="text-danger small mt-1 d-block">{{ $message }}</span> @enderror
@@ -133,7 +133,7 @@
                                         <select class="form-select" wire:model="business_monthly_limits">
                                             <option value="">{{ __('Volume') }}</option>
                                             @foreach($monthly_limits as $val)
-                                                <option value="{{ trim($val) }}">{{ ucwords($val) }}</option>
+                                            <option value="{{ trim($val) }}">{{ ucwords($val) }}</option>
                                             @endforeach
                                         </select>
                                         @error('business_monthly_limits') <span class="text-danger small mt-1 d-block">{{ $message }}</span> @enderror
@@ -265,10 +265,14 @@
                         </button>
 
                         @if($stage == 'email_verify')
-                            <button type="button" wire:click="resendEmailVerify" class="btn btn-outline-secondary w-100">
-                                {{ __('Resend Code') }} <span id="timer" class="auth-timer"></span>
-                            </button>
+                        <button type="button" wire:click="resendEmailVerify" wire:loading.attr="disabled" class="btn btn-outline-secondary w-100">
+                            <span wire:loading.remove wire:target="resendEmailVerify"> {{ __('Resend Code') }}</span>
+                            <span wire:loading wire:target="resendEmailVerify">
+                                <span class="spinner-border spinner-border-sm me-2"></span>{{ __('Processing...') }}
+                            </span>
+                        </button>
                         @endif
+                        <span id="timer" class="auth-timer"></span>
                     </div>
                 </form>
             </div>
@@ -281,107 +285,107 @@
 </div>
 
 @push('scripts')
-    <script src="{{asset('dashboard/js/moment.js')}}"></script>
-    <script src="{{asset('dashboard/js/moment-timezone-with-data.js')}}"></script>
-    <script>
-        function otpEmailInput() {
-            return {
-                otp: Array(6).fill(''),
-                onInput(index, event) {
-                    let input = event.target;
-                    let value = input.value.replace(/\D/g, '');
-                    if (value.length > 1) value = value[0];
-                    this.otp[index] = value;
+<script src="{{asset('dashboard/js/moment.js')}}"></script>
+<script src="{{asset('dashboard/js/moment-timezone-with-data.js')}}"></script>
+<script>
+    function otpEmailInput() {
+        return {
+            otp: Array(6).fill(''),
+            onInput(index, event) {
+                let input = event.target;
+                let value = input.value.replace(/\D/g, '');
+                if (value.length > 1) value = value[0];
+                this.otp[index] = value;
 
-                    if (value && index < this.otp.length - 1) {
-                        input.nextElementSibling?.focus();
-                    }
-
-                    this.syncToLivewire();
-                },
-                onBackspace(index, event) {
-                    if (!this.otp[index] && index > 0) {
-                        event.target.previousElementSibling?.focus();
-                    }
-                    this.syncToLivewire();
-                },
-                onPaste(event) {
-                    event.preventDefault();
-                    const paste = (event.clipboardData || window.clipboardData).getData('text');
-                    const digits = paste.replace(/\D/g, '').slice(0, this.otp.length).split('');
-
-                    digits.forEach((char, i) => {
-                        this.otp[i] = char;
-                    });
-
-                    const inputs = event.target.parentElement.querySelectorAll('input');
-                    const nextIndex = digits.length >= this.otp.length ? this.otp.length - 1 : digits.length;
-                    inputs[nextIndex]?.focus();
-
-                    this.syncToLivewire();
-                },
-                syncToLivewire() {
-                    const fullCode = this.otp.join('');
-                    if (fullCode.length === this.otp.length) {
-                        @this.set('email_code', fullCode);
-                    }
+                if (value && index < this.otp.length - 1) {
+                    input.nextElementSibling?.focus();
                 }
-            };
-        }
 
-        function formatCountry(country) {
-            if (!country.id) {
-                return country.text;
-            }
-            var $country = $(
-                '<span><img src="https://flagcdn.com/h40/' + country.id.split('*')[0].toLocaleLowerCase() +
-                '.png" class="img-flag" /> ' + country.text + '</span>'
-            );
-            return $country;
-        }
+                this.syncToLivewire();
+            },
+            onBackspace(index, event) {
+                if (!this.otp[index] && index > 0) {
+                    event.target.previousElementSibling?.focus();
+                }
+                this.syncToLivewire();
+            },
+            onPaste(event) {
+                event.preventDefault();
+                const paste = (event.clipboardData || window.clipboardData).getData('text');
+                const digits = paste.replace(/\D/g, '').slice(0, this.otp.length).split('');
 
-        document.addEventListener('livewire:load', function() {
-            function initializeSelect2() {
-                $('#country').select2({
-                    templateResult: formatCountry,
-                    templateSelection: formatCountry
+                digits.forEach((char, i) => {
+                    this.otp[i] = char;
                 });
-            }
-            initializeSelect2();
 
-            $('#country').on('change', function(e) {
-                @this.set('country', $(this).val());
-            });
+                const inputs = event.target.parentElement.querySelectorAll('input');
+                const nextIndex = digits.length >= this.otp.length ? this.otp.length - 1 : digits.length;
+                inputs[nextIndex]?.focus();
 
-            @this.set('timezone', moment.tz.guess());
-        });
-
-        let countdown; // Global reference
-
-        window.livewire.on('countDown', function(data) {
-            // Clear previous interval if any
-            if (countdown) clearInterval(countdown);
-            const parts = data.split(":");
-            const minutes = parseInt(parts[0], 10);
-            const seconds = parseInt(parts[1], 10);
-            let totalSeconds = (minutes * 60) + seconds;
-
-            // If time is already 0:00, set immediately and stop
-            if (totalSeconds <= 0) {
-                document.getElementById("timer").innerText = "00:00";
-                return;
-            }
-
-            countdown = setInterval(function() {
-                let displayMinutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-                let displaySeconds = (totalSeconds % 60).toString().padStart(2, '0');
-                document.getElementById("timer").innerText = `${displayMinutes}:${displaySeconds}`;
-                if (totalSeconds <= 0) {
-                    clearInterval(countdown);
-                    document.getElementById("timer").innerText = "00:00";
+                this.syncToLivewire();
+            },
+            syncToLivewire() {
+                const fullCode = this.otp.join('');
+                if (fullCode.length === this.otp.length) {
+                    @this.set('email_code', fullCode);
                 }
-                totalSeconds--;
-            }, 1000);
+            }
+        };
+    }
+
+    function formatCountry(country) {
+        if (!country.id) {
+            return country.text;
+        }
+        var $country = $(
+            '<span><img src="https://flagcdn.com/h40/' + country.id.split('*')[0].toLocaleLowerCase() +
+            '.png" class="img-flag" /> ' + country.text + '</span>'
+        );
+        return $country;
+    }
+
+    document.addEventListener('livewire:load', function() {
+        function initializeSelect2() {
+            $('#country').select2({
+                templateResult: formatCountry,
+                templateSelection: formatCountry
+            });
+        }
+        initializeSelect2();
+
+        $('#country').on('change', function(e) {
+            @this.set('country', $(this).val());
         });
-    </script>
+
+        @this.set('timezone', moment.tz.guess());
+    });
+
+    let countdown; // Global reference
+
+    window.livewire.on('countDown', function(data) {
+        // Clear previous interval if any
+        if (countdown) clearInterval(countdown);
+        const parts = data.split(":");
+        const minutes = parseInt(parts[0], 10);
+        const seconds = parseInt(parts[1], 10);
+        let totalSeconds = (minutes * 60) + seconds;
+
+        // If time is already 0:00, set immediately and stop
+        if (totalSeconds <= 0) {
+            document.getElementById("timer").innerText = "00:00";
+            return;
+        }
+
+        countdown = setInterval(function() {
+            let displayMinutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            let displaySeconds = (totalSeconds % 60).toString().padStart(2, '0');
+            document.getElementById("timer").innerText = `${displayMinutes}:${displaySeconds}`;
+            if (totalSeconds <= 0) {
+                clearInterval(countdown);
+                document.getElementById("timer").innerText = "00:00";
+            }
+            totalSeconds--;
+        }, 1000);
+    });
+</script>
 @endpush
