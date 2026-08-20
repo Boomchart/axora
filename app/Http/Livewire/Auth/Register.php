@@ -190,7 +190,7 @@ class Register extends Component
                     'password' => ['required', Password::defaults()],
                     'phone' => 'required|phone:' . strtoupper($this->country),
                 ];
-                dd($this->getErrorBag());
+
                 $this->validate($rules, [
                     'first_name.required' => __('Enter first name'),
                     'last_name.required' => __('Enter last name'),
@@ -201,11 +201,13 @@ class Register extends Component
                     'password.required' => __('Password is required')
                 ]);
 
-                if (User::whereMode('live')->whereEmail($this->email)->exists()) {
+                if (User::whereEmail($this->email)->exists()) {
+                    dd('ddd');
                     return $this->addError('email', __('Email address is already in use'));
                 }
 
                 if ($this->country != PhoneNumber::make($this->phone, $this->country)->getCountry()) {
+                       dd('dddf');
                     return $this->addError('phone',  __('Invalid phone number'));
                 }
 
@@ -231,6 +233,7 @@ class Register extends Component
                 $phone = PhoneNumber::make($this->phone, $this->country)->formatE164();
 
                 if (User::whereMode('live')->wherePhone($phone)->exists()) {
+                       dd('dddg');
                     return $this->emit('alert', __('Phone number is already used by another account'));
                 }
 
