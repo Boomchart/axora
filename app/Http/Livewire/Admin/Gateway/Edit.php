@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Gateway;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class Edit extends Component
 {
@@ -71,12 +72,10 @@ class Edit extends Component
         $this->validate();
 
         if ($this->image) {
-            $filePath = $this->image->storePublicly('brand');
-            Storage::delete('brand/'.$this->val->image);
+            $filePath = Cloudinary::upload($this->image->getRealPath())->getSecurePath();
             $this->val->update([
                 'image' => $filePath,
             ]);
-            $this->reset(['image']);
         }
         
         $this->val->update([

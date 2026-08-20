@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Gateway;
 use Livewire\Component;
 use App\Models\Gateway;
 use Livewire\WithFileUploads;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class Index extends Component
 {
@@ -54,10 +55,10 @@ class Index extends Component
             'instructions' => ['required'],
             'details' => ['required'],
             'wallet_address' => [($this->crypto == 1) ? 'required' : 'nullable'],
-            // 'image' => 'required|file|mimes:'.allowedFileTypes().'|max:'.allowedFileSize(),
+            'image' => 'required|file|mimes:'.allowedFileTypes().'|max:'.allowedFileSize(),
         ]);
 
-        $filePath = $this->image->storePublicly('gateway');
+        $filePath = Cloudinary::upload($this->image->getRealPath())->getSecurePath();
 
         Gateway::create([
             'name' => $this->name,
