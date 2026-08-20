@@ -122,8 +122,6 @@ class CryptoController extends Controller
                 return DB::transaction(function () use ($request) {
                     $account = CryptoBalance::whereId($request->asset_id)->whereBusinessId($this->client->reference)->first();
                     if ($account) {
-                        $hasapay = new HasapayService($this->mode);
-                        $wallet = $hasapay->fetchWalletId($account->token, $account->network);
                         if (CryptoAccount::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereLabel($request->label)->exists()) {
                             $msg = __('Label has been used before');
                             $apiresponse = ['message' => $msg, 'errors' => ['label' => [$msg]], 'status' => 'failed', 'data' => null];
@@ -131,6 +129,8 @@ class CryptoController extends Controller
                             return response()->json($apiresponse, 422);
                         }
                         if ($this->mode == 'live') {
+                            $hasapay = new HasapayService($this->mode);
+                            $wallet = $hasapay->fetchWalletId($account->token, $account->network);
                             $address = $hasapay->generateAddress($wallet['wallet_id'], $request->label);
                             if ($address['success'] == true) {
                                 $new = CryptoAccount::create([
