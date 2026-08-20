@@ -19,7 +19,7 @@ class Index extends Component
     public $active = 1;
     public $currency;
     public $vendor = 'hasapay';
-    public string $name;
+    public $name;
     public $image;
     public $search;
 
