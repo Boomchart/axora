@@ -35,7 +35,7 @@ class Edit extends Component
 
         if ($this->image) {
             $rules = array_merge($rules, [
-                'image' => 'required|file|mimes:'.allowedFileTypes().'|max:'.allowedFileSize(),
+                'image' => 'required|file|mimetypes:'.allowedFileTypes().'|max:'.allowedFileSize(),
             ]);
         }
         return $rules;

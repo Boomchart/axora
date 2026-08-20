@@ -55,7 +55,7 @@ class Index extends Component
             'instructions' => ['required'],
             'details' => ['required'],
             'wallet_address' => [($this->crypto == 1) ? 'required' : 'nullable'],
-            'image' => 'required|file|mimes:'.allowedFileTypes().'|max:'.allowedFileSize(),
+            'image' => 'required|file|mimetypes:'.allowedFileTypes().'|max:'.allowedFileSize(),
         ]);
 
         $filePath = Cloudinary::upload($this->image->getRealPath())->getSecurePath();
