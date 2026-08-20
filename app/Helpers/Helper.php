@@ -379,18 +379,33 @@ function generateBusinessReference()
     return $randomNumber;
 }
 
+function rsaKeyPath(string $file): string
+{
+    return config('services.rsa.path') . '/' . $file;
+}
+
 function encryptRSA($dataToEncrypt)
 {
-    $publicKey = openssl_pkey_get_public(file_get_contents(base_path() . '/../secure/rsa/public_key.pem'));
-    openssl_public_encrypt($dataToEncrypt, $encryptedData, $publicKey);
+    $publicKey = openssl_pkey_get_public(file_get_contents(rsaKeyPath('public_key.pem')));
+
+    if (! openssl_public_encrypt($dataToEncrypt, $encryptedData, $publicKey)) {
+        throw new RuntimeException('RSA encryption failed: ' . openssl_error_string());
+    }
+
     return base64_encode($encryptedData);
 }
 
 function decryptRSA($encryptedData)
 {
-    $privateKey = openssl_pkey_get_private(file_get_contents(base_path() . '/../secure/rsa/private_key.pem'), 'fJbL5@KNVLYP5!j@@');
-    $encryptedData = base64_decode($encryptedData);
-    openssl_private_decrypt($encryptedData, $decryptedData, $privateKey);
+    $privateKey = openssl_pkey_get_private(
+        file_get_contents(rsaKeyPath('private_key.pem')),
+        config('services.rsa.passphrase')
+    );
+
+    if (! openssl_private_decrypt(base64_decode($encryptedData), $decryptedData, $privateKey)) {
+        throw new RuntimeException('RSA decryption failed: ' . openssl_error_string());
+    }
+
     return $decryptedData;
 }
 
