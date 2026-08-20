@@ -67,9 +67,9 @@
 
 		<main class="axora-kyc-main">
 			<div class="axora-kyc-mobile-steps d-md-none">
-				<div class="axora-kyc-mobile-step {{ $link['business_details'] ? 'active' : '' }}"><i class="bi bi-bank"></i></div>
-				<div class="axora-kyc-mobile-step {{ $link['business_documents'] ? 'active' : '' }}"><i class="bi bi-file-earmark-text"></i></div>
-				<div class="axora-kyc-mobile-step {{ $link['business_directors'] ? 'active' : '' }}"><i class="bi bi-people"></i></div>
+				<div class="axora-kyc-mobile-step {{ $stage == 'business_details' ? 'active' : '' }}"><i class="bi bi-bank"></i></div>
+				<div class="axora-kyc-mobile-step {{ $stage == 'business_documents' ? 'active' : '' }}"><i class="bi bi-file-earmark-text"></i></div>
+				<div class="axora-kyc-mobile-step {{ $stage == 'business_directors' ? 'active' : '' }}"><i class="bi bi-people"></i></div>
 			</div>
 
 			<div class="axora-kyc-content">

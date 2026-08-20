@@ -92,6 +92,9 @@ class SendEmail implements ShouldQueue
     }
     public function handle()
     {
-        $this->sendEmail($this->to, $this->name, $this->subject, $this->message, null, $this->attach, $this->contact, $this->record, $this->cc);
+        try {
+            $this->sendEmail($this->to, $this->name, $this->subject, $this->message, null, $this->attach, $this->contact, $this->record, $this->cc);
+        } catch (\Exception $e) {
+        }
     }
 }

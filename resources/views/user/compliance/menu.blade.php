@@ -42,6 +42,7 @@
     <script src="{{ asset('asset/filepond/js/validate-type.js') }}"></script>
     <script src="{{ asset('asset/filepond/js/validate-size.js') }}"></script>
     <script src="{{ asset('asset/filepond/js/filepond.js') }}"></script>
+    <x-laralert />
 </body>
 
 </html>

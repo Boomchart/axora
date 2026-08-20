@@ -54,19 +54,21 @@
                                                     <i class="bi bi-eye" x-show="!show" x-transition></i>
                                                 </span>
                                             </p>
-                                            <span class="fw-bold fs-7 text-start axora-text-color">
+
+                                            <p class="fw-bold fs-7 text-start axora-text-color">
                                                 <span class="fw-bolder fs-2hx" x-cloak x-show="show" x-transition>
                                                     {{$currency->currency_symbol.currencyFormat(number_format($user->getBalance($currency->id)->amount,2)).' '.$currency->currency}}
                                                 </span>
                                                 <span class="fw-bolder fs-2hx" x-cloak x-show="!show" x-transition>************</span>
-                                            </span>
+                                            </p>
 
                                             @if($user->business->kyc_status == 'APPROVED')
                                             @foreach(getGateways() as $gateway)
                                             <livewire:user.gateway :gateway=$gateway :user=$user :settings=$set :currency=$currency :wire:key="$gateway->id"></livewire:user.gateway>
                                             @endforeach
                                             <button id="kt_deposit_money_button" class="btn btn-dark me-3"><i class="bi bi-plus-lg text-white"></i> {{__('Add Funds')}}</button>
-                                            @if($user->business->flag_withdraw == 0)<button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>@endif
+                                            @if($user->business->flag_withdraw == 0)
+                                            <button id="kt_withdraw_money_button" class="btn btn-outline-dark">{{__('Withdraw')}}</button>@endif
                                             <div wire:ignore.self id="kt_deposit_money" class="bg-white" data-kt-drawer="true" data-kt-drawer-activate="true" data-kt-drawer-toggle="#kt_deposit_money_button" data-kt-drawer-close="#kt_deposit_money_close" data-kt-drawer-width="{'md': '500px'}">
                                                 <div class="card w-100">
                                                     <div class="card-header pe-5 border-0">

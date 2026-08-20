@@ -78,11 +78,6 @@ class CustomEmail implements ShouldQueue
                 $user = $reply->user;
                 $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{token}}", "{{staff}}", "{{reply}}");
                 $replace = array($reply->user->first_name, $reply->user->last_name, $set->site_name, $reply->ticket->ticket_id, $reply?->staff?->first_name . ' ' . $reply?->staff?->last_name, $reply->message);
-            } else if (in_array($check->type, ['rfi_add'])) {
-                $rfi = RFI::whereId($id)->first();
-                $user = $rfi->user;
-                $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{reference}}", "{{reason}}");
-                $replace = array($rfi->user->first_name, $rfi->user->last_name, $set->site_name, $rfi?->transaction?->ref_id, trim($rfi->message));
             } else if (in_array($check->type, ['compliance_resubmit'])) {
                 $user = User::whereId($id)->withTrashed()->first();
                 $find = array("{{first_name}}", "{{last_name}}", "{{site_name}}", "{{reason}}");
@@ -123,6 +118,9 @@ class CustomEmail implements ShouldQueue
 
     public function handle()
     {
-        $this->customEmail($this->type, $this->customer, $this->reason, $this->otp);
+        try {
+            $this->customEmail($this->type, $this->customer, $this->reason, $this->otp);
+        } catch (\Exception $e) {
+        }
     }
 }
