@@ -13,7 +13,7 @@
                 <form wire:submit.prevent="gateway">
                     <div class="modal-body">
                         <div class="fv-row mb-6">
-                            <label class="form-label fs-7 text-dark">{{__('Amount')}} ({{$currency->currency}})</label>
+                            <label class="form-label fs-7 text-dark required">{{__('Amount')}} ({{$currency->currency}})</label>
                             <input class="form-control form-control-solid" type="text" step="any" wire:model.debounce.500ms="amount" autocomplete="transaction-amount" id="amount" min="1" required placeholder="{{__('0.00')}}" autofocus />
                             @error('amount')
                             <span class="text-danger">{{$message}}</span>
@@ -22,7 +22,7 @@
                         @if($gateway->type==1)
                         @if($gateway->val1)
                         <div class="fv-row mb-6">
-                            <label class="form-label fs-7 text-dark">{{$gateway->val1}}</label>
+                            <label class="form-label fs-7 text-dark required">{{$gateway->val1}}</label>
                             <input class="form-control form-control-solid  @error('details') is-invalid @enderror" type="text" wire:model.defer="details" required id="details" />
                             @error('details')
                             <span class="text-danger">{{$message}}</span>
@@ -30,7 +30,7 @@
                         </div>
                         @endif
                         <div class="fv-row mb-6">
-                            <label class="form-label fs-7 text-dark">{{__('Receipt')}}</label>
+                            <label class="form-label fs-7 text-dark required">{{__('Receipt')}}</label>
                             <input class="form-control form-control-solid" type="file" wire:model="image" required />
                             @error('image')
                             <span class="text-danger">{{$message}}</span>
