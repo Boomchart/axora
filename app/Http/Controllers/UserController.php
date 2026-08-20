@@ -33,6 +33,9 @@ class UserController extends Controller
     {
         if ($this->user->business->kyc_status != 'APPROVED') {
             return redirect()->route('user.dashboard')->with('alert', __('Approved compliance is required'));
+        }        
+        if ($this->user->business->flag_withdraw) {
+            return redirect()->route('user.dashboard')->with('alert', __('Contact support to enable withdrawal on your account'));
         }
 
         return view('user.transactions.crypto-payout', ['title' => __('Crypto Payout')]);

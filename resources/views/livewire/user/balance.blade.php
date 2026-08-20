@@ -205,7 +205,9 @@
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-center justify-content-between mb-5">
                                     <h5 class="fw-bold text-dark mb-0">{{__('Crypto Portfolio')}}</h5>
+                                    @if($user->business->flag_withdraw == 0)
                                     <a href="{{route('crypto.payout')}}" target="_blank" class="btn btn-dark">{{__('Withdraw Crypto')}}</a>
+                                    @endif
                                 </div>
                                 <div class="d-flex flex-column gap-4">
                                     @foreach($user->business->cryptobalances()->orderBy('amount', 'desc')->orderBy('token', 'asc')->take(4)->get() as $crypto)
