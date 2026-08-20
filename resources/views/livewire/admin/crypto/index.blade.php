@@ -72,7 +72,7 @@
                             <label class="form-check-label" for="active">{{__('Activate currency after creation')}}</label>
                         </div>
                         <div class="text-center mt-10">
-                            <button type="submit" class="btn btn-primary btn-block my-2">
+                            <button type="submit" class="btn btn-primary btn-block my-2" wire:loading.attr="disabled" wire:target="addCurrency,image">
                                 <span wire:loading.remove wire:target="addCurrency">{{__('Submit Request')}}</span>
                                 <span wire:loading wire:target="addCurrency">{{__('Processing Request...')}}</span>
                             </button>
