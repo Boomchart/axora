@@ -151,6 +151,10 @@
             color: var(--warning);
         }
 
+        .iconinfo {
+            color: var(--info);
+        }
+
         @media screen and (max-width: 530px) {
             .xnotification {
                 width: 100%;
@@ -181,7 +185,23 @@
             },
             warning: {
                 icon: "bi bi-exclamation-circle fs-3x iconalert"
+            },
+            info: {
+                icon: "bi bi-info-circle fs-3x iconinfo"
             }
+        }
+
+        // Aliases so events emitted with other names still resolve to a known toast type
+        const toastAliases = {
+            alert: "warning",
+            err: "error",
+            danger: "error",
+            message: "info"
+        }
+
+        const resolveToastType = (id) => {
+            if (toastDetails[id] && toastDetails[id].icon) return id
+            return toastAliases[id] || "info"
         }
 
         const removeToast = (toast) => {
@@ -196,8 +216,10 @@
         }
 
         const createToast = (id, message) => {
+            const type = resolveToastType(id);
+
             // Check if toast of same type already exists
-            const existingToast = findExistingToast(id);
+            const existingToast = findExistingToast(type);
 
             if (existingToast) {
                 // Update existing toast message
@@ -215,9 +237,9 @@
             // Create new toast only if none exists for this type
             const {
                 icon
-            } = toastDetails[id];
+            } = toastDetails[type];
             const toast = document.createElement("li");
-            toast.className = `xtoast ${id}`;
+            toast.className = `xtoast ${type}`;
             toast.innerHTML = `<div class="column">
                      <i class="${icon}"></i>
                      <span>${message}</span>

@@ -40,14 +40,6 @@
         };
     })();
 
-    window.livewire.on('success', data => {
-        createToast("success", data);
-    });
-
-    window.livewire.on('alert', data => {
-        createToast("alert", data);
-    });
-
     window.livewire.on('closeModal', data => {
         $('#' + data).modal('hide');
     });
