@@ -190,6 +190,7 @@ class Register extends Component
                     'password' => ['required', Password::defaults()],
                     'phone' => 'required|phone:' . strtoupper($this->country),
                 ];
+                dd($this->getErrorBag());
                 $this->validate($rules, [
                     'first_name.required' => __('Enter first name'),
                     'last_name.required' => __('Enter last name'),
