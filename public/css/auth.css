@@ -1030,45 +1030,6 @@ a:not(.btn):not(.navbar-brand):not(.auth-logo-link):hover {
     border-radius: 12px;
 }
 
-.bg-whitelabel {
-    background-color: var(--primary-lighter) !important;
-}
-
-.symbol-label {
-    background-color: var(--primary-lighter);
-    color: var(--primary-dark);
-}
-
-.symbol-label.bg-axora-secondary {
-    background-color: var(--secondary-lighter) !important;
-    color: var(--primary-dark) !important;
-}
-
-.symbol-label.bg-warning i {
-    color: #8A5B00 !important;
-}
-
-.symbol-label.bg-danger i {
-    color: var(--danger-color) !important;
-}
-
-.symbol-label.bg-success,
-.symbol-label.bg-light-primary,
-.symbol-label.bg-whitelabel {
-    background-color: var(--primary-lighter) !important;
-    color: var(--primary-dark) !important;
-}
-
-.symbol-label.bg-success i,
-.symbol-label.bg-light-primary i,
-.symbol-label.bg-whitelabel i {
-    color: var(--primary-dark) !important;
-}
-
-#kt_post a[target="_blank"] .bg-whitelabel {
-    background-color: var(--primary-lighter) !important;
-}
-
 .auth-qr-hint {
     display: flex;
     align-items: center;

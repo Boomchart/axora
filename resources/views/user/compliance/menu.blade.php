@@ -16,11 +16,11 @@
     <link href="{{ asset('dashboard/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('asset/filepond/css/filepond.css') }}" />
     <link rel="stylesheet" href="{{ asset('tel/css/tel.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/axora_kyc.css') }}" />
     @livewireStyles
     @yield('css')
     @include('partials.font')
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/axora_kyc.css') }}" />
 </head>
 
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-fixed aside-default-enabled">

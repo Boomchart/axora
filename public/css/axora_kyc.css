@@ -11,6 +11,39 @@
     --text-primary: #0F172A;
     --text-secondary: #64748B;
     --border-color: rgba(15, 23, 42, 0.1);
+
+    --primary-color: #0a5f5f;
+    --primary-dark: #0A5F5F;
+    --primary-light: #108B8B;
+    --primary-lighter: #E6F5F5;
+
+    --secondary-color: #F4C2C2;
+    --secondary-dark: #E07A7A;
+    --secondary-light: #F8D6D6;
+    --secondary-lighter: #F8E7E4;
+    --secondary-vibrant: #FF6B6B;
+
+    --text-primary: #2D3436;
+    --text-secondary: #636E72;
+    --text-light: #B2BEC3;
+    --text-muted: #8898AA;
+
+    --background-primary: #FFFFFF;
+    --background-secondary: #F8F9FA;
+    --background-accent: #FFF9F5;
+    --bg-warm: #FDFBF7;
+
+    --shadow-sm: 0 2px 8px rgba(13, 115, 115, 0.1);
+    --shadow-md: 0 4px 16px rgba(13, 115, 115, 0.15);
+    --shadow-lg: 0 8px 32px rgba(13, 115, 115, 0.2);
+    --shadow-teal: 0 10px 40px rgba(13, 115, 115, 0.05);
+
+    --success-color: #108B8B;
+    --warning-color: #FDCC6E;
+    --danger-color: #D63031;
+    --info-color: #0D7373;
+    --bs-secondary-rgb: 108, 117, 125;
+    --bs-secondary: #6c757d;
 }
 
 
@@ -534,4 +567,43 @@
     border-color: var(--secondary-dark) !important;
     color: var(--primary-dark) !important;
     transform: translateY(-2px);
+}
+
+.bg-whitelabel {
+    background-color: var(--primary-lighter) !important;
+}
+
+.symbol-label {
+    background-color: var(--primary-lighter);
+    color: var(--primary-dark);
+}
+
+.symbol-label.bg-axora-secondary {
+    background-color: var(--secondary-lighter) !important;
+    color: var(--primary-dark) !important;
+}
+
+.symbol-label.bg-warning i {
+    color: #8A5B00 !important;
+}
+
+.symbol-label.bg-danger i {
+    color: var(--danger-color) !important;
+}
+
+.symbol-label.bg-success,
+.symbol-label.bg-light-primary,
+.symbol-label.bg-whitelabel {
+    background-color: var(--primary-lighter) !important;
+    color: var(--primary-dark) !important;
+}
+
+.symbol-label.bg-success i,
+.symbol-label.bg-light-primary i,
+.symbol-label.bg-whitelabel i {
+    color: var(--primary-dark) !important;
+}
+
+#kt_post a[target="_blank"] .bg-whitelabel {
+    background-color: var(--primary-lighter) !important;
 }
