@@ -2,11 +2,11 @@
 
 @section('content')
     <h1>{{$title}}</h1>
-    <p class="lead-text">{{__('Retrieve a gift card transaction by it\'s transaction reference')}}</p>
+    <p class="lead-text">{{__('Retrieve an airtime transaction by it\'s transaction ID')}}</p>
 
     <div class="endpoint-box">
         <span class="endpoint-method get">GET</span>
-        <span class="endpoint-url">{{url('/')}}/api/v1/giftcard-transactions/{reference}</span>
+        <span class="endpoint-url">{{url('/')}}/api/v1/airtime-transactions/{id}</span>
     </div>
 
     <h2 id="request-parameters">Path Parameters</h2>
@@ -22,24 +22,24 @@
         </thead>
         <tbody>
         <tr>
-            <td><span class="param-name">reference</span></td>
+            <td><span class="param-name">id</span></td>
             <td><span class="param-type">string</span></td>
             <td>required</td>
-            <td>The gift card transaction reference</td>
+            <td>The airtime transaction ID</td>
         </tr>
         </tbody>
     </table>
 
     <h2 id="example-request">Example Request</h2>
 
-    <h3 id="list-all-countries">Get a gift card transaction</h3>
+    <h3 id="list-all-countries">Get an airtime transaction</h3>
 
     <div class="code-block-wrapper">
         <div class="code-block-header">
             <span class="code-block-title">cURL</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">curl {{url('/')}}/api/v1/giftcard-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12 \
+        <pre><code class="language-bash">curl {{url('/')}}/api/v1/airtime-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12 \
   -H "Authorization: Bearer sk_live_your_api_key"</code></pre>
     </div>
 
@@ -55,7 +55,7 @@
     ],
 ]);
 
-$response = $client->get('giftcard-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12');
+$response = $client->get('airtime-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12');
 $cards = json_decode($response->getBody(), true);</code></pre>
     </div>
 
@@ -64,7 +64,7 @@ $cards = json_decode($response->getBody(), true);</code></pre>
             <span class="code-block-title">JavaScript</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-javascript">const response = await fetch('{{url('/api/v1/giftcard-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12')}}', {
+        <pre><code class="language-javascript">const response = await fetch('{{url('/api/v1/airtime-transactions/1430b926-3faf-49dc-b0d3-1f801ea7fd12')}}', {
   headers: {
     'Authorization': 'Bearer sk_live_your_api_key'
   }
@@ -81,139 +81,66 @@ const cards = await response.json();</code></pre>
             <button class="code-copy-button">Copy</button>
         </div>
         <pre><code class="language-json">{
-   "message": "Transaction details",
+  "message": "Transaction details",
+  "status": "success",
+  "data": {
+    "id": "cb74cee0-113c-4330-bf82-3cf0fb3efd76",
+    "currency": "USD",
+    "amount": 1.49,
+    "charge": 0,
+    "total": 1.49,
     "status": "success",
-    "data": {
-        "id": "3f03fd72-1836-4880-912c-c45b4eb016cc",
-        "currency": "USD",
-        "amount": 124.56,
-        "charge": 10.44,
-        "total": 135,
-        "status": "success",
-        "mode": "test",
-        "balance": {
-            "old_balance": 0,
-            "new_balance": 0
+    "mode": "test",
+    "balance": {
+      "old_balance": 998,
+      "new_balance": 998
+    },
+    "orders": [
+      {
+        "external_reference": "824a3b3b-6388-4e41-8a92-14f056910ce7",
+        "operator": {
+          "id": "145a1cf2-e08d-4b00-9ff5-e613984498d9",
+          "name": "Airtel Nigeria",
+          "amount": 800,
+          "currency": "NGN"
         },
-        "orders": [
-            {
-                "external_reference": "50d1251a-d262-41ba-aed0-8cef37af9d3e",
-                "card": {
-                    "id": "cf562d2a-826c-42f1-a19f-3de7fe6911c0",
-                    "name": "App Store & iTunes US",
-                    "quantity": 4,
-                    "amount": 11,
-                    "currency": "USD"
-                },
-                "payment": {
-                    "currency": "USD",
-                    "rate": 1,
-                    "amount": 11,
-                    "charge": 1,
-                    "sub_total": 12,
-                    "total": 48
-                },
-                "customer": {
-                    "name": "John Doe",
-                    "email": "name@remote.com",
-                    "phone": "+12025550136",
-                    "phone_code": "US"
-                },
-                "items": [
-                    {
-                        "id": "3084a8dd-47d7-443a-a14d-a06b1fb18e6e",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    },
-                    {
-                        "id": "5c3cbb21-e43f-4e1c-a61a-81c0c19bab60",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    },
-                    {
-                        "id": "8a4b7c36-572b-48b7-9aa3-5adc45e646fc",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    },
-                    {
-                        "id": "e748d5a8-0907-40f4-a3ed-4d5eea8b4ce3",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    }
-                ]
-            },
-            {
-                "external_reference": "36a1ac5a-07d5-44ef-90f5-51a3a1d1348b",
-                "card": {
-                    "id": "d96096ad-1eff-4e38-afd0-7d02973d4b5f",
-                    "name": "H Samuel",
-                    "quantity": 3,
-                    "amount": 20,
-                    "currency": "GBP"
-                },
-                "payment": {
-                    "currency": "USD",
-                    "rate": 1.3425882416122,
-                    "amount": 26.85,
-                    "charge": 2.15,
-                    "sub_total": 29,
-                    "total": 87
-                },
-                "customer": {
-                    "name": "John Doe",
-                    "email": "name@remote.com",
-                    "phone": "+12025550136",
-                    "phone_code": "US"
-                },
-                "items": [
-                    {
-                        "id": "6991178f-57b6-417c-a78a-e862fa51568a",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    },
-                    {
-                        "id": "ccf88760-2335-4204-a843-32b38f02fe5a",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    },
-                    {
-                        "id": "e9248e6f-e4db-4d06-8467-e6234ad254a8",
-                        "status": "pending",
-                        "redeem_code": {
-                            "url": null,
-                            "card_code": null,
-                            "pin": null
-                        }
-                    }
-                ]
-            }
-        ],
-        "created_at": "2026-05-05T13:19:22.000000Z"
-    }
+        "payment": {
+          "currency": "USD",
+          "rate": 0.00082918739635158,
+          "amount": 0.66,
+          "charge": 0,
+          "sub_total": 0.66,
+          "total": 0.66
+        },
+        "customer": {
+          "phone": "+2349057550480",
+          "phone_code": "ng"
+        }
+      },
+      {
+        "external_reference": "11d2c1aa-791a-4441-b28b-04f1cf682e91",
+        "operator": {
+          "id": "145a1cf2-e08d-4b00-9ff5-e613984498d9",
+          "name": "Airtel Nigeria",
+          "amount": 1000,
+          "currency": "NGN"
+        },
+        "payment": {
+          "currency": "USD",
+          "rate": 0.00082918739635158,
+          "amount": 0.83,
+          "charge": 0,
+          "sub_total": 0.83,
+          "total": 0.83
+        },
+        "customer": {
+          "phone": "+2349072963268",
+          "phone_code": "ng"
+        }
+      }
+    ],
+    "created_at": "2026-08-20T15:52:07.000000Z"
+  }
 }</code></pre>
     </div>
 
@@ -223,8 +150,8 @@ const cards = await response.json();</code></pre>
             Related Endpoints
         </div>
         <ul>
-            <li><a href="{{url('/api-reference/gift-cards/transactions')}}">List gift card transactions</a> </li>
-            <li><a href="{{url('/api-reference/gift-cards/quote')}}">Create a gift card quote </a> </li>
+            <li><a href="{{url('/api-reference/airtime/transactions')}}">List airtime transactions</a> </li>
+            <li><a href="{{url('/api-reference/airtime/quote')}}">Create an airtime transaction quote </a> </li>
         </ul>
     </div>
 @endsection

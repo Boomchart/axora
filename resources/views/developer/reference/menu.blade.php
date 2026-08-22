@@ -248,6 +248,7 @@
                             <li class="sidebar-item {{ Request::is('api-reference/airtime/quote') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/quote') }}">{{ __('Create Airtime Quote') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/airtime/order') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/order') }}">{{ __('Order Airtime') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/airtime/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/transactions') }}">{{ __('List Airtime Transactions') }}</a></li>
+                            <li class="sidebar-item {{ Request::is('api-reference/airtime/transaction') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/transaction') }}">{{ __('Get Airtime Transaction') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/airtime/lookup') ? 'active' : '' }}"><a href="{{ url('/api-reference/airtime/lookup') }}">{{ __('Airtime Lookup') }}</a></li>
                         </ul>
                     </li>
@@ -267,6 +268,7 @@
                             <li class="sidebar-item {{ Request::is('api-reference/data/quote') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/quote') }}">{{ __('Create data top-up quote') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/data/order') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/order') }}">{{ __('Order data top-up') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/data/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/transactions') }}">{{ __('List data top-up transactions') }}</a></li>
+                            <li class="sidebar-item {{ Request::is('api-reference/data/transaction') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/transaction') }}">{{ __('Get data top-up transaction') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/data/lookup') ? 'active' : '' }}"><a href="{{ url('/api-reference/data/lookup') }}">{{ __('Data top-up Lookup') }}</a></li>
                         </ul>
                     </li>
