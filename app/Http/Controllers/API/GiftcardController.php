@@ -54,7 +54,7 @@ class GiftcardController extends Controller
         $this->verifyToken($request);
         $country = strtoupper($country);
         if ($this->access == true) {
-            try {
+            // try {
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
@@ -89,10 +89,10 @@ class GiftcardController extends Controller
                 $apiresponse = ['message' => __('Cards'), 'status' => 'success', 'data' => CardResource::collection($resource)->map(fn($resource) => new CardResource($resource, $this->client))];
                 $this->logError(200, (array) $apiresponse);
                 return $apiresponse;
-            } catch (\Exception $e) {
-                $this->logError(500, $e->getMessage());
-                return response()->json(['message' =>  __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
-            }
+            // } catch (\Exception $e) {
+            //     $this->logError(500, $e->getMessage());
+            //     return response()->json(['message' =>  __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
+            // }
         } else {
             return response()->json(['message' => __('Invalid API Key'), 'status' => 'failed', 'data' => null], 401);
         }
