@@ -40,12 +40,11 @@ class Details extends Component
 
                 DB::table('orders')->where('id', $this->val->id)
                     ->update([
-                        'id' => $newUuid
+                        'id' => $newUuid,
+                        'failed_order' => 0,
                     ]);
 
-                $this->val->update([
-                    'failed_order' => 0
-                ]);
+                return redirect()->route('admin.view.orders', ['order' => $newUuid]);
             } catch (\Exception $e) {
                 return $this->emit('alert', __('An error occurred, try again later'));
             }
