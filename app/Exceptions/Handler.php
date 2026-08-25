@@ -45,24 +45,24 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        // $this->reportable(function (Throwable $e) {
-        //     $this->renderable(function (\Exception $e, $request) {
-        //         if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
-        //             return redirect(url()->previous())->with('alert', __('An error occurred, Try again'));
-        //         }
-        //         if ($request->is('api/*')) {
-        //             $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode()  : 500;
-        //             return response()->json([
-        //                 'success' => false,
-        //                 'message' => ($status != 500) ?: 'Server Error',
-        //                 'statusCode' => $status,
-        //             ], $status);
-        //         }
-        //         if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-        //             return back()->with('alert', __('Method not allowed'));
-        //         }
-        //     });
-        // });
+        $this->reportable(function (Throwable $e) {
+            $this->renderable(function (\Exception $e, $request) {
+                if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
+                    return redirect(url()->previous())->with('alert', __('An error occurred, Try again'));
+                }
+                if ($request->is('api/*')) {
+                    $status = method_exists($e, 'getStatusCode') ? $e->getStatusCode()  : 500;
+                    return response()->json([
+                        'success' => false,
+                        'message' => ($status != 500) ?: 'Server Error',
+                        'statusCode' => $status,
+                    ], $status);
+                }
+                if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+                    return back()->with('alert', __('Method not allowed'));
+                }
+            });
+        });
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)

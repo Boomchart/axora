@@ -297,7 +297,7 @@ class GiftcardController extends Controller
         $hasErrors = false;
         $balance = $this->client->user->getFirstBalance();
 
-        // try {
+        try {
             $items = [];
             $totalSum = 0;
             $finalChargeSum = 0;
@@ -531,12 +531,12 @@ class GiftcardController extends Controller
                 $this->logError(200, $apiresponse);
                 return response()->json($apiresponse, 200);
             }, 3);
-        // } catch (\Exception $e) {
-        //     $this->logError(500, $e->getMessage());
-        //     return response()->json(['message' => __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
-        // } finally {
-        //     $lock->release();
-        // }
+        } catch (\Exception $e) {
+            $this->logError(500, $e->getMessage());
+            return response()->json(['message' => __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
+        } finally {
+            $lock->release();
+        }
     }
 
     public function transactions(Request $request, $reference = null)
