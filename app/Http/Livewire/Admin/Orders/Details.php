@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\{Webhook, Balance};
 use Spatie\WebhookServer\WebhookCall;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Details extends Component
 {
@@ -35,11 +36,13 @@ class Details extends Component
     {
         if ($this->val->status == 'pending' && $this->val->failed_order == 1 && $this->val->mode == 'live') {
             try {
-                DB::transaction(function () {
-                    $this->val->update([
-                        'failed_order' => 0
+                $newUuid = Str::uuid()->toString();
+
+                DB::table('orders')->where('id', $this->val->id)
+                    ->update([
+                        'id' => $newUuid,
+                        'failed_order' => 0,
                     ]);
-                }, 3);
             } catch (\Exception $e) {
                 return $this->emit('alert', __('An error occurred, try again later'));
             }
