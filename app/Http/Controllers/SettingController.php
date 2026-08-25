@@ -74,6 +74,16 @@ class SettingController extends Controller
         return view('admin.transactions.details', ['title' => __('Transaction Details'), 'val' => $transaction]);
     }
 
+    public function failedOrders()
+    {
+        return view('admin.orders.index', ['title' => __('Orders'), 'failed' => 1, 'status' => null]);
+    }      
+    
+    public function orders($status = null)
+    {
+        return view('admin.orders.index', ['title' => __('Orders'), 'status' => $status, 'failed' => null]);
+    }   
+    
     public function detailsOrder(Orders $order)
     {
         return view('admin.orders.details', ['title' => __('Order Details'), 'val' => $order]);

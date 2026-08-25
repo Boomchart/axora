@@ -2,7 +2,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-                <h1 class="text-dark fw-bolder my-1 fs-2">{{__('Dashboard')}}</h1>
+                <h1 class="text-dark fw-bolder mb-5 fs-2">{{__('Dashboard')}}</h1>
             </div>
         </div>
         <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post">
@@ -19,7 +19,7 @@
                         <div class="card p-5 bg-danger">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-7 text-dark">{{__('Needs Attention')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                                <a href="{{route('admin.orders.failed')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
                             </div>
                             <h3 class="text-dark">{{number_format_short($admin->needsAttentionCard())}}</h3>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="card p-5 bg-secondary">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-7 text-dark">{{__('Completed Orders')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                                <a href="{{route('admin.orders', ['status' => 'success'])}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
                             </div>
                             <h3 class="text-dark">{{number_format_short($admin->completedOrders())}}</h3>
                         </div>
@@ -37,7 +37,7 @@
                         <div class="card p-5 bg-secondary">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-7 text-dark">{{__('Pending Orders')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                                <a href="{{route('admin.orders', ['status' => 'pending'])}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
                             </div>
                             <h3 class="text-dark">{{number_format_short($admin->pendingOrders())}}</h3>
                         </div>
@@ -46,7 +46,7 @@
                         <div class="card p-5 bg-secondary">
                             <div class="d-flex justify-content-between">
                                 <p class="fs-7 text-dark">{{__('Failed Orders')}}</p>
-                                <a href="{{route('admin.orders')}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
+                                <a href="{{route('admin.orders', ['status' => 'failed'])}}" target="_blank"><i class="bi bi-arrow-right-circle text-dark fs-2"></i></a>
                             </div>
                             <h3 class="text-dark">{{number_format_short($admin->failedOrders())}}</h3>
                         </div>

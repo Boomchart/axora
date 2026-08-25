@@ -51,7 +51,7 @@ class UpdateTransactions extends Command
                     dispatch(new Giftcard($val));
                 } elseif ($val->type == 'airtime_purchase') {
                     dispatch(new Airtime($val));
-                }elseif ($val->type == 'data_purchase') {
+                } elseif ($val->type == 'data_purchase') {
                     dispatch(new Data($val));
                 }
             }
@@ -74,6 +74,19 @@ class UpdateTransactions extends Command
     public function handle()
     {
         //Reloadly
+        foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereType('giftcard')->whereMode('live')->whereFailedOrder(0)->take(5)->whereNotNull('order_id')->get() as $val) {
+            $reloadly = new ReloadlyGiftcardService();
+            $getCard = $reloadly->redeemCodes($val->order_id);
+            if ($getCard['success'] == true) {
+                $val->update([
+                    'status' => 'success',
+                    'card_code' => encryptRSA($getCard['data'][0]['cardNumber']) ?? null,
+                    'pin_code' => encryptRSA($getCard['data'][0]['pinCode']) ?? null,
+                    'card_url' => encryptRSA($getCard['data'][0]['redemptionUrl']) ?? null,
+                ]);
+                $this->sendWebhook($val);
+            }
+        }
         foreach (\App\Models\Orders::whereStatus('pending')->whereProvider('reloadly')->whereType('giftcard')->whereMode('live')->whereFailedOrder(0)->take(5)->whereNull('order_id')->get() as $val) {
             $reloadly = new ReloadlyGiftcardService();
             $order = $reloadly->order([

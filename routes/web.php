@@ -227,7 +227,8 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
             });
 
             Route::group(['prefix' => 'orders'], function () {
-                Route::view('all', 'admin.orders.index', ['title' => __('Gift Card Orders')])->name('admin.orders');
+                Route::get('failed', [SettingController::class, 'failedOrders'])->name('admin.orders.failed');
+                Route::get('all/{status?}', [SettingController::class, 'orders'])->name('admin.orders');
                 Route::get('details/{order}', [SettingController::class, 'detailsOrder'])->name('admin.view.orders');
             });
 

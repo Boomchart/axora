@@ -33,6 +33,18 @@
                     </div>
                 </div>
             </a>
+            @if($val->failed_order && $val->status == 'pending')
+            <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4">
+                <a wire:click="retryOrder" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="retryOrder" class="btn btn-block btn-secondary">
+                    <span wire:loading.remove wire:target="retryOrder">{{__('Retry Order')}}</span>
+                    <span wire:loading wire:target="retryOrder">{{__('Processing Request...')}}</span>
+                </a>
+                <a wire:click="markAsFailed" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="markAsFailed" class="btn btn-block btn-secondary">
+                    <span wire:loading.remove wire:target="markAsFailed">{{__('Mark as failed')}}</span>
+                    <span wire:loading wire:target="markAsFailed">{{__('Processing Request...')}}</span>
+                </a>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-md-12">
                     <div class="mb-5">
