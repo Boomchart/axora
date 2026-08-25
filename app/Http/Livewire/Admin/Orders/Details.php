@@ -48,7 +48,6 @@ class Details extends Component
             } catch (\Exception $e) {
                 return $this->emit('alert', __('An error occurred, try again later'));
             }
-            return $this->emit('success', __('Order retried'));
         } else {
             return $this->emit('alert', __('Order can\'t be retried'));
         }
