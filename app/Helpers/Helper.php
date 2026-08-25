@@ -70,7 +70,12 @@ function generateSolanaAddress()
 
 function randomString($length, $characters)
 {
-    return substr(str_shuffle(str_repeat($characters, ceil($length / strlen($characters)))), 0, $length);
+    $max = strlen($characters) - 1;
+    $result = '';
+    for ($i = 0; $i < $length; $i++) {
+        $result .= $characters[random_int(0, $max)];
+    }
+    return $result;
 }
 
 function generateTestWalletAddress($network, $token = null)
@@ -373,7 +378,7 @@ function formatOtpTime($minutes)
 function generateBusinessReference()
 {
     do {
-        $randomNumber = str_pad(mt_rand(1, 999999), 7, '0', STR_PAD_LEFT);
+        $randomNumber = str_pad(random_int(0, 9999999), 7, '0', STR_PAD_LEFT);
         $exists = Business::whereReference($randomNumber)->exists();
     } while ($exists);
     return $randomNumber;
@@ -413,7 +418,7 @@ function generateRandomCode()
 {
     $segments = [];
     for ($i = 0; $i < 4; $i++) {
-        $segments[] = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 4);
+        $segments[] = randomString(4, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
     }
     $code = implode('-', $segments);
     return $code;
@@ -528,7 +533,7 @@ function updateLocale($type, $user = null)
 function generateOTP($business)
 {
     do {
-        $randomNumber = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+        $randomNumber = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $exists = OTP::whereCode($randomNumber)->whereBusinessId($business->id)->exists();
     } while ($exists);
     $set = Settings::find(1);
@@ -826,7 +831,7 @@ function randomNumber($length)
 {
     $result = '';
     for ($i = 0; $i < $length; $i++) {
-        $result .= mt_rand(0, 9);
+        $result .= random_int(0, 9);
     }
     return $result;
 }

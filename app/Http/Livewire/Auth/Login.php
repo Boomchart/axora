@@ -10,10 +10,18 @@ use Carbon\Carbon;
 use App\Jobs\SendEmail;
 use App\Jobs\CustomEmail;
 use App\Models\Devices;
+use App\Traits\ThrottlesAttempts;
 use hisorange\BrowserDetect\Parser as Browser;
 
 class Login extends Component
 {
+    use ThrottlesAttempts;
+
+    protected function firesLockoutEvent()
+    {
+        return true;
+    }
+
     public $settings;
     public $email;
     public $password;
@@ -33,8 +41,16 @@ class Login extends Component
                 'password' => 'required',
             ]);
 
+            $lockout = $this->attemptLockout('user-login', $this->email);
+            if ($lockout !== null) {
+                $this->emit('wrongPassword');
+                return $this->addError('added', $this->attemptLockoutMessage($lockout));
+            }
+
             $remember_me = ($this->remember_me != null) ? true : false;
             if (Auth::guard('user')->attempt(['email' => $this->email, 'password' => $this->password], $remember_me)) {
+                $this->clearAttempts('user-login', $this->email);
+
                 $user = User::whereId(auth()->guard('user')->user()->id)->first();
                 if ($user->status) {
                     Auth::guard('user')->logout();
@@ -96,6 +112,7 @@ class Login extends Component
                     return redirect()->route('user.dashboard');
                 }
             } else {
+                $this->recordFailedAttempt('user-login', $this->email);
                 $this->emit('wrongPassword');
                 return $this->addError('added', __('Oops! You have entered invalid credentials'));
             }

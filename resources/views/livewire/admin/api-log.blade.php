@@ -171,13 +171,13 @@
                                                                 <div class="col-12" wire:ignore>
                                                                     @if($val->payload)
                                                                     <p class="mb-1 fs-7">{{__('Payload')}}</p>
-<pre class="rounded-4 mb-5"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) !!}</code></pre>
+<pre class="rounded-4 mb-5"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{{ json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) }}</code></pre>
                                                                     @endif
                                                                     <p class="mb-1 fs-7">{{__('Message')}}</p>
                                                                     @if(is_array(json_decode($val->message, true)) == false)
                                                                     <p class="mb-1 fs-7">{{$val->message}}</p>
                                                                     @else
-<pre class="rounded-4"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}</code></pre>
+<pre class="rounded-4"><code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">{{ json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) }}</code></pre>
                                                                     @endif
                                                                 </div>
                                                             </div>

@@ -154,7 +154,7 @@
                                                                 @else
                                                                 <pre class="rounded-4">
                                                                         <code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">   
-                                                                        {!! json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) !!}
+                                                                        {{ json_encode(json_decode($val->message, true), JSON_PRETTY_PRINT) }}
                                                                         </code>
                                                                     </pre>
                                                                 @endif

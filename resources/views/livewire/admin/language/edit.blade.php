@@ -2,7 +2,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-                <h1 class="text-dark fw-bold my-1 fs-4">{{__('Edit Translation')}}</h1>
+                <h1 class="text-dark fw-bolder my-1 fs-2">{{__('Edit Translation')}}</h1>
                 <ul class="breadcrumb fw-semibold fs-base my-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="{{route('admin.dashboard')}}" class="text-muted text-hover-success">{{__('Dashboard')}}</a>

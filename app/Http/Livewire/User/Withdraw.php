@@ -4,8 +4,10 @@ namespace App\Http\Livewire\User;
 
 use Livewire\Component;
 use App\Models\Transactions;
+use App\Models\Balance;
 use App\Models\UserBank;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 use App\Jobs\CustomEmail;
 use App\Jobs\SendEmail;
 use Illuminate\Support\Str;
@@ -14,9 +16,18 @@ use Carbon\Carbon;
 use App\Jobs\SendSMS;
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
+use App\Traits\ThrottlesAttempts;
 
 class Withdraw extends Component
 {
+    use ThrottlesAttempts;
+
+    // The target is the session's own account, so lock the account, not the IP.
+    protected function scopesAttemptsToIp()
+    {
+        return false;
+    }
+
     public $user;
     public $withdraw_type = 'other';
     public $other;
@@ -113,22 +124,35 @@ class Withdraw extends Component
 
     public function create($balance, $fee)
     {
-        $balance->update(['amount' => $balance->amount - ($this->amount + $fee)]);
+        $total = $this->amount + $fee;
 
-        $object = [
-            'user_id' => $this->user->id,
-            'business_id' => $this->user->business_id,
-            'amount' => $this->amount,
-            'charge' => $fee,
-            'ref_id' => Str::uuid(),
-            'trx_type' => 'debit',
-            'type' => 'payout',
-            'status' => 'pending',
-            'withdraw_id' => $this->other,
-            'details' => $this->requirements,
-        ];
+        // Serialize concurrent debits on this balance row so two requests can't
+        // both pass the balance check and overdraw the account (race / double-spend).
+        $trx = DB::transaction(function () use ($balance, $fee, $total) {
+            $locked = Balance::disableCache()->whereKey($balance->id)->lockForUpdate()->first();
 
-        $trx = Transactions::create($object);
+            if (! $locked || $locked->amount < $total) {
+                throw new \RuntimeException(__('Insufficient Balance'));
+            }
+
+            $balance_before = $locked->amount;
+            $locked->update(['amount' => $balance_before - $total]);
+
+            return Transactions::create([
+                'user_id' => $this->user->id,
+                'business_id' => $this->user->business_id,
+                'amount' => $this->amount,
+                'charge' => $fee,
+                'ref_id' => Str::uuid(),
+                'trx_type' => 'debit',
+                'type' => 'payout',
+                'status' => 'pending',
+                'withdraw_id' => $this->other,
+                'details' => $this->requirements,
+                'balance_before' => $balance_before,
+                'balance_after' => $balance_before - $total,
+            ]);
+        });
 
         createAudit('Submitted withdraw request ' . $trx->ref_id);
         updateLocale('admin');
@@ -177,12 +201,19 @@ class Withdraw extends Component
                 ]
             );
 
-            $g = new GoogleAuthenticator();
-            if ($g->checkcode($this->user->business->fa_secret, $this->otp, 3) == false) {
-                return $this->emit('alert', __('Invalid 2fa Code'));
+            $lockout = $this->attemptLockout('user-2fa', $this->user->id);
+            if ($lockout !== null) {
+                return $this->emit('alert', $this->attemptLockoutMessage($lockout));
             }
 
-            if (($balance->amount + $fee) < $this->amount) {
+            $g = new GoogleAuthenticator();
+            if ($g->checkcode($this->user->business->fa_secret, $this->otp, 0) == false) {
+                $this->recordFailedAttempt('user-2fa', $this->user->id);
+                return $this->emit('alert', __('Invalid 2fa Code'));
+            }
+            $this->clearAttempts('user-2fa', $this->user->id);
+
+            if (($this->amount + $fee) > $balance->amount) {
                 return $this->addError('amount', __('Insufficient Balance'));
             }
 

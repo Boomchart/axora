@@ -24,4 +24,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    <FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|artisan|README\.md|yarn\.lock|webpack\.mix\.js|\.env.*)$">
+        Require all denied
+    </FilesMatch>
 </IfModule>

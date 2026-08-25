@@ -322,7 +322,10 @@ class CryptoController extends Controller
 
             try {
                 return DB::transaction(function () use ($request) {
-                    $account = CryptoBalance::whereId($request->asset_id)->whereBusinessId($this->client->reference)->first();
+                    // Row-lock the balance for the whole debit; the cache lock above can
+                    // expire (3s TTL) while the Hasapay calls run, so this is the real
+                    // guard against concurrent payouts overdrawing the balance.
+                    $account = CryptoBalance::whereId($request->asset_id)->whereBusinessId($this->client->reference)->lockForUpdate()->first();
                     if ($account) {
 
                         $result = verifyWalletAddress($request->to_address, $account->token, $account->network);
@@ -441,8 +444,8 @@ class CryptoController extends Controller
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
                 }
                 if ($reference != null) {
-                    if (Transactions::whereMode($this->mode)->whereRefId($reference)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->exists()) {
-                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->first())];
+                    if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->exists()) {
+                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->first())];
                         $this->logError(200, $apiresponse);
                         return response()->json($apiresponse, 200);
                     } else {
@@ -451,7 +454,7 @@ class CryptoController extends Controller
                         return response()->json($apiresponse, 404);
                     }
                 } else {
-                    $apiresponse = TransactionResource::collection(Transactions::whereMode($this->mode)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->latest()
+                    $apiresponse = TransactionResource::collection(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->latest()
                         ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
                         ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)));
                     $this->logError(200, (array)$apiresponse);

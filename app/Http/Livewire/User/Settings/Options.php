@@ -20,10 +20,19 @@ use Illuminate\Support\Facades\Auth;
 use App\Jobs\SendEmail;
 use App\Jobs\CustomEmail;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
+use App\Traits\ThrottlesAttempts;
 use Carbon\Carbon;
 
 class Options extends Component
 {
+    use ThrottlesAttempts;
+
+    // The target is the session's own account, so lock the account, not the IP.
+    protected function scopesAttemptsToIp()
+    {
+        return false;
+    }
+
     public $user;
     public $password;
     public $pin;
@@ -78,9 +87,18 @@ class Options extends Component
             $this->validate([
                 'fa_pin' => ['numeric', 'required', 'min_digits:6', 'max_digits:6', 'regex:/[0-9]+/'],
             ]);
+            // Turning 2fa off checks the live secret, so it shares that budget;
+            // turning it on checks a secret that is not protecting anything yet.
+            $purpose = ($this->user->business->fa_status == 1) ? 'user-2fa' : '2fa-enrol';
+            $lockout = $this->attemptLockout($purpose, $this->user->id);
+            if ($lockout !== null) {
+                return $this->addError('fa_pin', $this->attemptLockoutMessage($lockout));
+            }
+
             $g = new GoogleAuthenticator();
             if ($this->user->business->fa_status == 1) {
-                if ($g->checkcode($this->user->business->fa_secret, $this->fa_pin, 3)) {
+                if ($g->checkcode($this->user->business->fa_secret, $this->fa_pin, 0)) {
+                    $this->clearAttempts($purpose, $this->user->id);
                     $this->user->business->update([
                         'fa_status' => 0,
                         'fa_secret' => null,
@@ -89,10 +107,12 @@ class Options extends Component
                     dispatch(new CustomEmail('2fa_disabled', $this->user->id));
                     return $this->emit('success', __('2fa disabled'));
                 } else {
+                    $this->recordFailedAttempt($purpose, $this->user->id);
                     return $this->addError('fa_pin', __('Invalid code'));
                 }
             } else {
-                if ($g->checkcode($this->secret, $this->fa_pin, 3)) {
+                if ($g->checkcode($this->secret, $this->fa_pin, 0)) {
+                    $this->clearAttempts($purpose, $this->user->id);
                     $this->user->business->update([
                         'fa_status' => 1,
                         'fa_secret' => $this->secret,
@@ -102,6 +122,7 @@ class Options extends Component
                     dispatch(new CustomEmail('2fa_enabled', $this->user->id));
                     return $this->emit('success', __('2fa enabled'));
                 } else {
+                    $this->recordFailedAttempt($purpose, $this->user->id);
                     return $this->addError('fa_pin', __('Invalid code'));
                 }
             }

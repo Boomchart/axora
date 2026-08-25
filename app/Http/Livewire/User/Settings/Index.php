@@ -109,13 +109,7 @@ class Index extends Component
 
     public function generateWebhookSecret()
     {
-        $result = '';
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $length = 10;
-
-        for ($i = 0; $i < $length; $i++) {
-            $result .= $characters[rand(0, strlen($characters) - 1)];
-        }
+        $result = Str::random(40);
         $this->webhook_secret = $result;
 
         $this->user->business->update([

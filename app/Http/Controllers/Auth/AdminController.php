@@ -10,6 +10,7 @@ use Symfony\Component\Process\Process;
 use App\Models\Admin;
 use App\Models\Devices;
 use App\Models\Settings;
+use App\Traits\ThrottlesAttempts;
 use App\Jobs\SendEmail;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -19,6 +20,13 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
+  use ThrottlesAttempts;
+
+  protected function firesLockoutEvent()
+  {
+      return true;
+  }
+
   public $settings;
   public function __construct()
   {
@@ -45,8 +53,14 @@ class AdminController extends Controller
 
   public function submitadminlogin(Request $request)
   {
+    $lockout = $this->attemptLockout('admin-login', $request->username);
+    if ($lockout !== null) {
+      return back()->with('alert', $this->attemptLockoutMessage($lockout))->withInput();
+    }
+
     $remember_me = $request->has('remember_me') ? true : false;
     if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password], $remember_me)) {
+      $this->clearAttempts('admin-login', $request->username);
       try {
         $admin = Admin::whereId(auth()->guard('admin')->user()->id)->first();
         if ($admin->status == 1) {
@@ -86,6 +100,7 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard');
       }
     } else {
+      $this->recordFailedAttempt('admin-login', $request->username);
       return back()->with('alert', __('Oops! You have entered invalid credentials'))->withInput();
     }
   }

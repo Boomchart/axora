@@ -4,7 +4,7 @@
 <div class="toolbar" id="kt_toolbar">
     <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
         <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-            <h1 class="text-dark fw-bold my-1 fs-4">{{__('Purchase Giftcard')}}</h1>
+            <h1 class="text-dark fw-bolder my-1 fs-2">{{__('Purchase Giftcard')}}</h1>
             <ul class="breadcrumb fw-dase fs-7 my-1 mb-6">
                 <li class="breadcrumb-item text-muted">
                     <a href="{{route('user.dashboard')}}" class="text-muted text-hover-success">{{__('Dashboard')}} </a>

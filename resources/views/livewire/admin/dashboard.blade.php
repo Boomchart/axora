@@ -2,10 +2,7 @@
     <div class="toolbar" id="kt_toolbar">
         <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
             <div class="d-flex flex-column align-items-start justify-content-center flex-wrap me-2">
-                <h1 class="text-dark fw-bold my-1 fs-4">{{__('Dashboard')}}</h1>
-            </div>
-            <div class="d-flex align-items-center flex-nowrap text-nowrap py-1 mb-6">
-                <a href="{{route('optimize.system')}}" class="btn btn-secondary"><i class="bi bi-lightning"></i> {{__('Clear Data Cache')}}</a>
+                <h1 class="text-dark fw-bolder my-1 fs-2">{{__('Dashboard')}}</h1>
             </div>
         </div>
         <div class="post fs-7 d-flex flex-column-fluid min-vh-100" id="kt_post">

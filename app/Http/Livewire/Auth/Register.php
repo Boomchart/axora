@@ -16,12 +16,21 @@ use Illuminate\Support\Str;
 use App\Jobs\CustomEmail;
 use Illuminate\Validation\Rules\Password;
 use App\Models\Devices;
+use App\Traits\ThrottlesAttempts;
 use hisorange\BrowserDetect\Parser as Browser;
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Carbon\Carbon;
 
 class Register extends Component
 {
+    use ThrottlesAttempts;
+
+    // The target is the session's own account, so lock the account, not the IP.
+    protected function scopesAttemptsToIp()
+    {
+        return false;
+    }
+
     public $settings;
     public $account_type = 'business';
     public $countryReg;
@@ -107,7 +116,7 @@ class Register extends Component
             createAudit('Timeout limit for email verification');
             return $this->emit('alert', __('You can resend link after ') . gmdate('i:s', Carbon::parse($this->user->email_time)->diffInSeconds(now())) . __(' minutes'));
         } else {
-            $code = str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+            $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
             $this->user->update(['email_time' => now()->addMinutes(5), 'email_auth' => $code]);
             createAudit('Resent verification email');
             try {
@@ -147,14 +156,7 @@ class Register extends Component
 
     public function generateWebhookSecret()
     {
-        $result = '';
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $length = 10;
-
-        for ($i = 0; $i < $length; $i++) {
-            $result .= $characters[rand(0, strlen($characters) - 1)];
-        }
-        return $result;
+        return Str::random(40);
     }
 
     public function next()
@@ -248,7 +250,7 @@ class Register extends Component
                     'phone' => $phone,
                     'email' => trim(strtolower($this->email)),
                     'email_verify' => 0,
-                    'email_auth' => str_pad(mt_rand(1, 999999), 6, '0', STR_PAD_LEFT),
+                    'email_auth' => str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT),
                     'password' => Hash::make($this->password),
                 ]);
 
@@ -358,13 +360,21 @@ class Register extends Component
                     'email_code.max_digits' => __('Enter 6 digits'),
                 ]
             );
-            if ($this->email_code == $this->user->email_auth) {
+            $lockout = $this->attemptLockout('email-verify', $this->user->id);
+            if ($lockout !== null) {
+                return $this->emit('alert', $this->attemptLockoutMessage($lockout));
+            }
+
+            if (hash_equals((string) $this->user->email_auth, (string) $this->email_code)) {
+                $this->clearAttempts('email-verify', $this->user->id);
                 $this->user->update(['email_verify' => 1, 'otp_required' => 'off']);
                 $this->emit('success', __('Email verified'));
                 createAudit('Confirmed email address');
                 $this->stage = 'multi_factor';
                 $this->switchStage();
             } else {
+                $this->recordFailedAttempt('email-verify', $this->user->id);
+                createAudit('Entered invalid email verification code');
                 return $this->emit('alert', __('Invalid code'));
             }
         } elseif ($this->stage == 'multi_factor') {
@@ -378,9 +388,15 @@ class Register extends Component
                     'fa_code.max_digits' => __('Enter 6 digits'),
                 ]
             );
+            $lockout = $this->attemptLockout('2fa-enrol', $this->user->id);
+            if ($lockout !== null) {
+                return $this->emit('alert', $this->attemptLockoutMessage($lockout));
+            }
+
             try {
                 $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-                if ($g->checkcode($this->fa_secret, $this->fa_code, 3)) {
+                if ($g->checkcode($this->fa_secret, $this->fa_code, 0)) {
+                    $this->clearAttempts('2fa-enrol', $this->user->id);
                     $this->user->business->update([
                         'fa_status' => 1,
                         'fa_secret' => $this->fa_secret,
@@ -390,6 +406,7 @@ class Register extends Component
                     createAudit('Activated 2fa');
                     return redirect()->route('user.dashboard');
                 } else {
+                    $this->recordFailedAttempt('2fa-enrol', $this->user->id);
                     return $this->emit('alert', __('Invalid code'));
                 }
             } catch (\Exception $e) {

@@ -297,7 +297,7 @@ class GiftcardController extends Controller
         $hasErrors = false;
         $balance = $this->client->user->getFirstBalance();
 
-        try {
+        // try {
             $items = [];
             $totalSum = 0;
             $finalChargeSum = 0;
@@ -452,6 +452,17 @@ class GiftcardController extends Controller
             }
 
             return DB::transaction(function () use ($items, $balance, $totalSum, $finalChargeSum) {
+                // Re-read the balance under a row lock inside the transaction. The cache
+                // lock above can expire (3s TTL) while the Hasapay calls run, so this is
+                // the authoritative guard against concurrent orders overdrawing the balance.
+                if ($this->mode == 'live') {
+                    $balance = \App\Models\Balance::disableCache()->whereKey($balance->id)->lockForUpdate()->first();
+
+                    if (! $balance || $balance->amount < $totalSum) {
+                        throw new \RuntimeException(__('Insufficient Balance'));
+                    }
+                }
+
                 $balance_before = $balance->amount;
                 if ($this->mode == 'live') {
                     $balance_after = $balance->amount - $totalSum;
@@ -520,12 +531,12 @@ class GiftcardController extends Controller
                 $this->logError(200, $apiresponse);
                 return response()->json($apiresponse, 200);
             }, 3);
-        } catch (\Exception $e) {
-            $this->logError(500, $e->getMessage());
-            return response()->json(['message' => __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
-        } finally {
-            $lock->release();
-        }
+        // } catch (\Exception $e) {
+        //     $this->logError(500, $e->getMessage());
+        //     return response()->json(['message' => __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
+        // } finally {
+        //     $lock->release();
+        // }
     }
 
     public function transactions(Request $request, $reference = null)
@@ -540,8 +551,8 @@ class GiftcardController extends Controller
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
                 }
                 if ($reference != null) {
-                    if (Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->exists()) {
-                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->first())];
+                    if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->exists()) {
+                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->first())];
                         $this->logError(200, $apiresponse);
                         return response()->json($apiresponse, 200);
                     } else {
@@ -553,7 +564,7 @@ class GiftcardController extends Controller
                     $apiresponse = [
                         'message' => __('Transactions'),
                         'status' => 'success',
-                        'data' => TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('giftcard_purchase')->latest()
+                        'data' => TransactionResource::collection(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereType('giftcard_purchase')->latest()
                             ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
                             ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)))
                     ];

@@ -20,11 +20,6 @@ Route::get('change-lang/{locale}', [SettingController::class, 'locale'])->name('
 Route::get('robots.txt', [SeoController::class, 'robots'])->name('robots');
 Route::get('sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 
-Route::controller(SettingController::class)->group(function () {
-    Route::get('optimize', 'optimize')->name('optimize.system');
-    Route::get('migrate', 'migrate')->name('run.migration');
-});
-
 Route::post('redboxx_webhook', [WebhookController::class, 'redboxx'])->name('redboxx.webhook');
 Route::post('hasapay_webhook', [WebhookController::class, 'hasapay'])->name('hasapay.webhook');
 

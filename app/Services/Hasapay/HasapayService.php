@@ -5,6 +5,7 @@ namespace App\Services\Hasapay;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class HasapayService
 {
@@ -219,17 +220,7 @@ class HasapayService
     private function generateHMACAuth(array $body)
     {
         $timestamp = (string) time();
-        $requestId = sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff)
-        );
+        $requestId = (string) Str::uuid();
         $bodyString = $body ? json_encode($body) : '';
 
         $payload = "{$timestamp}:{$requestId}:{$bodyString}";

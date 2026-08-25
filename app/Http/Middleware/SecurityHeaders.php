@@ -27,9 +27,7 @@ class SecurityHeaders
             $response->headers->set('X-Content-Type-Options', 'nosniff');
             $response->headers->set('Permissions-Policy', 'autoplay=(self), camera=(self), encrypted-media=(self), fullscreen=(), geolocation=(self), gyroscope=(self), magnetometer=(), microphone=(self), midi=(), payment=(), sync-xhr=(self), usb=()');
             $response->headers->set('Access-Control-Allow-Origin', '*');
-            if ($role == 'denyIframe') {
-                $response->headers->set('X-Frame-Options', 'DENY');
-            }
+            $response->headers->set('X-Frame-Options', 'DENY');
             $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
             $response->headers->set('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With,X-CSRF-Token');
 

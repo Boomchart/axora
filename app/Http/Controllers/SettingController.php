@@ -18,10 +18,19 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use Sonata\GoogleAuthenticator\GoogleQrUrl;
+use App\Traits\ThrottlesAttempts;
 use Carbon\Carbon;
 
 class SettingController extends Controller
 {
+    use ThrottlesAttempts;
+
+    // The target is the session's own account, so lock the account, not the IP.
+    protected function scopesAttemptsToIp()
+    {
+        return false;
+    }
+
     protected $admin;
     protected $settings;
 
@@ -207,19 +216,30 @@ class SettingController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors($validator->errors())->withInput();
             }
+            // Turning 2fa off checks the live secret, so it shares that budget;
+            // turning it on checks a secret that is not protecting anything yet.
+            $purpose = ($this->admin->fa_status == 1) ? 'admin-2fa' : 'admin-2fa-enrol';
+            $lockout = $this->attemptLockout($purpose, $this->admin->id);
+            if ($lockout !== null) {
+                return back()->with('alert', $this->attemptLockoutMessage($lockout))->withInput();
+            }
+
             $g = new GoogleAuthenticator();
             if ($this->admin->fa_status == 1) {
-                if ($g->checkcode($this->admin->googlefa_secret, $request->fa_pin, 3)) {
+                if ($g->checkcode($this->admin->googlefa_secret, $request->fa_pin, 0)) {
+                    $this->clearAttempts($purpose, $this->admin->id);
                     $this->admin->update([
                         'fa_status' => 0,
                         'googlefa_secret' => null,
                     ]);
                     return back()->with('success', __('2fa disabled'));
                 } else {
+                    $this->recordFailedAttempt($purpose, $this->admin->id);
                     return back()->with('alert', __('Invalid code'))->withInput();
                 }
             } else {
-                if ($g->checkcode($request->secret, $request->fa_pin, 3)) {
+                if ($g->checkcode($request->secret, $request->fa_pin, 0)) {
+                    $this->clearAttempts($purpose, $this->admin->id);
                     $this->admin->update([
                         'fa_status' => 1,
                         'googlefa_secret' => $request->secret,
@@ -227,6 +247,7 @@ class SettingController extends Controller
                     ]);
                     return back()->with('success', __('2fa enabled'));
                 } else {
+                    $this->recordFailedAttempt($purpose, $this->admin->id);
                     return back()->with('alert', __('Invalid code'))->withInput();
                 }
             }
@@ -276,17 +297,5 @@ class SettingController extends Controller
             $data->fill($request->all())->save();
         }
         return back()->with('success', __('Updated'));
-    }
-
-    public function optimize()
-    {
-        Artisan::call('optimize:clear');
-        return back()->with('success', __('Cache, Route, Config, View optimized'));
-    }
-
-    public function migrate()
-    {
-        Artisan::call('migrate', ['--path' => 'database/migrations', '--force' => true]);
-        return back()->with('success', __('System has been updated'));
     }
 }

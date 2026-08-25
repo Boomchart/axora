@@ -579,8 +579,8 @@ class DataController extends Controller
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
                 }
                 if ($reference != null) {
-                    if (Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->exists()) {
-                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->first())];
+                    if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->exists()) {
+                        $apiresponse = ['message' => __('Transaction details'), 'status' => 'success', 'data' => new TransactionResource(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->first())];
                         $this->logError(200, $apiresponse);
                         return response()->json($apiresponse, 200);
                     } else {
@@ -592,7 +592,7 @@ class DataController extends Controller
                     $apiresponse = [
                         'message' => __('Transactions'),
                         'status' => 'success',
-                        'data' => TransactionResource::collection(Transactions::whereMode($this->mode)->whereType('data_purchase')->latest()
+                        'data' => TransactionResource::collection(Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereType('data_purchase')->latest()
                             ->when($day != null, fn($query) => $query->whereDate('created_at', '=', \Carbon\Carbon::parse($day)))
                             ->when($request->page == 'all', fn($query) => $query->get(), fn($query) => $query->paginate($limit ?? 20)))
                     ];

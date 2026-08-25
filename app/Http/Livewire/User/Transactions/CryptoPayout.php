@@ -5,10 +5,20 @@ namespace App\Http\Livewire\User\Transactions;
 use Livewire\Component;
 use App\Models\{Transactions, CryptoBalance};
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Services\Hasapay\HasapayService;
+use App\Traits\ThrottlesAttempts;
 
 class CryptoPayout extends Component
 {
+    use ThrottlesAttempts;
+
+    // The target is the session's own account, so lock the account, not the IP.
+    protected function scopesAttemptsToIp()
+    {
+        return false;
+    }
+
     public $amount = '0.00';
     public $wallet_address;
     public $validationAmount;
@@ -188,10 +198,21 @@ class CryptoPayout extends Component
         if ($this->process == false) {
             return $this->emit('alert', __('An error occurred while calculating gas fee'));
         }
+        $lockout = $this->attemptLockout('user-2fa', $this->user->id);
+        if ($lockout !== null) {
+            return $this->emit('alert', $this->attemptLockoutMessage($lockout));
+        }
+
         $g = new \Sonata\GoogleAuthenticator\GoogleAuthenticator();
-        if ($g->checkcode($this->user->business->fa_secret, $this->fa_code, 3)) {
-            $this->create();
+        if ($g->checkcode($this->user->business->fa_secret, $this->fa_code, 0)) {
+            $this->clearAttempts('user-2fa', $this->user->id);
+            try {
+                $this->create();
+            } catch (\Throwable $e) {
+                return $this->emit('alert', $e->getMessage());
+            }
         } else {
+            $this->recordFailedAttempt('user-2fa', $this->user->id);
             return $this->emit('alert', __('Invalid code'));
         }
     }
@@ -199,29 +220,46 @@ class CryptoPayout extends Component
     private function create()
     {
         $amount = removeCommas($this->amount);
-        //Update Sender Balance
-        $senderBalBefore = $this->balance->amount;
-        $senderBalAfter = $this->balance->amount - $amount - ($this->fee ?? 0);
+        $fee = $this->fee ?? 0;
+        $total = $amount + $fee;
 
+        // Lock the balance row for the whole debit so concurrent payouts (extra tabs,
+        // scripted requests reusing the same still-valid 2FA code) can't both pass the
+        // balance check and overdraw. CryptoBalance->amount is derived from BalanceLog,
+        // which is always read live, so re-reading under the lock is authoritative.
+        $debit = DB::transaction(function () use ($amount, $fee, $total) {
+            $locked = CryptoBalance::whereKey($this->balance->id)->lockForUpdate()->first();
 
-        $debit = $this->debit_trx = Transactions::create([
-            'user_id' => $this->user->business->user_id,
-            'business_id' => $this->user->business_id,
-            'amount' => $amount,
-            'charge' => $this->fee ?? 0,
-            'crypto_wallet_id' => $this->balance->id,
-            'ref_id' => Str::uuid(),
-            'trx_type' => 'debit',
-            'type' => 'crypto_payout',
-            'balance_before' => $senderBalBefore,
-            'balance_after' => $senderBalAfter,
-            'wallet_address' => $this->wallet_address,
-            'currency' => $this->balance->token,
-            'agents' => $this->agents,
-            'status' => 'pending',
-        ]);
+            if (! $locked || $locked->amount < $total) {
+                throw new \RuntimeException(__('Insufficient balance.'));
+            }
 
-        logBalance($this->balance->id, $amount, 'debit', $debit->id, 'amount', true);
+            $senderBalBefore = $locked->amount;
+            $senderBalAfter = $senderBalBefore - $total;
+
+            $debit = Transactions::create([
+                'user_id' => $this->user->business->user_id,
+                'business_id' => $this->user->business_id,
+                'amount' => $amount,
+                'charge' => $fee,
+                'crypto_wallet_id' => $locked->id,
+                'ref_id' => Str::uuid(),
+                'trx_type' => 'debit',
+                'type' => 'crypto_payout',
+                'balance_before' => $senderBalBefore,
+                'balance_after' => $senderBalAfter,
+                'wallet_address' => $this->wallet_address,
+                'currency' => $locked->token,
+                'agents' => $this->agents,
+                'status' => 'pending',
+            ]);
+
+            logBalance($locked->id, $total, 'debit', $debit->id, 'amount', true);
+
+            return $debit;
+        });
+
+        $this->debit_trx = $debit;
 
         createAudit('Sent Crypto Payout to ' . $this->wallet_address . ' ' . $debit->ref_id);
 

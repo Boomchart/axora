@@ -131,7 +131,7 @@
                                                                 <p class="mb-1 fs-7">{{__('Payload')}}</p>
                                                                 <pre class="rounded-4">
                                                                         <code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">   
-                                                                        {!! json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) !!}
+                                                                        {{ json_encode(json_decode($val->payload, true), JSON_PRETTY_PRINT) }}
                                                                         </code>
                                                                     </pre>
                                                             </div>
@@ -141,7 +141,7 @@
                                                                 <p class="mb-1 fs-7">{{__('Headers')}}</p>
                                                                 <pre class="rounded-4">
                                                                         <code class="language-json" style="font-size: 0.85rem !important;" data-lang="json">   
-                                                                        {!! json_encode(json_decode($val->headers, true), JSON_PRETTY_PRINT) !!}
+                                                                        {{ json_encode(json_decode($val->headers, true), JSON_PRETTY_PRINT) }}
                                                                         </code>
                                                                     </pre>
                                                             </div>
