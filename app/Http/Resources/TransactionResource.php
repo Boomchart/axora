@@ -62,9 +62,9 @@ class TransactionResource extends JsonResource
                                     'id' => $data->id,
                                     'status' => $data->status,
                                     'redeem_code' => [
-                                        'url' => !empty(decryptRSA($data->card_url)) ? decryptRSA($data->card_url) : null,
-                                        'card_code' => !empty(decryptRSA($data->card_code)) ? decryptRSA($data->card_code) : null,
-                                        'pin' => !empty(decryptRSA($data->pin_code)) ? decryptRSA($data->pin_code) : null,
+                                        'url' => !empty($data->card_url) ? decryptRSA($data->card_url) : null,
+                                        'card_code' => !empty($data->card_code) ? decryptRSA($data->card_code) : null,
+                                        'pin' => !empty($data->pin_code) ? decryptRSA($data->pin_code) : null,
                                     ],
                                 ];
                             })->values()->all(),
