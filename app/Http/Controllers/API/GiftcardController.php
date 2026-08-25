@@ -358,7 +358,7 @@ class GiftcardController extends Controller
                 }
 
                 if ($card->only_denominations) {
-                    $denominations = collect(json_decode($card->denominations, true))->map(fn($d) => $d['amount'])->toArray();
+                    $denominations = json_decode($card->denominations, true);
                     $minDen = min($denominations);
                     $maxDen = max($denominations);
 
