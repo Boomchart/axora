@@ -35,7 +35,7 @@
             </a>
             @if($val->failed_order && $val->status == 'pending')
             <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4">
-                <a wire:click="retryOrder" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="retryOrder" class="btn btn-block btn-secondary">
+                <a wire:click="retryOrder" wire:loading.attr="disabled" wire:loading.class="opacity-50" wire:target="retryOrder" class="btn btn-block btn-secondary me-4">
                     <span wire:loading.remove wire:target="retryOrder">{{__('Retry Order')}}</span>
                     <span wire:loading wire:target="retryOrder">{{__('Processing Request...')}}</span>
                 </a>
