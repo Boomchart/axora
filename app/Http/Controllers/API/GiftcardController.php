@@ -137,7 +137,7 @@ class GiftcardController extends Controller
             $amount = $request->amount;
 
             if ($card->only_denominations) {
-                $denominations = array_column(json_decode($card->denominations, true) ?? [], 'amount');
+                $denominations = json_decode($card->denominations, true) ?? [];
                 $minDen = min($denominations);
                 $maxDen = max($denominations);
 
