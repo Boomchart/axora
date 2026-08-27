@@ -77,13 +77,13 @@ class SettingController extends Controller
     public function failedOrders()
     {
         return view('admin.orders.index', ['title' => __('Orders'), 'failed' => 1, 'status' => null]);
-    }      
-    
+    }
+
     public function orders($status = null)
     {
         return view('admin.orders.index', ['title' => __('Orders'), 'status' => $status, 'failed' => null]);
-    }   
-    
+    }
+
     public function detailsOrder(Orders $order)
     {
         return view('admin.orders.details', ['title' => __('Order Details'), 'val' => $order]);
@@ -108,10 +108,12 @@ class SettingController extends Controller
         return view('admin.settings.index', ['title' => __('General settings'), 'ui' => $ui, 'type' => $type, 'country' => CountryReg::find($country), 'secret' => $secret, 'image' => $image]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         $settings = Settings::find(1);
         auth()->guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect('/' . $settings->admin_url)->with('success', __('Just Logged Out!'));
     }
 

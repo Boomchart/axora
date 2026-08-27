@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         if ($this->user->business->kyc_status != 'APPROVED') {
             return redirect()->route('user.dashboard')->with('alert', __('Approved compliance is required'));
-        }        
+        }
         if ($this->user->business->flag_withdraw) {
             return redirect()->route('user.dashboard')->with('alert', __('Contact support to enable withdrawal on your account'));
         }
@@ -118,12 +118,14 @@ class UserController extends Controller
         return view('user.profile.index', ['title' => __('Settings'), 'type' => $type, 'secret' => $secret, 'image' => $image]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         createAudit('Logged Out');
         if (Auth::guard('user')->check()) {
             $this->user->update(['fa_expiring' => Carbon::now()->subMinutes(30)]);
             Auth::guard('user')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
             session()->flash('message', __('Just Logged Out!'));
             return redirect()->route('login');
         } else {
