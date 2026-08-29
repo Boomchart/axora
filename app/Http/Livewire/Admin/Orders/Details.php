@@ -59,7 +59,8 @@ class Details extends Component
             try {
                 DB::transaction(function () {
                     $this->val->update([
-                        'status' => 'failed'
+                        'status' => 'failed',
+                        'failed_order' => 0,
                     ]);
                     $balance = Balance::whereId($this->val->transaction->wallet_id)->first();
                     $balance->increment('amount', (($this->val->rev_share + $this->val->profit + $this->val->vendor_share) + ($this->val->amount * $this->val->rate)));
