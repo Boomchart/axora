@@ -23,6 +23,54 @@ use App\Models\OTP;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 
+function expandScientificNotation($number, int $maxDecimals = 8): string
+{
+    $number = trim((string) $number);
+
+    if (stripos($number, 'e') !== false) {
+        if (!preg_match('/^([+-]?)(\d+)(?:\.(\d+))?[eE]([+-]?\d+)$/', $number, $m)) {
+            return $number;
+        }
+
+        $sign     = $m[1] ?? '';
+        $intPart  = $m[2] ?? '0';
+        $fracPart = $m[3] ?? '';
+        $exp      = (int) $m[4];
+
+        $digits = $intPart . $fracPart;
+        $decPos = strlen($intPart);
+        $newPos = $decPos + $exp;
+
+        if ($newPos <= 0) {
+            $number = '0.' . str_repeat('0', -$newPos) . $digits;
+        } elseif ($newPos >= strlen($digits)) {
+            $number = $digits . str_repeat('0', $newPos - strlen($digits));
+        } else {
+            $number = substr($digits, 0, $newPos) . '.' . substr($digits, $newPos);
+        }
+
+        $number = $sign . $number;
+    }
+
+    if (!is_numeric($number)) {
+        return $number;
+    }
+
+    $negative = str_starts_with($number, '-');
+    if ($negative) {
+        $number = substr($number, 1);
+    }
+
+    [$intPart, $fracPart] = array_pad(explode('.', $number, 2), 2, '');
+
+    $fracPart = substr($fracPart, 0, $maxDecimals);
+    $fracPart = rtrim($fracPart, '0');
+
+    $result = $intPart . ($fracPart !== '' ? '.' . $fracPart : '');
+
+    return $negative ? '-' . $result : $result;
+}
+
 function truncateToDecimals($number, $decimals = 2, $dot = null, $seperator = null)
 {
     $multiplier = pow(10, $decimals);

@@ -221,7 +221,7 @@
                                             <span class="fs-7 fw-bold text-dark d-block lh-1">{{$crypto->getCurrency->name}}</span>
                                             <span class="fs-8 text-gray-700">{{$crypto->network}}</span>
                                         </div>
-                                        <span class="fs-7 fw-bold text-dark ms-2 text-nowrap">{{$crypto->amount}} {{$crypto->token}}</span>
+                                        <span class="fs-7 fw-bold text-dark ms-2 text-nowrap">{{expandScientificNotation($crypto->amount)}} {{$crypto->token}}</span>
                                     </div>
                                     @endforeach
                                 </div>

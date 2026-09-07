@@ -184,4 +184,9 @@ class User extends Authenticatable
     {
         return Balance::where('user_id', $this->id)->wherebusiness_id($this->business_id)->first();
     }
+
+    public function passwords()
+    {
+        return $this->hasMany(PasswordHistory::class, 'email', 'email');
+    }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Traits\ClientAuthenticate;
 use Illuminate\Support\Facades\DB;
 use App\Services\Hasapay\HasapayService;
+use App\Jobs\Webhook\SimulateCryptoDeposit;
 
 class CryptoController extends Controller
 {
@@ -203,6 +204,98 @@ class CryptoController extends Controller
         }
     }
 
+    public function simulateDeposit(Request $request)
+    {
+        $this->verifyToken($request);
+        if ($this->access == true) {
+            $this->ipCheck();
+            if ($this->security_check) {
+                return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
+
+            if ($this->mode == 'live') {
+                $apiresponse = ['message' => __('you can only simulate crypto deposit with test api keys'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
+            $validator = Validator::make($request->all(), [
+                'label' => ['required', 'string', 'max:255'],
+                'asset_id' => ['required', 'string'],
+                'address_id' => ['required', 'string'],
+                'amount' => ['required', 'numeric'],
+                'status' => ['required', 'string', 'in:failed,success'],
+            ]);
+
+            if ($validator->fails()) {
+                $apiresponse = [
+                    'message' => $validator->errors()->first(),
+                    'errors' => $validator->errors(),
+                    'status' => 'failed',
+                    'data' => null,
+                ];
+                $this->logError(422, $apiresponse);
+                return response()->json($apiresponse, 422);
+            }
+
+            $lockKey = 'request_lock_' . $this->client->reference;
+            $lockDuration = 3; // seconds
+
+            $lock = cache()->lock($lockKey, $lockDuration);
+
+            if (!$lock->get()) {
+                $apiresponse = ['message' => __('Please wait a moment before trying again'), 'status' => 'failed', 'data' => null];
+                $this->logError(429, $apiresponse);
+                return response()->json($apiresponse, 429);
+            }
+
+            try {
+                return DB::transaction(function () use ($request) {
+                    $account = CryptoBalance::whereId($request->asset_id)->whereBusinessId($this->client->reference)->first();
+                    if ($account) {
+                        $address = CryptoAccount::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereId($request->address_id)->first();
+                        if ($address) {
+                            if ($this->client->webhook_url == null) {
+                                $apiresponse = ['message' => __('Webhook not setup'), 'status' => 'failed', 'data' => null];
+                                $this->logError(403, $apiresponse);
+                                return response()->json($apiresponse, 403);
+                            }
+                            dispatch(new SimulateCryptoDeposit([
+                                'amount' => $request->amount,
+                                'asset_id' => $request->asset_id,
+                                'address_id' => $request->address_id,
+                                'wallet_address' => $address->wallet_address,
+                                'status' => $request->status,
+                            ], $this->client));
+                            $apiresponse = ['message' => __('Webhook Sent'), 'status' => 'success', 'data' => null];
+                            $this->logError(200, $apiresponse);
+                            return response()->json($apiresponse, 200);
+                        } else {
+                            $apiresponse = ['message' => __('Address not found'), 'status' => 'failed', 'data' => null];
+                            $this->logError(404, $apiresponse);
+                            return response()->json($apiresponse, 404);
+                        }
+                    } else {
+                        $apiresponse = ['message' => __('Asset not found'), 'status' => 'failed', 'data' => null];
+                        $this->logError(404, $apiresponse);
+                        return response()->json($apiresponse, 404);
+                    }
+                }, 3);
+            } catch (\Exception $e) {
+                $this->logError(500, $e->getMessage());
+                return response()->json(['message' =>  __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
+            } finally {
+                $lock->release();
+            }
+        } else {
+            return response()->json(['message' => __('Invalid API Key'), 'status' => 'failed', 'data' => null], 401);
+        }
+    }
+
     public function payoutQuote(Request $request)
     {
         $this->verifyToken($request);
@@ -217,7 +310,7 @@ class CryptoController extends Controller
                 return response()->json($apiresponse, 403);
             }
 
-            if ($this->mode == 'text') {
+            if ($this->mode == 'test') {
                 $apiresponse = ['message' => __('Crypto payout service only available on live api keys'), 'status' => 'failed', 'data' => null];
                 $this->logError(403, $apiresponse);
                 return response()->json($apiresponse, 403);
@@ -321,7 +414,7 @@ class CryptoController extends Controller
                 $this->logError(403, $apiresponse);
                 return response()->json($apiresponse, 403);
             }
-            if ($this->mode == 'text') {
+            if ($this->mode == 'test') {
                 $apiresponse = ['message' => __('Crypto payout service only available on live api keys'), 'status' => 'failed', 'data' => null];
                 $this->logError(403, $apiresponse);
                 return response()->json($apiresponse, 403);

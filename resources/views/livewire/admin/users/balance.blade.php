@@ -113,7 +113,7 @@
                                     <div class="d-flex justify-content-between align-items-start flex-wrap">
                                         <div class="d-flex flex-column">
                                             <p class="text-dark fs-4 fw-bold me-3 mb-0">{{$balance->getCurrency->name}} ({{$balance->token}}) <span class="dot"></span> {{$balance->network}}</p>
-                                            <p class="text-gray-800 fs-6 me-3 mb-3">{{$balance->amount}} {{$balance->token}}</p>
+                                            <p class="text-gray-800 fs-6 me-3 mb-3">{{expandScientificNotation($balance->amount)}} {{$balance->token}}</p>
                                         </div>
                                     </div>
                                 </div>
