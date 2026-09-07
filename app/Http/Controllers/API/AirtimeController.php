@@ -32,6 +32,11 @@ class AirtimeController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             if (AirtimeProvider::whereId($operator)->exists()) {
                 $resource = AirtimeProvider::whereId($operator)->first();
                 $apiresponse = ['message' => __('Network Operator details'), 'status' => 'success', 'data' => new AirtimeResource($resource, $this->client)];
@@ -56,6 +61,11 @@ class AirtimeController extends Controller
             $this->ipCheck();
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
             }
             if ($country == null) {
                 $apiresponse = [
@@ -104,7 +114,11 @@ class AirtimeController extends Controller
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
                 }
-
+                if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
+                }
                 $validator = Validator::make($request->all(), [
                     'operator_id' => ['required'],
                     'amount' => ['required', 'numeric'],
@@ -219,6 +233,11 @@ class AirtimeController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             $validator = Validator::make($request->all(), [
                 'operator_id' => ['required'],
                 'phone_code' => ['required', 'string', 'max:2'],
@@ -312,6 +331,12 @@ class AirtimeController extends Controller
         $this->ipCheck();
         if ($this->security_check) {
             return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+        }
+
+        if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+            $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+            $this->logError(403, $apiresponse);
+            return response()->json($apiresponse, 403);
         }
 
         $validator = Validator::make($request->all(), ['data' => ['required', 'array']]);
@@ -609,6 +634,11 @@ class AirtimeController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+                if ($this->client->access_airtime == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Airtime service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
                 if ($reference != null) {
                     if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('airtime_purchase')->exists()) {

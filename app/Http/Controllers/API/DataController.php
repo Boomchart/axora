@@ -32,6 +32,11 @@ class DataController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_data == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             if (DataProvider::whereId($operator)->exists()) {
                 $resource = DataProvider::whereId($operator)->first();
                 $apiresponse = ['message' => __('Network Operator details'), 'status' => 'success', 'data' => new DataResource($resource, $this->client)];
@@ -56,6 +61,11 @@ class DataController extends Controller
             $this->ipCheck();
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_data == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
             }
             if ($country == null) {
                 $apiresponse = [
@@ -99,6 +109,11 @@ class DataController extends Controller
             $this->ipCheck();
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_data == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
             }
             $validator = Validator::make($request->all(), [
                 'operator_id' => ['required'],
@@ -179,6 +194,12 @@ class DataController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+
+                if ($this->client->access_data == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
 
                 $validator = Validator::make($request->all(), [
@@ -295,6 +316,12 @@ class DataController extends Controller
         $this->ipCheck();
         if ($this->security_check) {
             return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+        }
+
+        if ($this->client->access_data == 0 && $this->mode == 'live') {
+            $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+            $this->logError(403, $apiresponse);
+            return response()->json($apiresponse, 403);
         }
 
         $validator = Validator::make($request->all(), ['data' => ['required', 'array']]);
@@ -577,6 +604,11 @@ class DataController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+                if ($this->client->access_data == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Data service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
                 if ($reference != null) {
                     if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('data_purchase')->exists()) {

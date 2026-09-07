@@ -24,6 +24,10 @@ class Compliance extends Component
     public $airtime_issuing_agents;
     public $watchlist;
     public $flag_withdraw;
+    public $access_giftcard;
+    public $access_airtime;
+    public $access_data;
+    public $access_crypto;
     public $agent;
     public $admin;
     public $new_password;
@@ -99,6 +103,10 @@ class Compliance extends Component
     {
         $this->watchlist = (bool) ($this->client->business->watchlist == 1) ? true : false;
         $this->flag_withdraw = (bool) ($this->client->business->flag_withdraw == 1) ? true : false;
+        $this->access_giftcard = (bool) ($this->client->business->access_giftcard == 1) ? true : false;
+        $this->access_airtime = (bool) ($this->client->business->access_airtime == 1) ? true : false;
+        $this->access_data = (bool) ($this->client->business->access_data == 1) ? true : false;
+        $this->access_crypto = (bool) ($this->client->business->access_crypto == 1) ? true : false;
         $this->agent = (bool) ($this->client->business->agent == 1) ? true : false;
         $this->issuing_fc = $this->client->business->issuing_fc;
         $this->issuing_pc = $this->client->business->issuing_pc;
@@ -113,6 +121,10 @@ class Compliance extends Component
         $this->client->business->update([
             'watchlist' => $this->watchlist,
             'flag_withdraw' => $this->flag_withdraw,
+            'access_giftcard' => $this->access_giftcard,
+            'access_airtime' => $this->access_airtime,
+            'access_data' => $this->access_data,
+            'access_crypto' => $this->access_crypto,
             'agent' => $this->agent,
         ]);
 

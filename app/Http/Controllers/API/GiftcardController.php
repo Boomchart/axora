@@ -32,6 +32,11 @@ class GiftcardController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_giftcard == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Giftcard service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
 
             if (BuyCard::whereId($card)->exists()) {
                 $resource = BuyCard::whereId($card)->first();
@@ -58,6 +63,11 @@ class GiftcardController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+                if ($this->client->access_giftcard == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Giftcard service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
                 if ($country == null) {
                     $apiresponse = [
@@ -109,6 +119,11 @@ class GiftcardController extends Controller
             $this->ipCheck();
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_giftcard == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Giftcard service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
             }
 
             $validator = Validator::make($request->all(), [
@@ -245,7 +260,11 @@ class GiftcardController extends Controller
         if ($this->security_check) {
             return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
         }
-
+        if ($this->client->access_giftcard == 0 && $this->mode == 'live') {
+            $apiresponse = ['message' => __('Giftcard service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+            $this->logError(403, $apiresponse);
+            return response()->json($apiresponse, 403);
+        }
         $validator = Validator::make($request->all(), ['data' => ['required', 'array']]);
         if ($validator->fails()) {
             $apiresponse = [
@@ -549,6 +568,11 @@ class GiftcardController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+                if ($this->client->access_giftcard == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Giftcard service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
                 if ($reference != null) {
                     if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereType('giftcard_purchase')->exists()) {

@@ -89,7 +89,11 @@ class Business extends Model
         'airtime_issuing_pc',
         'airtime_issuing_agents',
         'agent',
-        'charge_account'
+        'charge_account',
+        'access_giftcard',
+        'access_data',
+        'access_airtime',
+        'access_crypto',
     ];
 
     protected $encryptable = [

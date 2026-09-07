@@ -26,6 +26,38 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="min-w-250px fs-7">{{__('Access giftcard service via api')}}</td>
+                                            <td class="w-125px">
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" wire:click="save" wire:model="access_giftcard">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="min-w-250px fs-7">{{__('Access airtime service via api')}}</td>
+                                            <td class="w-125px">
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" wire:click="save" wire:model="access_airtime">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="min-w-250px fs-7">{{__('Access data service via api')}}</td>
+                                            <td class="w-125px">
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" wire:click="save" wire:model="access_data">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="min-w-250px fs-7">{{__('Access crypto service via api')}}</td>
+                                            <td class="w-125px">
+                                                <div class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="checkbox" wire:click="save" wire:model="access_crypto">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td class="min-w-250px fs-7">{{__('Agent')}}</td>
                                             <td class="w-125px">
                                                 <div class="form-check form-check-custom form-check-solid">
@@ -109,7 +141,7 @@
                             </form>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="col-md-12 mb-5">
                     <div class="card">
                         <div class="card-body">

@@ -31,6 +31,11 @@ class CryptoController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             if ($asset) {
                 if (CryptoBalance::whereId($asset)->whereBusinessId($this->client->reference)->exists()) {
                     $resource = CryptoBalance::whereId($asset)->whereBusinessId($this->client->reference)->first();
@@ -61,6 +66,11 @@ class CryptoController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             if ($address) {
                 if (CryptoAccount::whereBalanceId($asset)->whereBusinessId($this->client->reference)->whereMode($this->mode)->whereType('customer')->whereId($address)->exists()) {
                     $resource = CryptoAccount::whereBalanceId($asset)->whereBusinessId($this->client->reference)->whereMode($this->mode)->whereType('customer')->whereId($address)->first();
@@ -90,6 +100,11 @@ class CryptoController extends Controller
             $this->ipCheck();
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+            }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
             }
             $validator = Validator::make($request->all(), [
                 'label' => ['required', 'string', 'max:255'],
@@ -196,6 +211,17 @@ class CryptoController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
+
+            if ($this->mode == 'text') {
+                $apiresponse = ['message' => __('Crypto payout service only available on live api keys'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             $validator = Validator::make($request->all(), [
                 'amount' => ['required', 'numeric', 'min:0'],
                 'address_id' => ['required', 'string'],
@@ -290,6 +316,16 @@ class CryptoController extends Controller
             if ($this->security_check) {
                 return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
             }
+            if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
+            if ($this->mode == 'text') {
+                $apiresponse = ['message' => __('Crypto payout service only available on live api keys'), 'status' => 'failed', 'data' => null];
+                $this->logError(403, $apiresponse);
+                return response()->json($apiresponse, 403);
+            }
             $validator = Validator::make($request->all(), [
                 'amount' => ['required', 'numeric', 'min:0'],
                 'asset_id' => ['required', 'string'],
@@ -362,28 +398,22 @@ class CryptoController extends Controller
                                 'total' => (($request->amount * $percent / 100) + $flat) + $estimate['data']['total_fee']['amount'],
                             ];
 
-                            if ($account->amount < ($request->amount + $charge['total']) && $this->mode == 'live') {
+                            if ($account->amount < ($request->amount + $charge['total'])) {
                                 $apiresponse = ['message' => __('Insufficient Balance'), 'status' => 'failed', 'data' => null];
                                 $this->logError(402, $apiresponse);
                                 return response()->json($apiresponse, 402);
                             }
 
-                            if ($request->amount < $charge['total'] && $this->mode == 'live') {
+                            if ($request->amount < $charge['total']) {
                                 $apiresponse = ['message' => __('Charge must be greater than amount'), 'status' => 'failed', 'data' => null];
                                 $this->logError(403, $apiresponse);
                                 return response()->json($apiresponse, 403);
                             }
 
-                            if ($this->mode == 'live') {
-                                logBalance($account->id, ($request->amount + $charge['total']), 'debit', null, 'amount', true);
-                            }
+                            logBalance($account->id, ($request->amount + $charge['total']), 'debit', null, 'amount', true);
 
                             $balance_before = $account->amount;
-                            if ($this->mode == 'live') {
-                                $balance_after = $account->amount - ($request->amount + $charge['total']);
-                            } else {
-                                $balance_after = $account->amount;
-                            }
+                            $balance_after = $account->amount - ($request->amount + $charge['total']);
 
                             $agents = $account?->crypto_wallet_payout_agents;
 
@@ -442,6 +472,11 @@ class CryptoController extends Controller
                 $this->ipCheck();
                 if ($this->security_check) {
                     return response()->json(['message' => $this->security_check, 'status' => 'failed', 'data' => null], 403);
+                }
+                if ($this->client->access_crypto == 0 && $this->mode == 'live') {
+                    $apiresponse = ['message' => __('Crypto service not available on your account, contact support'), 'status' => 'failed', 'data' => null];
+                    $this->logError(403, $apiresponse);
+                    return response()->json($apiresponse, 403);
                 }
                 if ($reference != null) {
                     if (Transactions::whereBusinessId($this->client->reference)->whereMode($this->mode)->whereRefId($reference)->whereIn('type', ['crypto_deposit', 'crypto_payout'])->exists()) {
