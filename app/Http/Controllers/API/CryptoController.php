@@ -224,7 +224,6 @@ class CryptoController extends Controller
                 return response()->json($apiresponse, 403);
             }
             $validator = Validator::make($request->all(), [
-                'label' => ['required', 'string', 'max:255'],
                 'asset_id' => ['required', 'string'],
                 'address_id' => ['required', 'string'],
                 'amount' => ['required', 'numeric'],
