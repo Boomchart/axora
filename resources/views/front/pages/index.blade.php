@@ -62,111 +62,111 @@
                         </div>
                         <div class="code-content">
                             <div class="code-block active" data-lang="curl">
-<pre><code class="language-bash">curl --request POST \
-    --url {{route('home')}}/v1/transaction \
-    --header 'Authorization: Bearer YOUR_API_KEY' \
-    --header 'Content-Type: application/json' \
-    --data '{
-        "service_type": "airtime",
-        "product_id": "mtn-ng-airtime",
-        "amount": 25.50,
-        "recipient": "+2348030000000",
-        "email": "user@example.com"
-    }'
-</code></pre>
+<pre><code class="language-bash">curl -X POST {{ url('/api/v1/airtime-order') }} \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{
+    "data": [
+      {
+        "external_reference": "order-ref-001",
+        "operator_id": "3e0e1d43-809c-4f36-b069-b7fe6ee2b6d4",
+        "amount": 1000,
+        "phone": "09072969000",
+        "phone_code": "NG"
+      }
+    ]
+  }'</code></pre>
                             </div>
                             <div class="code-block" data-lang="javascript">
-<pre><code class="language-javascript">const axios = require('axios');
+<pre><code class="language-javascript">const response = await fetch('{{ url('/api/v1/airtime-order') }}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_your_api_key',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    data: [{
+      external_reference: 'order-ref-001',
+      operator_id: '3e0e1d43-809c-4f36-b069-b7fe6ee2b6d4',
+      amount: 1000,
+      phone: '09072969000',
+      phone_code: 'NG'
+    }]
+  })
+});
 
-const response = await axios.post(
-'{{route('home')}}/v1/transaction',
-    {
-        "service_type": "gift_card",
-        "product_id": "amazon-us-10",
-        "quantity": 1,
-        "amount": 10.00,
-        "email": "user@example.com"
-    },
-    {
-        headers: {
-        'Authorization': 'Bearer YOUR_API_KEY',
-        'Content-Type': 'application/json'
-        }
-    }
-);
-
-</code></pre>
+const orders = await response.json();</code></pre>
                             </div>
                             <div class="code-block" data-lang="php">
-<pre><code class="language-php">&lt;?php
-    $curl = curl_init();
+<pre><code class="language-php">$client = new GuzzleHttp\Client([
+  'base_uri' => '{{ url('/') }}/api/v1/',
+  'headers' => [
+    'Authorization' => 'Bearer sk_live_your_api_key',
+    'Accept' => 'application/json',
+  ],
+]);
 
-    curl_setopt_array($curl, [
-        CURLOPT_URL => "{{route('home')}}/v1/wallet/generate",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_HTTPHEADER => [
-            "Authorization: Bearer YOUR_API_KEY",
-            "Content-Type: application/json"
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'network' => 'TRC20',
-            'currency' => 'USDT',
-            'user_reference' => 'user_98765'
-        ])
-    ]);
+$response = $client->post('airtime-order', [
+  'json' => [
+    'data' => [[
+      'external_reference' => 'order-ref-001',
+      'operator_id' => '3e0e1d43-809c-4f36-b069-b7fe6ee2b6d4',
+      'amount' => 1000,
+      'phone' => '09072969000',
+      'phone_code' => 'NG',
+    ]],
+  ],
+]);
 
-    $response = curl_exec($curl);
-    curl_close($curl);
-
-    echo $response;
-    ?&gt;
-</code></pre>
+$orders = json_decode($response->getBody(), true);</code></pre>
                             </div>
                             <div class="code-block" data-lang="python">
-<pre><code class="language-python">
-    import requests
-    url = "{{route('home')}}/v1/transaction"
+<pre><code class="language-python">import requests
 
-    headers = {
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    }
+response = requests.post(
+    "{{ url('/api/v1/airtime-order') }}",
+    headers={
+        "Authorization": "Bearer sk_live_your_api_key",
+        "Accept": "application/json",
+    },
+    json={
+        "data": [{
+            "external_reference": "order-ref-001",
+            "operator_id": "3e0e1d43-809c-4f36-b069-b7fe6ee2b6d4",
+            "amount": 1000,
+            "phone": "09072969000",
+            "phone_code": "NG",
+        }]
+    },
+)
 
-    payload = {
-        "service_type": "data_bundle",
-        "product_id": "vodafone-uk-10gb",
-        "recipient": "+447700900000",
-        "email": "user@example.com"
-    }
-
-    response = requests.post(url, json=payload, headers=headers)
-    print(response.json())
-</code></pre>
+orders = response.json()</code></pre>
                             </div>
                             <div class="code-block" data-lang="ruby">
-                            <pre><code class="language-ruby">
-    require 'net/http'
-    require 'json'
+<pre><code class="language-ruby">require 'net/http'
+require 'json'
 
-    uri = URI('{{route('home')}}/v1/transaction')
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
+uri = URI('{{ url('/api/v1/airtime-order') }}')
+request = Net::HTTP::Post.new(uri)
+request['Authorization'] = 'Bearer sk_live_your_api_key'
+request['Content-Type'] = 'application/json'
+request['Accept'] = 'application/json'
+request.body = {
+  data: [{
+    external_reference: 'order-ref-001',
+    operator_id: '3e0e1d43-809c-4f36-b069-b7fe6ee2b6d4',
+    amount: 1000,
+    phone: '09072969000',
+    phone_code: 'NG'
+  }]
+}.to_json
 
-    request = Net::HTTP::Post.new(uri.path)
-    request['Authorization'] = 'Bearer YOUR_API_KEY'
-    request['Content-Type'] = 'application/json'
+response = Net::HTTP.start(uri.hostname, uri.port,
+  use_ssl: uri.scheme == 'https') { |http| http.request(request) }
 
-    request.body = {
-        service_type: 'airtime',
-        product_id: 'att-us-topup',
-        amount: 50.00,
-        recipient: '+12025550125'
-    }.to_json
-
-    response = http.request(request)
-    puts response.body
-                            </code></pre>
+orders = JSON.parse(response.body)</code></pre>
                             </div>
                         </div>
                         <button class="code-copy-btn" title="Copy to clipboard">
