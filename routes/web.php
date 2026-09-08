@@ -72,6 +72,7 @@ Route::prefix('api-reference')->group(function () {
         Route::view('create-address', 'developer.reference.crypto.create-address', ['title' => __('Create Crypto Address')])->name('developer.crypto.create-address');
         Route::view('transactions', 'developer.reference.crypto.transactions', ['title' => __('List Crypto Transactions')])->name('developer.crypto.transactions');
         Route::view('transaction', 'developer.reference.crypto.transaction', ['title' => __('Get Crypto Transaction')])->name('developer.crypto.transaction');
+        Route::view('simulate-deposit', 'developer.reference.crypto.simulate-deposit', ['title' => __('Simulate Crypto Deposit')])->name('developer.crypto.simulate-deposit');
     });
 
     Route::view('countries', 'developer.reference.countries', ['title' => __('Countries')])->name('developer.countries');

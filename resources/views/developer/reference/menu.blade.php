@@ -292,6 +292,7 @@
                             <li class="sidebar-item {{ Request::is('api-reference/crypto/payout') ? 'active' : '' }}"><a href="{{ url('/api-reference/crypto/payout') }}">{{ __('Create Crypto Payout') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/crypto/transactions') ? 'active' : '' }}"><a href="{{ url('/api-reference/crypto/transactions') }}">{{ __('List Crypto Transactions') }}</a></li>
                             <li class="sidebar-item {{ Request::is('api-reference/crypto/transaction') ? 'active' : '' }}"><a href="{{ url('/api-reference/crypto/transaction') }}">{{ __('Get Crypto Transaction') }}</a></li>
+                            <li class="sidebar-item {{ Request::is('api-reference/crypto/simulate-deposit') ? 'active' : '' }}"><a href="{{ url('/api-reference/crypto/simulate-deposit') }}">{{ __('Simulate Crypto Deposit') }}</a></li>
                         </ul>
                     </li>
                 </ul>

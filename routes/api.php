@@ -49,5 +49,6 @@ Route::middleware(['throttle.api:60,1'])->group(function () {
         Route::post('payout-quote', [CryptoController::class, 'payoutQuote']);
         Route::post('payout', [CryptoController::class, 'payout']);
         Route::get('crypto-transactions/{reference?}', [CryptoController::class, 'transactions']);
+        Route::get('simulate-deposit', [CryptoController::class, 'simulateDeposit']);
     });
 });
