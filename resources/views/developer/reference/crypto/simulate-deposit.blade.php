@@ -5,7 +5,7 @@
     <p class="lead-text">{{ __('Simulates an incoming crypto deposit in test mode and sends the resulting crypto_deposit webhook to your endpoint.') }}</p>
 
     <div class="endpoint-box">
-        <span class="endpoint-method get">GET</span>
+        <span class="endpoint-method post">POST</span>
         <span class="endpoint-url">{{ url('/') }}/api/v1/simulate-deposit</span>
     </div>
 
@@ -27,8 +27,7 @@
         </p>
     </div>
 
-    <h2 id="query-parameters">Query Parameters</h2>
-    <p>This endpoint uses <code>GET</code>, so parameters are sent in the query string.</p>
+    <h2 id="body-parameters">Body Parameters</h2>
     <table class="params-table">
         <thead>
         <tr>
@@ -82,13 +81,16 @@
             <span class="code-block-title">cURL</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-bash">curl -G "{{ url('/') }}/api/v1/simulate-deposit" \
+        <pre><code class="language-bash">curl -X POST "{{ url('/') }}/api/v1/simulate-deposit" \
   -H "Authorization: Bearer sk_test_your_api_key" \
+  -H "Content-Type: application/json" \
   -H "Accept: application/json" \
-  --data-urlencode "asset_id=5145e120-afa5-40e5-85f8-925f88001859" \
-  --data-urlencode "address_id=a0fb1188-dc90-4c60-98ec-0cbc59979e33" \
-  --data-urlencode "amount=25" \
-  --data-urlencode "status=success"</code></pre>
+  -d '{
+    "asset_id": "5145e120-afa5-40e5-85f8-925f88001859",
+    "address_id": "a0fb1188-dc90-4c60-98ec-0cbc59979e33",
+    "amount": 25,
+    "status": "success"
+  }'</code></pre>
     </div>
 
     <div class="code-block-wrapper">
@@ -104,8 +106,8 @@
     ],
 ]);
 
-$response = $client->get('simulate-deposit', [
-    'query' => [
+$response = $client->post('simulate-deposit', [
+    'json' => [
         'asset_id' => '5145e120-afa5-40e5-85f8-925f88001859',
         'address_id' => 'a0fb1188-dc90-4c60-98ec-0cbc59979e33',
         'amount' => 25,
@@ -121,22 +123,20 @@ $result = json_decode($response->getBody(), true);</code></pre>
             <span class="code-block-title">JavaScript</span>
             <button class="code-copy-button">Copy</button>
         </div>
-        <pre><code class="language-javascript">const params = new URLSearchParams({
-  asset_id: '5145e120-afa5-40e5-85f8-925f88001859',
-  address_id: 'a0fb1188-dc90-4c60-98ec-0cbc59979e33',
-  amount: '25',
-  status: 'success'
+        <pre><code class="language-javascript">const response = await fetch('{{ url('/api/v1/simulate-deposit') }}', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_test_your_api_key',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    asset_id: '5145e120-afa5-40e5-85f8-925f88001859',
+    address_id: 'a0fb1188-dc90-4c60-98ec-0cbc59979e33',
+    amount: 25,
+    status: 'success'
+  })
 });
-
-const response = await fetch(
-  '{{ url('/api/v1/simulate-deposit') }}?' + params,
-  {
-    headers: {
-      'Authorization': 'Bearer sk_test_your_api_key',
-      'Accept': 'application/json'
-    }
-  }
-);
 
 const result = await response.json();</code></pre>
     </div>

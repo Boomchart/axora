@@ -269,6 +269,7 @@ class CryptoController extends Controller
                                 'address_id' => $request->address_id,
                                 'wallet_address' => $address->wallet_address,
                                 'status' => $request->status,
+                                'currency' => $address->token
                             ], $this->client));
                             $apiresponse = ['message' => __('Webhook Sent'), 'status' => 'success', 'data' => null];
                             $this->logError(200, $apiresponse);
@@ -286,6 +287,7 @@ class CryptoController extends Controller
                 }, 3);
             } catch (\Exception $e) {
                 $this->logError(500, $e->getMessage());
+                report($e);
                 return response()->json(['message' =>  __('Internal Server Error'), 'status' => 'failed', 'data' => null], 500);
             } finally {
                 $lock->release();
