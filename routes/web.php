@@ -30,6 +30,11 @@ Route::prefix('docs')->group(function () {
     Route::view('authentication', 'developer.authentication', ['title' => __('Authentication')])->name('developer.authentication');
     Route::view('environments', 'developer.environments', ['title' => __('Environments')])->name('developer.environments');
     Route::view('api-keys', 'developer.api-keys', ['title' => __('Get API Keys')])->name('developer.api-keys');
+    Route::view('guides', 'developer.guides.index', ['title' => __('Guides')])->name('developer.guides');
+    Route::view('guides/gift-cards', 'developer.guides.gift-cards', ['title' => __('Gift Card Guide')])->name('developer.guides.gift-cards');
+    Route::view('guides/airtime', 'developer.guides.airtime', ['title' => __('Airtime Guide')])->name('developer.guides.airtime');
+    Route::view('guides/data', 'developer.guides.data', ['title' => __('Data Guide')])->name('developer.guides.data');
+    Route::view('guides/crypto', 'developer.guides.crypto', ['title' => __('Crypto Guide')])->name('developer.guides.crypto');
 });
 
 Route::prefix('api-reference')->group(function () {
