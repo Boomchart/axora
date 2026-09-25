@@ -130,6 +130,13 @@
                         <span class="axora-doc-mobile-link-text">{{ __('Get API Keys') }}</span>
                     </a>
                 </li>
+
+                <li>
+                    <a class="{{ Request::is('docs/guides*') ? 'active' : '' }}" href="{{ route('developer.guides') }}">
+                        <i class="bi bi-compass"></i>
+                        <span class="axora-doc-mobile-link-text">{{ __('Guides') }}</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -180,6 +187,12 @@
                     <li class="sidebar-item {{ Request::is('docs/api-keys') ? 'active' : '' }}">
                         <a href="{{ url('/docs/api-keys') }}">
                             <i class="bi bi-key"></i> {{ __('Get API Keys') }}
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {{ Request::is('docs/guides*') ? 'active' : '' }}">
+                        <a href="{{ route('developer.guides') }}">
+                            <i class="bi bi-compass"></i> {{ __('Guides') }}
                         </a>
                     </li>
                 </ul>
