@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\{CryptoBalanceResource, CryptoAccountResource};
 use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
-use App\Models\{Settings, Transactions, CryptoBalance, CryptoAccount};
+use App\Models\{Settings, Transactions, CryptoBalance, CryptoAccount, CryptoCurrencies};
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Traits\ClientAuthenticate;
@@ -318,7 +318,7 @@ class CryptoController extends Controller
             }
             $validator = Validator::make($request->all(), [
                 'amount' => ['required', 'numeric', 'min:0'],
-                'address_id' => ['required', 'string'],
+                'asset_id' => ['required', 'string'],
                 'to_address' => ['required', 'string'],
             ]);
 
@@ -347,10 +347,9 @@ class CryptoController extends Controller
 
             try {
                 return DB::transaction(function () use ($request) {
-                    $address = CryptoAccount::whereId($request->address_id)->whereMode($this->mode)->whereBusinessId($this->client->reference)->first();
-                    if ($address) {
-
-                        $result = verifyWalletAddress($request->to_address, $address->token, $address->network);
+                    $asset = CryptoCurrencies::whereId($request->asset_id)->first();
+                    if ($asset) {
+                        $result = verifyWalletAddress($request->to_address, $asset->token, $asset->network);
                         if ($result['valid'] == false) {
                             $msg = $result['reason'];
                             $apiresponse = ['message' => $msg, 'errors' => ['to_address' => [$msg]], 'status' => 'failed', 'data' => null];
@@ -359,7 +358,7 @@ class CryptoController extends Controller
                         }
 
                         $hasapay = new HasapayService($this->mode);
-                        $wallet = $hasapay->fetchWalletId($address->token, $address->network);
+                        $wallet = $hasapay->fetchWalletId($asset->token, $asset->network);
 
                         $estimate = $hasapay->estimateGasFee(
                             $wallet['token'],
@@ -368,9 +367,15 @@ class CryptoController extends Controller
                             removeCommas($request->amount)
                         );
 
+                        $cryptoBalance = CryptoBalance::whereBusinessId($this->client->reference)->whereCountryId($asset->id)->first();
+                        if ($cryptoBalance == null) {
+                            $apiresponse = ['message' => __('Asset not found'), 'status' => 'failed', 'data' => null];
+                            $this->logError(404, $apiresponse);
+                            return response()->json($apiresponse, 404);
+                        }
                         if ($estimate['success'] == true) {
-                            $flat = (float)$address->cryptoBalance->crypto_wallet_payout_fc + collect(json_decode($address->cryptoBalance->crypto_wallet_payout_agents, true) ?? [])->sum('rev_fc');
-                            $percent = (float)$address->cryptoBalance->crypto_wallet_payout_pc + collect(json_decode($address->cryptoBalance->crypto_wallet_payout_agents, true) ?? [])->sum('rev_pc');
+                            $flat = (float)$cryptoBalance->crypto_wallet_payout_fc + collect(json_decode($cryptoBalance->crypto_wallet_payout_agents, true) ?? [])->sum('rev_fc');
+                            $percent = (float)$cryptoBalance->crypto_wallet_payout_pc + collect(json_decode($cryptoBalance->crypto_wallet_payout_agents, true) ?? [])->sum('rev_pc');
 
                             $apiresponse = ['message' => __('Estimate Calculated'), 'status' => 'success', 'data' => [
                                 'gas_fee' => $estimate['data']['total_fee']['amount'],
@@ -386,7 +391,7 @@ class CryptoController extends Controller
                             return response()->json($apiresponse, 422);
                         }
                     } else {
-                        $apiresponse = ['message' => __('Address not found'), 'status' => 'failed', 'data' => null];
+                        $apiresponse = ['message' => __('Asset not found'), 'status' => 'failed', 'data' => null];
                         $this->logError(404, $apiresponse);
                         return response()->json($apiresponse, 404);
                     }

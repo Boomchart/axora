@@ -27,13 +27,10 @@
             <td>The payout amount, denominated in the address's token. Must be zero or greater.</td>
         </tr>
         <tr>
-            <td><span class="param-name">address_id</span></td>
+            <td><span class="param-name">asset_id</span></td>
             <td><span class="param-type">string</span></td>
             <td>required</td>
-            <td>
-                The ID of one of your deposit address records. Azora uses its token and network to calculate
-                the quote. This is not an on-chain wallet address.
-            </td>
+            <td>The asset ID returned by the list assets endpoint.</td>
         </tr>
         <tr>
             <td><span class="param-name">to_address</span></td>
