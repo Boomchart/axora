@@ -37,7 +37,8 @@ class CryptoDeposit implements ShouldQueue
             'event' => 'crypto_deposit',
             'data' => [
                 'id' => $this->data->id,
-                'currency' => $this->data->currency,
+                'token' => $this->data->token,
+                'network' => $this->data->network,
                 'amount' => (float) number_format($this->data->amount, 2, '.', ''),
                 'charge' => (float) number_format($this->data->charge, 2, '.', ''),
                 'total' => (float) number_format(($this->data->charge + $this->data->amount), 2, '.', ''),

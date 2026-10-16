@@ -58,7 +58,6 @@ class WebhookController extends Controller
                             'trx_hash' => $data['data']['tx_hash']
                         ]);
 
-                        dispatch(new \App\Jobs\Webhook\CryptoDeposit($transaction))->delay(now()->addMinute());
                         logBalance($balance->id, ($amount - $charge), 'credit', $transaction->id, 'amount', true);
 
                         if (!empty(json_decode($agents, true))) {
@@ -99,6 +98,8 @@ class WebhookController extends Controller
                                 }
                             }
                         }
+
+                        dispatch(new \App\Jobs\Webhook\CryptoDeposit($transaction))->delay(now()->addMinute());
                     }
                 }
             }

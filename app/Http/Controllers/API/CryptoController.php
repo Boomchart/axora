@@ -269,7 +269,8 @@ class CryptoController extends Controller
                                 'address_id' => $request->address_id,
                                 'wallet_address' => $address->wallet_address,
                                 'status' => $request->status,
-                                'currency' => $address->token
+                                'token' => $address->token,
+                                'network' => $address->network,
                             ], $this->client));
                             $apiresponse = ['message' => __('Webhook Sent'), 'status' => 'success', 'data' => null];
                             $this->logError(200, $apiresponse);
