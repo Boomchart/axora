@@ -48,6 +48,14 @@ class HasapayService
                     'asset_id' => '26e59d8e-c5e9-4e46-b586-3aa2d8285b7b'
                 ],
                 [
+                    'network' => 'ETH',
+                    'token' => 'ETH',
+                    'network_name' => 'mainnet',
+                    'chain' => 'ethereum',
+                    'wallet_id' => 'e3b73a69-8749-4745-9c70-aafe391ed02b',
+                    'asset_id' => '09b86ad3-c84a-4683-a528-08a1e3fd03d3'
+                ],
+                [
                     'network' => 'TRX',
                     'token' => 'USDT',
                     'network_name' => 'mainnet',
@@ -64,6 +72,14 @@ class HasapayService
                     'asset_id' => '0f8f5cab-1dbe-4065-b0ec-ba047b51e8b4'
                 ],
                 [
+                    'network' => 'TRX',
+                    'token' => 'TRX',
+                    'network_name' => 'mainnet',
+                    'chain' => 'tron',
+                    'wallet_id' => 'c1007bc0-c463-40fb-b590-a4c8ed73a597',
+                    'asset_id' => '7f384a5b-8496-4d5e-abdd-80cc7d82054f'
+                ],
+                [
                     'network' => 'SOL',
                     'token' => 'USDT',
                     'network_name' => 'mainnet',
@@ -78,6 +94,13 @@ class HasapayService
                     'chain' => 'solana',
                     'wallet_id' => 'b679dcdb-3236-42f8-8026-d29b5e0d286f',
                     'asset_id' => '362ea2ac-bf99-4fdd-a3ad-fd017fb43950'
+                ],[
+                    'network' => 'SOL',
+                    'token' => 'SOL',
+                    'network_name' => 'mainnet',
+                    'chain' => 'solana',
+                    'wallet_id' => 'b679dcdb-3236-42f8-8026-d29b5e0d286f',
+                    'asset_id' => 'b4ff2503-c4c4-41c9-8f91-efc80124026b'
                 ],
                 [
                     'network' => 'MATIC',
@@ -94,6 +117,14 @@ class HasapayService
                     'chain' => 'polygon',
                     'wallet_id' => '7fa394dc-bb0f-4b8d-8b4a-655b4d03c1dd',
                     'asset_id' => 'b6b20f25-7c1f-4836-ae6f-fffe1269a8e0'
+                ],
+                [
+                    'network' => 'BTC',
+                    'token' => 'BTC',
+                    'network_name' => 'mainnet',
+                    'chain' => 'bitcoin',
+                    'wallet_id' => '01437e3a-8088-4939-8d9b-0bf929a3739a',
+                    'asset_id' => '2ec4a0f0-b0a4-410a-b6ab-ebec9397826c'
                 ]
             ];
         } else {
