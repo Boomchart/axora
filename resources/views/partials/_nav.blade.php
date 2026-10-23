@@ -12,7 +12,7 @@
         <!-- Desktop menu -->
         <div class="d-none d-xl-flex align-items-center flex-grow-1">
             <ul class="navbar-nav mx-auto gap-xl-4">
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('solutions') ? 'active' : '' }}" href="{{ route('solutions') }}">{{ __('Solutions') }}</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('solutions', 'products.*') ? 'active' : '' }}" href="{{ route('solutions') }}">{{ __('Solutions') }}</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('pricing') ? 'active' : '' }}" href="{{route('pricing')}}">{{ __('Pricing') }}</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('developer.*') ? 'active' : '' }}" href="{{ route('developer.index') }}" target="_blank">{{ __('Developers') }}</a></li>
             </ul>
@@ -42,7 +42,7 @@
 
     <div class="axora-mobile-drawer-body">
         <ul class="axora-mobile-nav">
-            <li><a href="{{ route('solutions') }}" class="{{ request()->routeIs('solutions') ? 'active' : '' }}">{{ __('Solutions') }}</a></li>
+            <li><a href="{{ route('solutions') }}" class="{{ request()->routeIs('solutions', 'products.*') ? 'active' : '' }}">{{ __('Solutions') }}</a></li>
             <li><a href="{{route('pricing')}}" class="{{ request()->routeIs('pricing') ? 'active' : '' }}">{{ __('Pricing') }}</a></li>
             <li><a href="{{ route('developer.index') }}" class="{{ request()->routeIs('developer.*') ? 'active' : '' }}" target="_blank">{{ __('Developers') }}</a></li>
         </ul>
