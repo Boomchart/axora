@@ -204,10 +204,11 @@
                                     @enderror
                                 </div>
                                 <hr class="bg-secondary">
+                                <p class="fs-7 fw-bold">{{__('Vendor Fee')}}</p>
                                 <div class="row mb-6">
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <input @if($pc_required==1) required @else readonly @endif type="number" step="any" wire:model="val.issuing_pc" placeholder="{{__('Percent charge')}}" autocomplete="off" class="form-control form-control-solid">
+                                            <input readonly type="number" step="any" wire:model="val.issuing_pc" placeholder="{{__('Percent charge')}}" autocomplete="off" class="form-control form-control-solid">
                                             <span class="input-group-text border-0">%</span>
                                         </div>
                                         @error('val.issuing_pc')
@@ -217,7 +218,7 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-text border-0">{{$currency->currency_symbol}}</span>
-                                            <input @if($fc_required==1) required @else readonly @endif type="number" step="any" wire:model="val.issuing_fc" placeholder="{{__('Fiat charge')}}" autocomplete="off" class="form-control form-control-solid">
+                                            <input readonly type="number" step="any" wire:model="val.issuing_fc" placeholder="{{__('Fiat charge')}}" autocomplete="off" class="form-control form-control-solid">
                                         </div>
                                         @error('val.issuing_fc')
                                         <span class="form-text text-danger">{{$message}}</span>

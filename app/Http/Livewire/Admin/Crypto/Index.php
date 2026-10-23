@@ -76,6 +76,26 @@ class Index extends Component
     {
         return [
             [
+                'network' => 'SOL',
+                'token' => 'SOL',
+                'name' => 'Solana'
+            ],
+            [
+                'network' => 'BTC',
+                'token' => 'BTC',
+                'name' => 'Bitcoin'
+            ],
+            [
+                'network' => 'TRX',
+                'token' => 'TRX',
+                'name' => 'Tron'
+            ],
+            [
+                'network' => 'ETH',
+                'token' => 'ETH',
+                'name' => 'Ethereum'
+            ],
+            [
                 'network' => 'ETH',
                 'token' => 'USDC',
                 'name' => 'USD Coin'

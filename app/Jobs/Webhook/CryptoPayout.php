@@ -38,9 +38,9 @@ class CryptoPayout implements ShouldQueue
             'data' => [
                 'id' => $this->data->id,
                 'currency' => $this->data->currency,
-                'amount' => (float) number_format($this->data->amount, 2, '.', ''),
-                'charge' => (float) number_format($this->data->charge, 2, '.', ''),
-                'total' => (float) number_format(($this->data->charge + $this->data->amount), 2, '.', ''),
+                'amount' => expandScientificNotation($this->data->amount),
+                'charge' => expandScientificNotation($this->data->charge),
+                'total' => expandScientificNotation(($this->data->charge + $this->data->amount)),
                 'status' => $this->data->status,
                 'mode' => $this->data->mode,
                 'wallet_address' => $this->data->wallet_address,
@@ -48,8 +48,8 @@ class CryptoPayout implements ShouldQueue
                 'address_id' => $this->data->crypto_account_id,
                 'external_reference' => $this->data->external_reference,
                 'balance' => [
-                    'old_balance' => (float) $this->data->balance_before,
-                    'new_balance' => (float) $this->data->balance_after,
+                    'old_balance' => expandScientificNotation($this->data->balance_before),
+                    'new_balance' => expandScientificNotation($this->data->balance_after),
                 ],
                 'created_at' => $this->data->created_at,
             ]

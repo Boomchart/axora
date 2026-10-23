@@ -323,7 +323,8 @@
   "event": "crypto_deposit",
   "data": {
     "id": "01934010-c9f2-7de2-a170-7168c707857a",
-    "currency": "USDT",
+    "token": "USDT",
+    "network": "TRX",
     "amount": 98.5,
     "charge": 1.5,
     "total": 100,
