@@ -93,6 +93,9 @@ Route::group(['middleware' => 'DefaultHeader:denyIframe'], function () {
     Route::view('privacy', 'front.pages.privacy', ['title' => __('Privacy Policy')])->name('privacy');
     Route::view('security', 'front.pages.security', ['title' => __('Security')])->name('security');
     Route::view('solutions', 'front.pages.solutions', ['title' => __('Solutions')])->name('solutions');
+    Route::view('business-gift-cards', 'front.pages.products.gift-cards', ['title' => __('Gift Card API for Businesses')])->name('products.gift-cards');
+    Route::view('airtime-api', 'front.pages.products.airtime', ['title' => __('Airtime API for Businesses')])->name('products.airtime');
+    Route::view('data-api', 'front.pages.products.data', ['title' => __('Data Bundle API for Businesses')])->name('products.data');
     Route::view('contact', 'front.pages.contact', ['title' => __('Contact Us')])->name('contact');
     Route::get('card/{slug}', [FrontendController::class, 'card'])->name('card.category');
     Route::post('contact', [FrontendController::class, 'contactSubmit'])->name('contact-submit');

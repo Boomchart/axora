@@ -2158,3 +2158,671 @@ body.axora-menu-open .axora-mobile-drawer {
         display: none;
     }
 }
+
+/* Product landing pages */
+.azora-product-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 6.5rem 0 5rem;
+    background:
+        radial-gradient(circle at 8% 12%, rgba(244, 194, 194, 0.42), transparent 30%),
+        radial-gradient(circle at 90% 12%, rgba(13, 115, 115, 0.13), transparent 28%),
+        linear-gradient(180deg, #fff 0%, #f8fbfb 100%);
+}
+
+.azora-product-hero::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    right: -210px;
+    bottom: -260px;
+    border: 1px solid rgba(13, 115, 115, 0.12);
+    border-radius: 50%;
+    box-shadow: 0 0 0 75px rgba(13, 115, 115, 0.025), 0 0 0 150px rgba(13, 115, 115, 0.018);
+}
+
+.azora-product-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.azora-product-eyebrow,
+.azora-product-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--primary-dark);
+    font-size: 0.84rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.azora-product-eyebrow {
+    margin-bottom: 1.25rem;
+    padding: 0.6rem 0.95rem;
+    border: 1px solid rgba(13, 115, 115, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.azora-product-hero h1 {
+    max-width: 760px;
+    margin-bottom: 1.4rem;
+    color: #093f42;
+    font-size: clamp(2.6rem, 5vw, 4.5rem);
+    font-weight: 850;
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+}
+
+.azora-product-lead {
+    max-width: 690px;
+    margin-bottom: 2rem;
+    color: #53666c;
+    font-size: 1.15rem;
+    line-height: 1.75;
+}
+
+.azora-product-trust-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.35rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.azora-product-trust-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a5e63;
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+.azora-product-trust-list i {
+    color: var(--primary-color);
+}
+
+.azora-product-visual {
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 32px;
+    background: linear-gradient(150deg, #0a5f5f 0%, #08494f 100%);
+    box-shadow: 0 30px 80px rgba(8, 73, 79, 0.24);
+    color: #fff;
+}
+
+.azora-product-visual-glow {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    top: -150px;
+    right: -90px;
+    border-radius: 50%;
+    background: rgba(244, 194, 194, 0.22);
+    filter: blur(2px);
+}
+
+.azora-product-visual-top,
+.azora-product-visual-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.azora-product-visual-top > span:first-child {
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+.azora-product-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.38rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.75rem;
+    font-weight: 750;
+}
+
+.azora-product-status i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8cf3c2;
+    box-shadow: 0 0 0 4px rgba(140, 243, 194, 0.12);
+}
+
+.azora-product-visual-icon {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    margin: 3.5rem 0 1.3rem;
+    border-radius: 22px;
+    background: #fff;
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.16);
+}
+
+.azora-product-visual h2,
+.azora-product-visual > p,
+.azora-product-mini-grid {
+    position: relative;
+    z-index: 1;
+}
+
+.azora-product-visual h2 {
+    margin-bottom: 0.75rem;
+    color: #fff;
+    font-size: 1.65rem;
+    font-weight: 800;
+}
+
+.azora-product-visual > p {
+    margin-bottom: 1.6rem;
+    color: rgba(255, 255, 255, 0.74);
+    line-height: 1.7;
+}
+
+.azora-product-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+    margin-bottom: 1.7rem;
+}
+
+.azora-product-mini-grid > div {
+    min-height: 94px;
+    padding: 0.9rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.075);
+    text-align: center;
+}
+
+.azora-product-mini-grid i {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #f8d6d6;
+    font-size: 1.25rem;
+}
+
+.azora-product-mini-grid span {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.azora-product-visual-footer {
+    justify-content: flex-start;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.azora-product-visual-footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.azora-product-proof {
+    position: relative;
+    z-index: 2;
+    margin-top: -1.4rem;
+}
+
+.azora-product-proof-item {
+    height: 100%;
+    padding: 1.4rem 1.5rem;
+    border: 1px solid rgba(15, 23, 42, 0.07);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.065);
+}
+
+.azora-product-proof-item strong,
+.azora-product-proof-item span {
+    display: block;
+}
+
+.azora-product-proof-item strong {
+    margin-bottom: 0.3rem;
+    color: var(--primary-dark);
+    font-size: 1.06rem;
+    font-weight: 800;
+}
+
+.azora-product-proof-item span {
+    color: #697a80;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.azora-product-section {
+    padding: 6rem 0;
+}
+
+.azora-product-section-soft {
+    background: #f7faf9;
+}
+
+.azora-product-section-heading {
+    max-width: 780px;
+    margin: 0 auto 3.2rem;
+    text-align: center;
+}
+
+.azora-product-section-heading > span {
+    display: block;
+    margin-bottom: 0.65rem;
+    color: var(--primary-color);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.azora-product-section-heading h2,
+.azora-product-content-title {
+    color: #153d40;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    line-height: 1.12;
+}
+
+.azora-product-section-heading p,
+.azora-product-content-copy {
+    color: #687b80;
+    font-size: 1.02rem;
+    line-height: 1.75;
+}
+
+.azora-product-section-heading p {
+    margin: 1rem auto 0;
+}
+
+.azora-product-card {
+    height: 100%;
+    padding: 1.8rem;
+    border: 1px solid rgba(15, 23, 42, 0.075);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 16px 45px rgba(15, 23, 42, 0.045);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.azora-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+}
+
+.azora-product-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 1.25rem;
+    border-radius: 17px;
+    background: var(--secondary-lighter);
+    color: var(--primary-dark);
+    font-size: 1.35rem;
+}
+
+.azora-product-card h3,
+.azora-product-step h3 {
+    color: #173f42;
+    font-size: 1.13rem;
+    font-weight: 800;
+}
+
+.azora-product-card p,
+.azora-product-step p {
+    margin-bottom: 0;
+    color: #6a7b81;
+    line-height: 1.7;
+}
+
+.azora-product-content-title {
+    margin: 0.65rem 0 1rem;
+}
+
+.azora-product-feature-list {
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.azora-product-feature-list li {
+    display: flex;
+    gap: 0.95rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.075);
+}
+
+.azora-product-feature-list li:last-child {
+    border-bottom: none;
+}
+
+.azora-product-feature-list > li > i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e6f5f5;
+    color: var(--primary-dark);
+    font-size: 0.95rem;
+}
+
+.azora-product-feature-list strong,
+.azora-product-feature-list span {
+    display: block;
+}
+
+.azora-product-feature-list strong {
+    margin-bottom: 0.25rem;
+    color: #254b4d;
+    font-size: 0.98rem;
+}
+
+.azora-product-feature-list span {
+    color: #708186;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.azora-product-code-card {
+    overflow: hidden;
+    border-radius: 26px;
+    background: #0c2024;
+    box-shadow: 0 28px 70px rgba(12, 32, 36, 0.18);
+}
+
+.azora-product-code-head,
+.azora-product-code-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.3rem;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.azora-product-code-head {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.azora-product-code-head > span {
+    color: rgba(255, 255, 255, 0.68);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.76rem;
+}
+
+.azora-product-code-dots {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.azora-product-code-dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e07a7a;
+}
+
+.azora-product-code-dots i:nth-child(2) {
+    background: #fdcc6e;
+}
+
+.azora-product-code-dots i:nth-child(3) {
+    background: #70d8a6;
+}
+
+.azora-product-code-card pre {
+    min-height: 320px;
+    margin: 0;
+    padding: 2rem;
+    overflow: auto;
+    color: #d7f4ee;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.azora-product-code-card code {
+    color: inherit;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.azora-product-code-action {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.azora-product-code-action span,
+.azora-product-code-action a {
+    font-size: 0.8rem;
+    font-weight: 750;
+}
+
+.azora-product-code-action span {
+    color: #a8c8c4;
+}
+
+.azora-product-code-action span i {
+    margin-right: 0.35rem;
+    color: #78d8aa;
+}
+
+.azora-product-code-action a {
+    color: #f8d6d6;
+    text-decoration: none;
+}
+
+.azora-product-step {
+    position: relative;
+    height: 100%;
+    padding: 2rem;
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0 22px 22px 0;
+    background: linear-gradient(100deg, #f5fbfa, #fff);
+}
+
+.azora-product-step > span {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-dark);
+    font-size: 1.7rem;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.azora-product-faq-section {
+    background: #fffaf7;
+}
+
+.azora-product-accordion .accordion-item {
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    background: #fff;
+}
+
+.azora-product-accordion .accordion-button {
+    padding: 1.25rem 1.4rem;
+    color: #24484b;
+    background: #fff;
+    font-weight: 750;
+    box-shadow: none;
+}
+
+.azora-product-accordion .accordion-button:not(.collapsed) {
+    color: var(--primary-dark);
+    background: #f4fbfa;
+}
+
+.azora-product-accordion .accordion-button:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 0.2rem rgba(13, 115, 115, 0.12);
+}
+
+.azora-product-accordion .accordion-body {
+    padding: 0 1.4rem 1.35rem;
+    color: #687b80;
+    line-height: 1.75;
+}
+
+.azora-product-final-cta {
+    padding: 1rem 0 5rem;
+    background: #fffaf7;
+}
+
+.azora-product-final-cta-inner {
+    position: relative;
+    overflow: hidden;
+    padding: 4.5rem 2rem;
+    border-radius: 32px;
+    background: linear-gradient(135deg, #0a5f5f 0%, #073f45 100%);
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(8, 73, 79, 0.2);
+}
+
+.azora-product-final-cta-inner::before,
+.azora-product-final-cta-inner::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(244, 194, 194, 0.11);
+}
+
+.azora-product-final-cta-inner::before {
+    width: 300px;
+    height: 300px;
+    top: -190px;
+    left: -80px;
+}
+
+.azora-product-final-cta-inner::after {
+    width: 220px;
+    height: 220px;
+    right: -70px;
+    bottom: -150px;
+}
+
+.azora-product-final-cta-inner > span,
+.azora-product-final-cta-inner h2,
+.azora-product-final-cta-inner p,
+.azora-product-final-cta-inner .d-flex {
+    position: relative;
+    z-index: 1;
+}
+
+.azora-product-final-cta-inner > span {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #f8d6d6;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.azora-product-final-cta-inner h2 {
+    max-width: 760px;
+    margin: 0 auto 1rem;
+    color: #fff;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+}
+
+.azora-product-final-cta-inner p {
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.02rem;
+    line-height: 1.75;
+}
+
+@media (max-width: 991.98px) {
+    .azora-product-hero {
+        padding: 4.5rem 0 4rem;
+    }
+
+    .azora-product-section {
+        padding: 4.5rem 0;
+    }
+
+    .azora-product-visual {
+        max-width: 620px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .azora-product-hero h1 {
+        font-size: 2.65rem;
+    }
+
+    .azora-product-proof {
+        margin-top: 1rem;
+    }
+
+    .azora-product-mini-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .azora-product-mini-grid > div {
+        display: flex;
+        align-items: center;
+        min-height: auto;
+        gap: 0.7rem;
+        text-align: left;
+    }
+
+    .azora-product-mini-grid i {
+        margin: 0;
+    }
+
+    .azora-product-code-card pre {
+        min-height: auto;
+        padding: 1.3rem;
+        font-size: 0.76rem;
+    }
+
+    .azora-product-code-action {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .azora-product-final-cta-inner {
+        padding: 3.25rem 1.25rem;
+        border-radius: 24px;
+    }
+}

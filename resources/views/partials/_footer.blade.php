@@ -7,11 +7,14 @@
                     <img src="{{ asset('asset/images/dark_logo.png') }}" alt="{{ $set->site_name }}" loading="lazy" class="footer-logo">
                 </a>
                 <h3 class="footer-title">{{config('app.name')}} {{__('Unified API')}}</h3>
-                <p>{{__('The unified API that connects you to 3,000+ global brands, worldwide mobile operators, and Web3 infrastructure.')}}</p>
+                <p>@yield('footer_description', __('The unified API that connects you to 3,000+ global brands, worldwide mobile operators, and Web3 infrastructure.'))</p>
             </div>
             <div class="col-lg-2 col-6 col-md-6 mb-4">
                 <h4 class="footer-title">{{__('Product')}}</h4>
                 <ul>
+                    <li><a href="{{route('products.gift-cards')}}">{{__('Gift Cards')}}</a></li>
+                    <li><a href="{{route('products.airtime')}}">{{__('Airtime')}}</a></li>
+                    <li><a href="{{route('products.data')}}">{{__('Data Bundles')}}</a></li>
                     <li><a href="{{route('pricing')}}">{{__('Pricing')}}</a></li>
                     <li><a href="{{route('developer.index')}}">{{__('Documentation')}}</a></li>
                     <li><a href="{{route('developer.countries')}}">{{__('API Reference')}}</a></li>
