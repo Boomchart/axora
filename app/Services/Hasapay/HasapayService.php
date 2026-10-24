@@ -36,7 +36,7 @@ class HasapayService
                     'token' => 'USDC',
                     'network_name' => 'mainnet',
                     'chain' => 'ethereum',
-                    'wallet_id' => 'e3b73a69-8749-4745-9c70-aafe391ed02b',
+                    'wallet_id' => '5ca29c81-e186-4bc5-aadc-9050d59a23f0',
                     'asset_id' => 'e6582a24-a893-4de4-823f-1695f9fbea96'
                 ],
                 [
@@ -44,7 +44,7 @@ class HasapayService
                     'token' => 'USDT',
                     'network_name' => 'mainnet',
                     'chain' => 'ethereum',
-                    'wallet_id' => 'e3b73a69-8749-4745-9c70-aafe391ed02b',
+                    'wallet_id' => '5ca29c81-e186-4bc5-aadc-9050d59a23f0',
                     'asset_id' => '26e59d8e-c5e9-4e46-b586-3aa2d8285b7b'
                 ],
                 [
@@ -52,7 +52,7 @@ class HasapayService
                     'token' => 'ETH',
                     'network_name' => 'mainnet',
                     'chain' => 'ethereum',
-                    'wallet_id' => 'e3b73a69-8749-4745-9c70-aafe391ed02b',
+                    'wallet_id' => '5ca29c81-e186-4bc5-aadc-9050d59a23f0',
                     'asset_id' => '09b86ad3-c84a-4683-a528-08a1e3fd03d3'
                 ],
                 [
@@ -60,7 +60,7 @@ class HasapayService
                     'token' => 'USDT',
                     'network_name' => 'mainnet',
                     'chain' => 'tron',
-                    'wallet_id' => 'c1007bc0-c463-40fb-b590-a4c8ed73a597',
+                    'wallet_id' => '2e6ac9cf-a1b2-475c-af02-e77fe13b87f9',
                     'asset_id' => 'b8f91684-401b-456c-8cc3-df3283f160a2'
                 ],
                 [
@@ -68,7 +68,7 @@ class HasapayService
                     'token' => 'USDC',
                     'network_name' => 'mainnet',
                     'chain' => 'tron',
-                    'wallet_id' => 'c1007bc0-c463-40fb-b590-a4c8ed73a597',
+                    'wallet_id' => '2e6ac9cf-a1b2-475c-af02-e77fe13b87f9',
                     'asset_id' => '0f8f5cab-1dbe-4065-b0ec-ba047b51e8b4'
                 ],
                 [
@@ -76,7 +76,7 @@ class HasapayService
                     'token' => 'TRX',
                     'network_name' => 'mainnet',
                     'chain' => 'tron',
-                    'wallet_id' => 'c1007bc0-c463-40fb-b590-a4c8ed73a597',
+                    'wallet_id' => '2e6ac9cf-a1b2-475c-af02-e77fe13b87f9',
                     'asset_id' => '7f384a5b-8496-4d5e-abdd-80cc7d82054f'
                 ],
                 [
@@ -84,7 +84,7 @@ class HasapayService
                     'token' => 'USDT',
                     'network_name' => 'mainnet',
                     'chain' => 'solana',
-                    'wallet_id' => 'b679dcdb-3236-42f8-8026-d29b5e0d286f',
+                    'wallet_id' => '2154445f-2fb6-4a01-9738-90177938f97b',
                     'asset_id' => '4844732a-001c-46cd-aecd-3c86a760ac6d'
                 ],
                 [
@@ -92,14 +92,14 @@ class HasapayService
                     'token' => 'USDC',
                     'network_name' => 'mainnet',
                     'chain' => 'solana',
-                    'wallet_id' => 'b679dcdb-3236-42f8-8026-d29b5e0d286f',
+                    'wallet_id' => '2154445f-2fb6-4a01-9738-90177938f97b',
                     'asset_id' => '362ea2ac-bf99-4fdd-a3ad-fd017fb43950'
                 ],[
                     'network' => 'SOL',
                     'token' => 'SOL',
                     'network_name' => 'mainnet',
                     'chain' => 'solana',
-                    'wallet_id' => 'b679dcdb-3236-42f8-8026-d29b5e0d286f',
+                    'wallet_id' => '2154445f-2fb6-4a01-9738-90177938f97b',
                     'asset_id' => 'b4ff2503-c4c4-41c9-8f91-efc80124026b'
                 ],
                 [
@@ -123,7 +123,7 @@ class HasapayService
                     'token' => 'BTC',
                     'network_name' => 'mainnet',
                     'chain' => 'bitcoin',
-                    'wallet_id' => '01437e3a-8088-4939-8d9b-0bf929a3739a',
+                    'wallet_id' => '19a939d4-bf08-487d-9f17-1bead6953f1b',
                     'asset_id' => '2ec4a0f0-b0a4-410a-b6ab-ebec9397826c'
                 ]
             ];
