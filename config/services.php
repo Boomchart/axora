@@ -67,7 +67,7 @@ return [
     ],
 
     'rsa' => [
-        'path' => env('RSA_KEY_PATH', '/home/azorgpfu/secure/rsa'),
+        'path' => env('RSA_KEY_PATH', base_path('../secure/rsa/public_key.pem')),
         'passphrase' => env('RSA_PASSPHRASE'),
     ],
 ];
