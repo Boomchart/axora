@@ -439,7 +439,7 @@ function rsaKeyPath(string $file): string
 
 function encryptRSA($dataToEncrypt)
 {
-    $publicKey = openssl_pkey_get_public(file_get_contents(rsaKeyPath('public_key.pem')));
+    $publicKey = openssl_pkey_get_public(file_get_contents(config('services.rsa.public_path')));
 
     if (! openssl_public_encrypt($dataToEncrypt, $encryptedData, $publicKey)) {
         throw new RuntimeException('RSA encryption failed: ' . openssl_error_string());
@@ -451,7 +451,7 @@ function encryptRSA($dataToEncrypt)
 function decryptRSA($encryptedData)
 {
     $privateKey = openssl_pkey_get_private(
-        file_get_contents(rsaKeyPath('private_key.pem')),
+        file_get_contents(config('services.rsa.private_path')),
         config('services.rsa.passphrase')
     );
 
