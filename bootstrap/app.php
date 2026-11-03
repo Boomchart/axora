@@ -16,7 +16,7 @@ $app = new Illuminate\Foundation\Application(
 );
 
 $app->useEnvironmentPath(
-    base_path() . '/../secure/azoracards'
+    base_path() . '/../secure/azoracards.com'
 );
 
 /*
