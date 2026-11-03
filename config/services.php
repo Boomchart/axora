@@ -67,7 +67,7 @@ return [
     ],
 
     'rsa' => [
-        'path' => env('RSA_KEY_PATH', base_path('../rsa/public_key.pem')),
+        'path' => env('RSA_KEY_PATH', base_path('../secure/azoracards.com/rsa/public_key.pem')),
         'passphrase' => env('RSA_PASSPHRASE'),
     ],
 ];
